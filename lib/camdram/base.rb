@@ -4,17 +4,19 @@ module Camdram
   class Base
     attr_accessor :id
 
-    # Instantiate a new Base object from a JSON hash
+    # Instantiate a new object from a JSON hash
     #
-    # @param options [Hash] A single JSON hash with symbolized keys
-    # @return [Base]
+    # @param options [Hash] A single JSON hash with symbolized keys.
+    # @return [Object] The new object.
     def initialize(options = {})
       set_from_hash(options)
     end
 
     # Update the object from it's unqiue Camdram URL
     #
-    # @return [Base]
+    # @param base_url [String] The base URL to send the Camdram API request to.
+    # @return [Object] The object the method is called on.
+    # @note The object this method is called on is updated 'in place'.
     def update!(base_url)
       url = base_url + self.url
       uri = URI( url )
