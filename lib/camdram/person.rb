@@ -6,7 +6,7 @@ module Camdram
 
     # Return a hash of the person's attributes
     #
-    # @return [Hash]
+    # @return [Hash] Hash with symbolized keys
     def info
       {
         id: id,
@@ -16,10 +16,10 @@ module Camdram
       }
     end
 
-    # Return the unique Camdram URL of the person
+    # Return the unique Camdram URL slug of the person
     #
-    # @return [String]
-    def url
+    # @return [String] The full URL slug
+    def url_slug
       "/people/#{slug}.json"
     end
   end

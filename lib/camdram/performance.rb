@@ -6,7 +6,7 @@ module Camdram
 
     # Return a hash of the performance's attributes
     #
-    # @return [Hash]
+    # @return [Hash] Hash with symbolized keys
     def info
       {
         start_date: start_date,

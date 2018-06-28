@@ -6,7 +6,7 @@ module Camdram
 
     # Return a hash of the venue's attributes
     #
-    # @return [Hash]
+    # @return [Hash] Hash with symbolized keys
     def info
       {
         id: id,
@@ -23,10 +23,10 @@ module Camdram
       }
     end
 
-    # Return the unique Camdram URL of the venue
+    # Return the unique Camdram URL slug of the venue
     #
-    # @return [String]
-    def url
+    # @return [String] The full URL slug
+    def url_slug
       "/venues/#{slug}.json"
     end
   end

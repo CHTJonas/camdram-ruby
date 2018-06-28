@@ -6,7 +6,7 @@ module Camdram
 
     # Return a hash of the organisation's attributes
     #
-    # @return [Hash]
+    # @return [Hash] Hash with symbolized keys
     def info
       {
         id: id,
@@ -19,10 +19,10 @@ module Camdram
       }
     end
 
-    # Return the unique Camdram URL of the organisation
+    # Return the unique Camdram URL slug of the organisation
     #
-    # @return [String]
-    def url
+    # @return [String] The full URL slug
+    def url_slug
       "/societies/#{slug}.json"
     end
   end

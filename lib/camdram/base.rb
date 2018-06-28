@@ -12,20 +12,6 @@ module Camdram
       set_from_hash(options)
     end
 
-    # Update the object from it's unqiue Camdram URL
-    #
-    # @param base_url [String] The base URL to send the Camdram API request to.
-    # @return [Object] The object the method is called on.
-    # @note The object this method is called on is updated 'in place'.
-    def update!(base_url)
-      url = base_url + self.url
-      uri = URI( url )
-      response = HTTP.get(uri, 3)
-      json = JSON.parse(response, symbolize_names: true)
-      set_from_hash(json)
-      return self
-    end
-
     private
 
     # Sets the object's instance variables from a JSON hash
