@@ -1,7 +1,9 @@
 require 'camdram/base'
+require 'camdram/api'
 
 module Camdram
   class Organisation < Base
+    include API
     attr_accessor :name, :description, :twitter_id, :short_name, :slug, :type
 
     # Return a hash of the organisation's attributes

@@ -13,10 +13,10 @@ module Camdram
     #
     # @param options [Hash] A single JSON hash with symbolized keys.
     # @return [Show] The new Show object.
-    def initialize(options = {})
-      super(options)
-      @society = Organisation.new( @society )
-      @venue = Venue.new( @venue )
+    def initialize(options = {}, http = nil)
+      super(options, http)
+      @society = Organisation.new( @society, @http )
+      @venue = Venue.new( @venue, @http )
       @performances = split_object(@performances, Performance)
     end
 

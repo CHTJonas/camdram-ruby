@@ -15,6 +15,18 @@ module Camdram
       @http = http
     end
 
+    # Update the object
+    #
+    # @return [Object] The object the method is called on.
+    # @note The object this method is called on is updated 'in place'.
+    def update!
+      json = get(self.url_slug)
+      set_from_hash(json)
+      return self
+    end
+
+    private
+
     # Send a HTTP get request and parse the returned JSON
     #
     # @param url_slug [String] The URL slug to send the HTTP get request to.
@@ -34,18 +46,6 @@ module Camdram
       split_object(json, object)
     end
 
-    # Update the object
-    #
-    # @return [Object] The object the method is called on.
-    # @note The object this method is called on is updated 'in place'.
-    def update!
-      json = get(self.url_slug)
-      set_from_hash(json)
-      return self
-    end
-
-    private
-
     # Split a JSON array into a Ruby array of object of the specified class
     #
     # @param json [Array] The JSON array to itterate through.
@@ -54,7 +54,7 @@ module Camdram
     def split_object(json, object)
       objects = Array.new
       json.each do |obj|
-        objects << object.new( obj )
+        objects << object.new( obj, @http )
       end
       return objects
     end

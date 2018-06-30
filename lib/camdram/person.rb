@@ -1,7 +1,9 @@
 require 'camdram/base'
+require 'camdram/api'
 
 module Camdram
   class Person < Base
+    include API
     attr_accessor :name, :slug, :entity_type
 
     # Return a hash of the person's attributes
