@@ -28,7 +28,7 @@ module Camdram
         new Error::RedirectError(310, 'Too many redirects', nil)
       end
       url = @base_url + url_slug
-      uri = URI("#{url}?access_token=#{@access_token}")
+      uri = URI("#{url}?access_token=#{@api_token}")
       response = Net::HTTP.start(uri.hostname, uri.port, :use_ssl => true) {|http|
         request = Net::HTTP::Get.new(uri)
         request['User-Agent'] = @user_agent
@@ -40,7 +40,7 @@ module Camdram
       when Net::HTTPRedirection then
         location = response['location']
         warn "redirected to #{location}"
-        fetch(location, limit - 1)
+        get(location, max_redirects - 1)
       else
         Error.for(response)
       end

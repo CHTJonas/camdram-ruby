@@ -1,7 +1,7 @@
 require 'camdram/base'
+require 'camdram/api'
 require 'camdram/show'
 require 'camdram/organisation'
-require 'camdram/api'
 
 module Camdram
   class User < Base
@@ -11,7 +11,7 @@ module Camdram
 
     # Return a hash of the user's attributes
     #
-    # @return [Hash] Hash with symbolized keys
+    # @return [Hash] Hash with symbolized keys.
     def info
       {
         id: id,
@@ -22,14 +22,14 @@ module Camdram
 
     # Return the unique Camdram URL slug of the user
     #
-    # @return [String] The full URL slug
+    # @return [String] The full URL slug.
     def url_slug
       "/auth/account.json"
     end
 
     # Return an array of shows the user is authorised for
     #
-    # @return [Array] An array of Camdram::Show objects
+    # @return [Array] An array of Camdram::Show objects.
     def get_shows
       slug = "/auth/account/shows.json"
       get_array(slug, Show)

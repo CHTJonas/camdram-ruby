@@ -31,11 +31,7 @@ module Camdram
     # @return [Array] An array of objects of the specified class.
     def get_array(url_slug, object)
       json = get(url_slug)
-      objects = Array.new
-      json.each do |obj|
-        objects << object.new( obj )
-      end
-      return objects
+      split_object(json, object)
     end
 
     # Update the object
@@ -46,6 +42,21 @@ module Camdram
       json = get(self.url_slug)
       set_from_hash(json)
       return self
+    end
+
+    private
+
+    # Split a JSON array into a Ruby array of object of the specified class
+    #
+    # @param json [Array] The JSON array to itterate through.
+    # @param object [Object] The class to instantiate.
+    # @return [Array] An array of objects of the specified class.
+    def split_object(json, object)
+      objects = Array.new
+      json.each do |obj|
+        objects << object.new( obj )
+      end
+      return objects
     end
 
   end
