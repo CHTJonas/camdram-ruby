@@ -1,12 +1,14 @@
 require 'camdram/base'
+require 'camdram/api'
 
 module Camdram
   class Person < Base
+    include API
     attr_accessor :name, :slug, :entity_type
 
     # Return a hash of the person's attributes
     #
-    # @return [Hash]
+    # @return [Hash] Hash with symbolized keys
     def info
       {
         id: id,
@@ -16,10 +18,10 @@ module Camdram
       }
     end
 
-    # Return the unique Camdram URL of the person
+    # Return the unique Camdram URL slug of the person
     #
-    # @return [String]
-    def url
+    # @return [String] The full URL slug
+    def url_slug
       "/people/#{slug}.json"
     end
   end

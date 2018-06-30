@@ -1,12 +1,14 @@
 require 'camdram/base'
+require 'camdram/api'
 
 module Camdram
   class Venue < Base
+    include API
     attr_accessor :name, :description, :facebook_id, :twitter_id, :short_name, :slug, :address, :latitude, :longitude, :type
 
     # Return a hash of the venue's attributes
     #
-    # @return [Hash]
+    # @return [Hash] Hash with symbolized keys.
     def info
       {
         id: id,
@@ -23,10 +25,10 @@ module Camdram
       }
     end
 
-    # Return the unique Camdram URL of the venue
+    # Return the unique Camdram URL slug of the venue
     #
-    # @return [String]
-    def url
+    # @return [String] The full URL slug.
+    def url_slug
       "/venues/#{slug}.json"
     end
   end
