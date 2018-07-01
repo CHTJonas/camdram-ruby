@@ -21,7 +21,7 @@ module Camdram
     # @note The object this method is called on is updated 'in place'.
     def update!
       json = get(self.url_slug)
-      set_from_hash(json)
+      self.send(:initialize, json, @http)
       return self
     end
 
