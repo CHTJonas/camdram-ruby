@@ -28,9 +28,10 @@ module Camdram
         new Error::RedirectError(310, 'Too many redirects', nil)
       end
       url = @base_url + url_slug
-      uri = URI("#{url}?access_token=#{@api_token}")
+      uri = URI(url)
       response = Net::HTTP.start(uri.hostname, uri.port, :use_ssl => true) {|http|
         request = Net::HTTP::Get.new(uri)
+        request['Authorization'] = "Bearer #{@api_token}"
         request['User-Agent'] = @user_agent
         http.request(request)
       }
