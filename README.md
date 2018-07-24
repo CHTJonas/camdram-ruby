@@ -43,5 +43,5 @@ spec.add_runtime_dependency 'camdram', '~> 1.0'
 ```
 
 ## Copyright
-Copyright (c) 2006-2016 Charlie Jonas.
+Copyright (c) 2006-2018 Charlie Jonas.
 See [LICENSE](LICENSE) for details.
