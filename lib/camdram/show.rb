@@ -8,7 +8,7 @@ require 'camdram/image'
 module Camdram
   class Show < Base
     include API
-    attr_accessor :name, :description, :slug, :author, :category, :performances, :society, :venue, :image
+    attr_accessor :name, :description, :slug, :author, :category, :performances, :society, :other_society, :venue, :other_venue, :image
 
     # Instantiate a new Show object from a JSON hash
     #
