@@ -2,7 +2,7 @@ require 'camdram/http'
 
 module Camdram
   class Base
-    attr_accessor :id
+    attr_reader :id
 
     # Instantiate a new object from a JSON hash
     #
