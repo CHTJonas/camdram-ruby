@@ -4,7 +4,7 @@ require 'camdram/api'
 module Camdram
   class Venue < Base
     include API
-    attr_accessor :name, :description, :facebook_id, :twitter_id, :short_name, :slug, :address, :latitude, :longitude, :type
+    attr_accessor :name, :description, :facebook_id, :twitter_id, :short_name, :slug, :address, :latitude, :longitude
 
     # Return a hash of the venue's attributes
     #
