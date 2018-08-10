@@ -3,6 +3,7 @@ require 'camdram/error'
 
 module Camdram
   class HTTP
+    attr_writer :api_token, :base_url, :user_agent
 
     # Initializes a new HTTP object
     #
