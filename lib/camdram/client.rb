@@ -45,15 +45,25 @@ module Camdram
     # @raise [StandardError] Error raised when the API token is not set.
     # @return [Camdram::User] The associated User object.
     def user
-      raise 'API token not set' if !api_token?
-      # Create a new HTTP object if one doesn't already exist
-      @http ||= HTTP.new(@api_token, base_url, user_agent)
+      http_construct
       slug = "/auth/account.json"
       response = get(slug)
       User.new(response, @http)
     end
 
   private
+
+    # Construct a class to handle HTTP requests if necessary
+    #
+    # @raise [StandardError] Error raised when the API token is not set.
+    def http_construct
+      if api_token?
+        # Create a new HTTP object if one doesn't already exist
+        @http ||= HTTP.new(@api_token, base_url, user_agent)
+      else
+        raise 'API token not set'
+      end
+    end
 
     # Returns true if a given string is blank
     #
