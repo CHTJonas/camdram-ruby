@@ -48,7 +48,13 @@ module Camdram
         when Net::HTTPRedirection then
           location = response['location']
           warn "redirected to #{location}"
-          inner_get(URI(location), max_redirects - 1)
+          if location.start_with?('http')
+            # Handles full URL and external redirects
+            inner_get(URI(location), max_redirects - 1)
+          else
+            # Handles slug-based redirects
+            get(location, max_redirects - 1)
+          end
         else
           Error.for(response)
         end
