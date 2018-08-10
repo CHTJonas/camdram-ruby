@@ -2,7 +2,11 @@ require 'json'
 
 module Camdram
   module Error
-    # Create a custom error class for Camdram API calls
+
+    # Error class raised when an API call is attempted but no API key is set
+    class NoApiKey < RuntimeError; end
+
+    # Error class for Camdram API calls
     class CamdramError < StandardError
       attr_reader :http_status_code, :http_headers, :response_body
       attr_reader :error, :error_description

@@ -1,6 +1,7 @@
 require 'camdram/api'
-require 'camdram/user'
+require 'camdram/error'
 require 'camdram/version'
+require 'camdram/user'
 
 module Camdram
   class Client
@@ -13,7 +14,7 @@ module Camdram
     # @return [Camdram::Client] The top-level Camdram client.
     def initialize
       if !block_given?
-        warn 'Camdram::Client instantiated without config block'
+        warn 'Camdram::Client instantiated without config block - did you mean to add an API key?'
       else
         yield(self)
       end
@@ -23,7 +24,8 @@ module Camdram
     #
     # @return [Boolean] Whether the API token is set or not.
     def api_token?
-      !(blank?(api_token))
+      !@api_token.nil? && !(blank?(@api_token))
+    end
     end
 
     # Returns the API URL that each HTTP request is sent to
@@ -61,7 +63,7 @@ module Camdram
         # Create a new HTTP object if one doesn't already exist
         @http ||= HTTP.new(@api_token, base_url, user_agent)
       else
-        raise 'API token not set'
+        raise Camdram::Error::NoApiKey.new 'api_token is not set'
       end
     end
 
