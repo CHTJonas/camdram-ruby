@@ -29,6 +29,21 @@ client.user.get_orgs[0].name
 client.user.get_orgs[0].twitter_id
 ```
 
+These public actions don't require an API key (although you are still strongly advised to use one anyway):
+```ruby
+client.get_show(6171)
+client.get_show("2018-lucky")
+
+client.get_org(1)
+client.get_org("cambridge-university-amateur-dramatic-club")
+
+client.get_venue(29)
+client.get_venue("adc-theatre")
+
+client.get_person(13865)
+client.get_person("charlie-jonas")
+```
+
 ## Versioning
 This library aims to adhere to [Semantic Versioning 2.0.0](http://semver.org/).
 Violations of this scheme should be reported as bugs.

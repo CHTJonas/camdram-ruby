@@ -25,11 +25,18 @@ module Camdram
       }
     end
 
-    # Return the unique Camdram URL slug of the venue
+    # Returns the URL+slug of the venue
     #
-    # @return [String] The full URL slug.
+    # @return [String] The full URL and slug.
     def url_slug
-      "/venues/#{slug}.json"
+      "#{self.class.url}/#{slug}.json"
+    end
+
+    # Returns the URL stub assocaited with all venues
+    #
+    # @return [String] The URL stub.
+    def self.url
+      '/venues'
     end
   end
 end
