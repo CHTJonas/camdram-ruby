@@ -2,6 +2,10 @@ require 'camdram/api'
 require 'camdram/error'
 require 'camdram/version'
 require 'camdram/user'
+require 'camdram/show'
+require 'camdram/organisation'
+require 'camdram/venue'
+require 'camdram/person'
 
 module Camdram
   class Client
@@ -51,6 +55,50 @@ module Camdram
       slug = "/auth/account.json"
       response = get(slug)
       User.new(response, @http)
+    end
+
+    # Lookup a show by its unique Camdram ID
+    #
+    # @param id [Integer] The numeric Camdram ID of the show.
+    # @return [Show] The Show with the provided ID.
+    def get_show(id)
+      http_construct
+      url = "/shows/by-id/#{id}.json"
+      response = get(url)
+      Show.new(response, @http)
+    end
+
+    # Lookup an organisation by its unique Camdram ID
+    #
+    # @param id [Integer] The numeric Camdram ID of the organisation.
+    # @return [Organisation] The Ogranisation with the provided ID.
+    def get_org(id)
+      http_construct
+      url = "/societies/by-id/#{id}.json"
+      response = get(url)
+      Organisation.new(response, @http)
+    end
+
+    # Lookup a venue by its unique Camdram ID
+    #
+    # @param id [Integer] The numeric Camdram ID of the venue.
+    # @return [Venue] The Venue with the provided ID.
+    def get_venue(id)
+      http_construct
+      url = "/venues/by-id/#{id}.json"
+      response = get(url)
+      Venue.new(response, @http)
+    end
+
+    # Lookup a person by their unique Camdram ID
+    #
+    # @param id [Integer] The numeric Camdram ID of the person.
+    # @return [Person] The Person with the provided ID.
+    def get_person(id)
+      http_construct
+      url = "/people/by-id/#{id}.json"
+      response = get(url)
+      Person.new(response, @http)
     end
 
   private
