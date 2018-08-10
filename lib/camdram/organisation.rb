@@ -21,11 +21,18 @@ module Camdram
       }
     end
 
-    # Return the unique Camdram URL slug of the organisation
+    # Returns the URL+slug of the organisation
     #
-    # @return [String] The full URL slug.
+    # @return [String] The full URL and slug.
     def url_slug
-      "/societies/#{slug}.json"
+      "#{self.class.url}/#{slug}.json"
+    end
+
+    # Returns the URL stub assocaited with all organisations
+    #
+    # @return [String] The URL stub.
+    def self.url
+      '/societies'
     end
   end
 end

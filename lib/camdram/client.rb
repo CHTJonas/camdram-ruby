@@ -88,7 +88,7 @@ module Camdram
     # @return [Show] The Show with the provided ID.
     def get_show(id)
       http_construct(false)
-      url = "/shows/by-id/#{id}.json"
+      url = "#{Show.url}/by-id/#{id}.json"
       response = get(url)
       Show.new(response, @http)
     end
@@ -99,7 +99,7 @@ module Camdram
     # @return [Organisation] The Ogranisation with the provided ID.
     def get_org(id)
       http_construct(false)
-      url = "/societies/by-id/#{id}.json"
+      url = "#{Organisation.url}/by-id/#{id}.json"
       response = get(url)
       Organisation.new(response, @http)
     end
@@ -110,7 +110,7 @@ module Camdram
     # @return [Venue] The Venue with the provided ID.
     def get_venue(id)
       http_construct(false)
-      url = "/venues/by-id/#{id}.json"
+      url = "#{Venue.url}/by-id/#{id}.json"
       response = get(url)
       Venue.new(response, @http)
     end
@@ -121,7 +121,7 @@ module Camdram
     # @return [Person] The Person with the provided ID.
     def get_person(id)
       http_construct(false)
-      url = "/people/by-id/#{id}.json"
+      url = "#{Person.url}/by-id/#{id}.json"
       response = get(url)
       Person.new(response, @http)
     end

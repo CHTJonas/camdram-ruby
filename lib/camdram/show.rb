@@ -39,12 +39,18 @@ module Camdram
       }
     end
 
-    # Return the unique Camdram URL slug of the show
+    # Returns the URL+slug of the show
     #
-    # @return [String] The full URL slug.
+    # @return [String] The full URL and slug.
     def url_slug
-      "/shows/#{slug}.json"
+      "#{self.class.url}/#{slug}.json"
     end
 
+    # Returns the URL stub assocaited with all shows
+    #
+    # @return [String] The URL stub.
+    def self.url
+      '/shows'
+    end
   end
 end
