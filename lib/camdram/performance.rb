@@ -4,7 +4,16 @@ require 'camdram/api'
 module Camdram
   class Performance < Base
     include API
-    attr_accessor :start_date, :end_date, :time, :other_venue
+    attr_accessor :start_date, :end_date, :time, :venue, :other_venue
+
+    # Instantiate a new Performance object from a JSON hash
+    #
+    # @param options [Hash] A single JSON hash with symbolized keys.
+    # @return [Performance] The new Performance object.
+    def initialize(options = {}, http = nil)
+      super(options, http)
+      @venue = Venue.new( @venue, @http ) if !@venue.nil?
+    end
 
     # Return a hash of the performance's attributes
     #

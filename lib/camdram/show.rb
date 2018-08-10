@@ -16,10 +16,10 @@ module Camdram
     # @return [Show] The new Show object.
     def initialize(options = {}, http = nil)
       super(options, http)
-      @society = Organisation.new( @society, @http )
-      @venue = Venue.new( @venue, @http )
+      @society = Organisation.new( @society, @http ) if !@society.nil?
+      @venue = Venue.new( @venue, @http ) if !@venue.nil?
       @performances = split_object( @performances, Performance )
-      @image = Image.new( @image, @http )
+      @image = Image.new( @image, @http ) if !@image.nil?
     end
 
     # Return a hash of the shows's attributes
