@@ -82,46 +82,82 @@ module Camdram
       User.new(response, @http)
     end
 
-    # Lookup a show by its unique Camdram ID
+    # Lookup a show by its ID or slug
     #
-    # @param id [Integer] The numeric Camdram ID of the show.
-    # @return [Show] The Show with the provided ID.
+    # @param id [Integer] The numeric ID of the show.
+    # @param id [String] The slug of the show.
+    # @raise [ArgumentError] Error raised when an integer or string is not provided.
+    # @return [Show] The show with the provided ID or slug.
     def get_show(id)
       http_construct(false)
-      url = "#{Show.url}/by-id/#{id}.json"
+      url = nil
+      if id.is_a? Integer
+        url = "#{Show.url}/by-id/#{id}.json"
+      elsif id.is_a? String
+        url = "#{Show.url}/#{id}.json"
+      else
+        raise ArgumentError
+      end
       response = get(url)
-      Show.new(response, @http)
+      return Show.new(response, @http)
     end
 
-    # Lookup an organisation by its unique Camdram ID
+    # Lookup an organisation by its ID or slug
     #
-    # @param id [Integer] The numeric Camdram ID of the organisation.
-    # @return [Organisation] The Ogranisation with the provided ID.
+    # @param id [Integer] The numeric ID of the organisation.
+    # @param id [String] The slug of the organisation.
+    # @raise [ArgumentError] Error raised when an integer or string is not provided.
+    # @return [Organisation] The organisation with the provided ID or slug.
     def get_org(id)
       http_construct(false)
-      url = "#{Organisation.url}/by-id/#{id}.json"
+      url = nil
+      if id.is_a? Integer
+        url = "#{Organisation.url}/by-id/#{id}.json"
+      elsif id.is_a? String
+        url = "#{Organisation.url}/#{id}.json"
+      else
+        raise ArgumentError
+      end
       response = get(url)
       Organisation.new(response, @http)
     end
 
-    # Lookup a venue by its unique Camdram ID
+    # Lookup a venue by its ID or slug
     #
-    # @param id [Integer] The numeric Camdram ID of the venue.
-    # @return [Venue] The Venue with the provided ID.
+    # @param id [Integer] The numeric ID of the venue.
+    # @param id [String] The slug of the venue.
+    # @raise [ArgumentError] Error raised when an integer or string is not provided.
+    # @return [Venue] The venue with the provided ID or slug.
     def get_venue(id)
       http_construct(false)
-      url = "#{Venue.url}/by-id/#{id}.json"
+      url = nil
+      if id.is_a? Integer
+        url = "#{Venue.url}/by-id/#{id}.json"
+      elsif id.is_a? String
+        url = "#{Venue.url}/#{id}.json"
+      else
+        raise ArgumentError
+      end
       response = get(url)
       Venue.new(response, @http)
     end
 
-    # Lookup a person by their unique Camdram ID
+    # Lookup a person by their ID or slug
     #
-    # @param id [Integer] The numeric Camdram ID of the person.
-    # @return [Person] The Person with the provided ID.
+    # @param id [Integer] The numeric ID of the person.
+    # @param id [String] The person's slug.
+    # @raise [ArgumentError] Error raised when an integer or string is not provided.
+    # @return [Show] The person  with the provided ID or slug.
     def get_person(id)
       http_construct(false)
-      url = "#{Person.url}/by-id/#{id}.json"
+      url = nil
+      if id.is_a? Integer
+        url = "#{Person.url}/by-id/#{id}.json"
+      elsif id.is_a? String
+        url = "#{Person.url}/#{id}.json"
+      else
+        raise ArgumentError
+      end
       response = get(url)
       Person.new(response, @http)
     end
