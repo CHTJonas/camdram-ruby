@@ -96,7 +96,7 @@ module Camdram
       elsif id.is_a? String
         url = "#{Show.url}/#{id}.json"
       else
-        raise ArgumentError
+        raise ArgumentError.new 'id must be an integer, or slug must be a string'
       end
       response = get(url)
       return Show.new(response, @http)
@@ -116,7 +116,7 @@ module Camdram
       elsif id.is_a? String
         url = "#{Organisation.url}/#{id}.json"
       else
-        raise ArgumentError
+        raise ArgumentError.new 'id must be an integer, or slug must be a string'
       end
       response = get(url)
       Organisation.new(response, @http)
@@ -136,7 +136,7 @@ module Camdram
       elsif id.is_a? String
         url = "#{Venue.url}/#{id}.json"
       else
-        raise ArgumentError
+        raise ArgumentError.new 'id must be an integer, or slug must be a string'
       end
       response = get(url)
       Venue.new(response, @http)
@@ -156,7 +156,7 @@ module Camdram
       elsif id.is_a? String
         url = "#{Person.url}/#{id}.json"
       else
-        raise ArgumentError
+        raise ArgumentError.new 'id must be an integer, or slug must be a string'
       end
       response = get(url)
       Person.new(response, @http)
