@@ -19,7 +19,7 @@ module Camdram
       super(options, http)
       @society = Organisation.new( @society, @http ) if !@society.nil?
       @venue = Venue.new( @venue, @http ) if !@venue.nil?
-      @performances = split_object( @performances, Performance )
+      @performances = split_object( @performances, Performance ) if !@performances.nil?
       @image = Image.new( @image, @http ) if !@image.nil?
     end
 

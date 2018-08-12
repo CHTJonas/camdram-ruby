@@ -13,8 +13,8 @@ module Camdram
     # @return [Role] The new Role object.
     def initialize(options = {}, http = nil)
       super(options)
-      # @show = Show.new( @show, @http ) if !@show.nil?
-      # @person = Person.new( @person, @http ) if !@person.nil?
+      @show = Show.new( @show, http ) if !@show.nil?
+      @person = Person.new( @person, http ) if !@person.nil?
     end
 
     # Return a hash of the roles's attributes
