@@ -4,6 +4,7 @@ require 'camdram/organisation'
 require 'camdram/venue'
 require 'camdram/performance'
 require 'camdram/image'
+require 'camdram/role'
 
 module Camdram
   class Show < Base
@@ -18,8 +19,17 @@ module Camdram
       super(options, http)
       @society = Organisation.new( @society, @http ) if !@society.nil?
       @venue = Venue.new( @venue, @http ) if !@venue.nil?
-      @performances = split_object( @performances, Performance )
+      @performances = split_object( @performances, Performance ) if !@performances.nil?
       @image = Image.new( @image, @http ) if !@image.nil?
+    end
+
+    # Gets an array of roles associated with the shows
+    #
+    # @return [Array] An array of Role objects.
+    def roles
+      roles_url = "#{self.class.url}/#{slug}/roles.json"
+      response = get(roles_url)
+      split_object( response, Role )
     end
 
     # Return a hash of the shows's attributes
@@ -30,10 +40,15 @@ module Camdram
         id: id,
         name: name,
         description: description,
+        image: image,
         slug: slug,
         author: author,
+        prices: prices,
+        other_venue: other_venue,
+        other_society: other_society,
         category: category,
         performances: performances,
+        online_booking_url: online_booking_url,
         society: society,
         venue: venue,
       }
