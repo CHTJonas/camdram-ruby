@@ -7,7 +7,6 @@ module Camdram
   class User < Base
     include API
     attr_accessor :name, :email
-    attr_writer :base_url, :access_token
 
     # Return a hash of the user's attributes
     #
