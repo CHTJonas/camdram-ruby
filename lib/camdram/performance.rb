@@ -1,5 +1,6 @@
 require 'camdram/base'
 require 'camdram/api'
+require 'camdram/venue'
 
 module Camdram
   class Performance < Base

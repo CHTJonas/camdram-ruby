@@ -4,6 +4,7 @@ require 'camdram/organisation'
 require 'camdram/venue'
 require 'camdram/performance'
 require 'camdram/image'
+require 'camdram/role'
 
 module Camdram
   class Show < Base
@@ -20,6 +21,15 @@ module Camdram
       @venue = Venue.new( @venue, @http ) if !@venue.nil?
       @performances = split_object( @performances, Performance )
       @image = Image.new( @image, @http ) if !@image.nil?
+    end
+
+    # Gets an array of roles associated with the shows
+    #
+    # @return [Array] An array of Role objects.
+    def roles
+      roles_url = "#{self.class.url}/#{slug}/roles.json"
+      response = get(roles_url)
+      split_object( response, Role )
     end
 
     # Return a hash of the shows's attributes
