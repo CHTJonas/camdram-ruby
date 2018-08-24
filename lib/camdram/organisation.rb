@@ -1,10 +1,20 @@
 require 'camdram/base'
 require 'camdram/api'
+require 'camdram/image'
 
 module Camdram
   class Organisation < Base
     include API
-    attr_accessor :name, :description, :twitter_id, :short_name, :slug
+    attr_accessor :name, :description, :image, :twitter_id, :short_name, :slug
+
+    # Instantiate a new Organisation object from a JSON hash
+    #
+    # @param options [Hash] A single JSON hash with symbolized keys.
+    # @return [Organisation] The new Organisation object.
+    def initialize(options = {}, http = nil)
+      super(options, http)
+      @image = Image.new( @image, @http ) if !@image.nil?
+    end
 
     # Return a hash of the organisation's attributes
     #
