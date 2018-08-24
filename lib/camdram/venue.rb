@@ -21,7 +21,6 @@ module Camdram
         address: address,
         latitude: latitude,
         longitude: longitude,
-        type: type,
       }
     end
 

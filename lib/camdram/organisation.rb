@@ -17,7 +17,6 @@ module Camdram
         twitter_id: twitter_id,
         short_name: short_name,
         slug: slug,
-        type: type,
       }
     end
 
