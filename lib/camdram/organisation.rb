@@ -5,7 +5,7 @@ require 'camdram/image'
 module Camdram
   class Organisation < Base
     include API
-    attr_accessor :name, :description, :image, :twitter_id, :short_name, :slug
+    attr_accessor :name, :description, :image, :facebook_id, :twitter_id, :short_name, :slug
 
     # Instantiate a new Organisation object from a JSON hash
     #
@@ -24,6 +24,7 @@ module Camdram
         id: id,
         name: name,
         description: description,
+        facebook_id: facebook_id,
         twitter_id: twitter_id,
         short_name: short_name,
         slug: slug,
