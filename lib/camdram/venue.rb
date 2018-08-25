@@ -1,5 +1,6 @@
 require 'camdram/base'
 require 'camdram/api'
+require 'camdram/news'
 
 module Camdram
   class Venue < Base
@@ -23,6 +24,15 @@ module Camdram
         latitude: latitude,
         longitude: longitude,
       }
+    end
+
+    # Gets an array of the venue's news items
+    #
+    # @return [Array] An array of News objects.
+    def news
+      news_url = "#{self.class.url}/#{slug}/news.json"
+      response = get(news_url)
+      split_object( response, News )
     end
 
     # Returns the URL+slug of the venue

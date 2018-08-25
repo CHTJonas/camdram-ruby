@@ -1,6 +1,7 @@
 require 'camdram/base'
 require 'camdram/api'
 require 'camdram/image'
+require 'camdram/news'
 
 module Camdram
   class Organisation < Base
@@ -29,6 +30,15 @@ module Camdram
         short_name: short_name,
         slug: slug,
       }
+    end
+
+    # Gets an array of the organisation's news items
+    #
+    # @return [Array] An array of News objects.
+    def news
+      news_url = "#{self.class.url}/#{slug}/news.json"
+      response = get(news_url)
+      split_object( response, News )
     end
 
     # Returns the URL+slug of the organisation
