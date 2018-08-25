@@ -1,10 +1,22 @@
 require 'camdram/base'
 require 'camdram/api'
+require 'camdram/image'
+require 'camdram/news'
+require 'camdram/show'
 
 module Camdram
   class Organisation < Base
     include API
-    attr_accessor :name, :description, :twitter_id, :short_name, :slug
+    attr_accessor :name, :description, :image, :facebook_id, :twitter_id, :short_name, :slug
+
+    # Instantiate a new Organisation object from a JSON hash
+    #
+    # @param options [Hash] A single JSON hash with symbolized keys.
+    # @return [Organisation] The new Organisation object.
+    def initialize(options = {}, http = nil)
+      super(options, http)
+      @image = Image.new( @image, @http ) if !@image.nil?
+    end
 
     # Return a hash of the organisation's attributes
     #
@@ -14,11 +26,29 @@ module Camdram
         id: id,
         name: name,
         description: description,
+        facebook_id: facebook_id,
         twitter_id: twitter_id,
         short_name: short_name,
         slug: slug,
-        type: type,
       }
+    end
+
+    # Gets an array of the organisation's news items
+    #
+    # @return [Array] An array of News objects.
+    def news
+      news_url = "#{self.class.url}/#{slug}/news.json"
+      response = get(news_url)
+      split_object( response, News )
+    end
+
+    # Gets an array of the organisation's upcoming shows
+    #
+    # @return [Array] An array of Show objects.
+    def shows
+      shows_url = "#{self.class.url}/#{slug}/shows.json"
+      response = get(shows_url)
+      split_object( response, Show )
     end
 
     # Returns the URL+slug of the organisation

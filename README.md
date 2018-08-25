@@ -42,6 +42,11 @@ client.get_venue("adc-theatre")
 
 client.get_person(13865)
 client.get_person("charlie-jonas")
+
+client.get_org("cambridge-footlights").shows
+client.get_org("cambridge-footlights").news
+client.get_venue("cambridge-arts-theatre").shows
+client.get_venue("cambridge-arts-theatre").news
 ```
 
 ## Versioning
