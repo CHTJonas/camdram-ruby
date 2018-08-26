@@ -11,7 +11,7 @@ module Camdram
     # Instantiate a new News object from a JSON hash
     #
     # @param options [Hash] A single JSON hash with symbolized keys.
-    # @return [News] The new News object.
+    # @return [Camdram::News] The new News object.
     def initialize(options = {}, http = nil)
       super(options, http)
       @entity = case @entity[:_type]
@@ -22,7 +22,7 @@ module Camdram
 
     # Return a hash of the news item's attributes
     #
-    # @return [Hash] Hash with symbolized keys
+    # @return [Hash] Hash with symbolized keys.
     def info
       {
         id: id,

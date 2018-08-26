@@ -14,7 +14,7 @@ module Camdram
     # Instantiate a new Show object from a JSON hash
     #
     # @param options [Hash] A single JSON hash with symbolized keys.
-    # @return [Show] The new Show object.
+    # @return [Camdram::Show] The new Show object.
     def initialize(options = {}, http = nil)
       super(options, http)
       @society = Organisation.new( @society, @http ) if !@society.nil?

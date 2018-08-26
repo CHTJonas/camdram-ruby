@@ -8,7 +8,7 @@ module Camdram
 
     # Return a hash of the person's attributes
     #
-    # @return [Hash] Hash with symbolized keys
+    # @return [Hash] Hash with symbolized keys.
     def info
       {
         id: id,
