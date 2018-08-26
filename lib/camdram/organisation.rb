@@ -12,7 +12,7 @@ module Camdram
     # Instantiate a new Organisation object from a JSON hash
     #
     # @param options [Hash] A single JSON hash with symbolized keys.
-    # @return [Organisation] The new Organisation object.
+    # @return [Camdram::Organisation] The new Organisation object.
     def initialize(options = {}, http = nil)
       super(options, http)
       @image = Image.new( @image, @http ) if !@image.nil?

@@ -6,6 +6,8 @@ require 'camdram/show'
 require 'camdram/organisation'
 require 'camdram/venue'
 require 'camdram/person'
+require 'camdram/role'
+require 'camdram/search'
 
 module Camdram
   class Client
@@ -87,7 +89,7 @@ module Camdram
     # @param id [Integer] The numeric ID of the show.
     # @param id [String] The slug of the show.
     # @raise [ArgumentError] Error raised when an integer or string is not provided.
-    # @return [Show] The show with the provided ID or slug.
+    # @return [Camdram::Show] The show with the provided ID or slug.
     def get_show(id)
       http_construct(false)
       url = nil
@@ -107,7 +109,7 @@ module Camdram
     # @param id [Integer] The numeric ID of the organisation.
     # @param id [String] The slug of the organisation.
     # @raise [ArgumentError] Error raised when an integer or string is not provided.
-    # @return [Organisation] The organisation with the provided ID or slug.
+    # @return [Camdram::Organisation] The organisation with the provided ID or slug.
     def get_org(id)
       http_construct(false)
       url = nil
@@ -127,7 +129,7 @@ module Camdram
     # @param id [Integer] The numeric ID of the venue.
     # @param id [String] The slug of the venue.
     # @raise [ArgumentError] Error raised when an integer or string is not provided.
-    # @return [Venue] The venue with the provided ID or slug.
+    # @return [Camdram::Venue] The venue with the provided ID or slug.
     def get_venue(id)
       http_construct(false)
       url = nil
@@ -147,7 +149,7 @@ module Camdram
     # @param id [Integer] The numeric ID of the person.
     # @param id [String] The person's slug.
     # @raise [ArgumentError] Error raised when an integer or string is not provided.
-    # @return [Show] The person  with the provided ID or slug.
+    # @return [Camdram::Person] The person  with the provided ID or slug.
     def get_person(id)
       http_construct(false)
       url = nil
@@ -160,6 +162,47 @@ module Camdram
       end
       response = get(url)
       Person.new(response, @http)
+    end
+
+    # Returns an array of all registered organisations
+    #
+    # @return [Array] An array of Organisation objects.
+    def get_orgs
+      http_construct(false)
+      url = "#{Organisation.url}.json"
+      response = get(url)
+      split_object( response, Organisation )
+    end
+
+    # Returns an array of all registered venues
+    #
+    # @return [Array] An array of Venue objects.
+    def get_venues
+      http_construct(false)
+      url = "#{Venue.url}.json"
+      response = get(url)
+      split_object( response, Venue )
+    end
+
+    # Returns an array containing a sample of people taking part in shows this week
+    #
+    # @return [Array] An array of Role objects.
+    def get_people
+      http_construct(false)
+      url = "#{Person.url}.json"
+      response = get(url)
+      split_object( response, Role )
+    end
+
+    # Return an array of search entity results based on a search string
+    #
+    # @param query [String] The query string to search with.
+    # @return [Array] An array of Search objects.
+    def search(query, limit=10, page=1)
+      http_construct(false)
+      url = "/search.json?q=#{query}&limit=#{limit}&page=#{page}"
+      response = get(url)
+      split_object( response, Search )
     end
 
   private

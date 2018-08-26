@@ -21,7 +21,7 @@ module Camdram
     #
     # @param url_slug [String] The URL slug to send the request to.
     # @param max_redirects [Integer] The maximum number of redirects.
-    # @raise [RedirectError] Error raised when too many redirects occur.
+    # @raise [Camdram::Error::RedirectError] Error raised when too many redirects occur.
     # @return [String]
     def get(url_slug, max_redirects = 10)
       url = @base_url + url_slug

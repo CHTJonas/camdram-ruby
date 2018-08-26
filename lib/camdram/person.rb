@@ -4,17 +4,16 @@ require 'camdram/api'
 module Camdram
   class Person < Base
     include API
-    attr_accessor :name, :slug, :entity_type
+    attr_accessor :name, :slug
 
     # Return a hash of the person's attributes
     #
-    # @return [Hash] Hash with symbolized keys
+    # @return [Hash] Hash with symbolized keys.
     def info
       {
         id: id,
         name: name,
         slug: slug,
-        entity_type: entity_type,
       }
     end
 

@@ -10,7 +10,7 @@ module Camdram
     # Instantiate a new Role object from a JSON hash
     #
     # @param options [Hash] A single JSON hash with symbolized keys.
-    # @return [Role] The new Role object.
+    # @return [Camdram::Role] The new Role object.
     def initialize(options = {}, http = nil)
       super(options)
       @show = Show.new( @show, http ) if !@show.nil?
@@ -19,7 +19,7 @@ module Camdram
 
     # Return a hash of the roles's attributes
     #
-    # @return [Hash] Hash with symbolized keys
+    # @return [Hash] Hash with symbolized keys.
     def info
       {
         person_name: person_name,
