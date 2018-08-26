@@ -6,6 +6,7 @@ require 'camdram/show'
 require 'camdram/organisation'
 require 'camdram/venue'
 require 'camdram/person'
+require 'camdram/search'
 
 module Camdram
   class Client
@@ -160,6 +161,17 @@ module Camdram
       end
       response = get(url)
       Person.new(response, @http)
+    end
+
+    # Return an array of search entity results based on a search string
+    #
+    # @param query [String] The query string to search with.
+    # @return [Array] An array of Search objects.
+    def search(query)
+      http_construct(false)
+      url = "/search.json?q=#{query}"
+      response = get(url)
+      split_object( response, Search )
     end
 
   private
