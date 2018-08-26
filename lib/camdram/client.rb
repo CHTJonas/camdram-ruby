@@ -198,9 +198,9 @@ module Camdram
     #
     # @param query [String] The query string to search with.
     # @return [Array] An array of Search objects.
-    def search(query)
+    def search(query, limit=10, page=1)
       http_construct(false)
-      url = "/search.json?q=#{query}"
+      url = "/search.json?q=#{query}&limit=#{limit}&page=#{page}"
       response = get(url)
       split_object( response, Search )
     end
