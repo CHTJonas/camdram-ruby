@@ -6,6 +6,7 @@ require 'camdram/show'
 require 'camdram/organisation'
 require 'camdram/venue'
 require 'camdram/person'
+require 'camdram/role'
 require 'camdram/search'
 
 module Camdram
@@ -161,6 +162,36 @@ module Camdram
       end
       response = get(url)
       Person.new(response, @http)
+    end
+
+    # Returns an array of all registered organisations
+    #
+    # @return [Array] An array of Organisation objects.
+    def get_orgs
+      http_construct(false)
+      url = "#{Organisation.url}.json"
+      response = get(url)
+      split_object( response, Organisation )
+    end
+
+    # Returns an array of all registered venues
+    #
+    # @return [Array] An array of Venue objects.
+    def get_venues
+      http_construct(false)
+      url = "#{Venue.url}.json"
+      response = get(url)
+      split_object( response, Venue )
+    end
+
+    # Returns an array containing a sample of people taking part in shows this week
+    #
+    # @return [Array] An array of Role objects.
+    def get_people
+      http_construct(false)
+      url = "#{Person.url}.json"
+      response = get(url)
+      split_object( response, Role )
     end
 
     # Return an array of search entity results based on a search string
