@@ -16,5 +16,5 @@ task :build do
   system "gem build camdram-ruby"
 end
 task :release => :build do
-  system "gem push camdram-ruby-#{Camdram::Version}.gem"
+  system "gem push camdram-#{Camdram::VERSION}.gem"
 end
