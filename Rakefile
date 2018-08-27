@@ -3,19 +3,18 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 # Unit test tasks
 require 'rake/testtask'
-Rake::TestTask.new("test") { |t|
-  raise "API test key is not set!" if !ENV["API_test_key"]
+Rake::TestTask.new do |t|
   t.libs << 'test'
   t.test_files = Dir.glob("test/*_tests.rb").sort
   t.verbose = false
   t.warning = false
-}
+end
 
 # RubyGems tasks
 require 'camdram/version'
 task :build do
-  system "gem build .gemspec"
+  system "gem build camdram-ruby"
 end
 task :release => :build do
-  system "gem push bundler-#{Camdram::Version}"
+  system "gem push camdram-ruby-#{Camdram::Version}.gem"
 end
