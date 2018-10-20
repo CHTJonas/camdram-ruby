@@ -1,6 +1,7 @@
 require 'test_helper'
 
-class UserTests < MiniTest::Unit::TestCase
+class ClientTests < MiniTest::Unit::TestCase
+
   def test_user
     user = @client.user
     assert_equal 3807, user.id
@@ -8,9 +9,8 @@ class UserTests < MiniTest::Unit::TestCase
     assert_equal "charlie@charliejonas.co.uk", user.email
   end
 
-  def test_get_shows
-    user = @client.user
-    show = user.get_shows.first
+  def test_user_shows
+    show = @client.user.get_shows.first
     assert_equal 6514, show.id
     assert_equal "This show is a dummy used by Camdram for testing purposes only.", show.description
     assert_equal "5b58b83bd534a.jpg", show.image.filename
@@ -26,13 +26,22 @@ class UserTests < MiniTest::Unit::TestCase
     assert_equal "ADC Theatre", show.venue.name
   end
 
-  def test_get_organisations
-    user = @client.user
-    org = user.get_orgs.first
+  def test_user_organisations
+    org = @client.user.get_orgs.first
     assert_equal 38, org.id
     assert_equal "Camdram", org.name
     assert_equal "Camdram", org.short_name
     assert_equal "camdram", org.slug
     assert_equal "1002481303", org.twitter_id
+  end
+
+  def test_user_venues
+    venue = @client.user.get_venues.first
+    assert_equal 29, venue.id
+    assert_equal "ADC Theatre", venue.name
+    assert_equal "ADC Theatre", venue.short_name
+    assert_equal "adc-theatre", venue.slug
+    assert_equal "33348320992", venue.facebook_id
+    assert_equal "36725639", venue.twitter_id
   end
 end
