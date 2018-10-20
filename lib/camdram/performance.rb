@@ -11,9 +11,9 @@ module Camdram
     #
     # @param options [Hash] A single JSON hash with symbolized keys.
     # @return [Camdram::Performance] The new Performance object.
-    def initialize(options = {}, http = nil)
-      super(options, http)
-      @venue = Venue.new( @venue, @http ) if !@venue.nil?
+    def initialize(options = {})
+      super(options)
+      @venue = Venue.new( @venue ) unless @venue.nil?
     end
 
     # Return a hash of the performance's attributes

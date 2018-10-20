@@ -15,12 +15,12 @@ module Camdram
     #
     # @param options [Hash] A single JSON hash with symbolized keys.
     # @return [Camdram::Show] The new Show object.
-    def initialize(options = {}, http = nil)
-      super(options, http)
-      @society = Organisation.new( @society, @http ) if !@society.nil?
-      @venue = Venue.new( @venue, @http ) if !@venue.nil?
-      @performances = split_object( @performances, Performance ) if !@performances.nil?
-      @image = Image.new( @image, @http ) if !@image.nil?
+    def initialize(options = {})
+      super(options)
+      @society = Organisation.new( @society ) unless @society.nil?
+      @venue = Venue.new( @venue ) unless @venue.nil?
+      @performances = split_object( @performances, Performance ) unless @performances.nil?
+      @image = Image.new( @image ) unless @image.nil?
     end
 
     # Gets an array of roles associated with the shows

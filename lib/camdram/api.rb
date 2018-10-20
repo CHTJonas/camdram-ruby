@@ -8,11 +8,9 @@ module Camdram
     # Instantiate a new object
     #
     # @param options [Hash] A single JSON hash with symbolized keys.
-    # @param http [Camdram:HTTP] The HTTP class to which requests are sent.
     # @return [Object] The newly instantiated object.
-    def initialize(options = {}, http = nil)
+    def initialize(options = {})
       super(options)
-      @http = http
     end
 
     # Update the object
@@ -21,7 +19,7 @@ module Camdram
     # @note The object this method is called on is updated 'in place'.
     def update!
       json = get(self.url_slug)
-      self.send(:initialize, json, @http)
+      self.send(:initialize, json)
       return self
     end
 
@@ -32,7 +30,7 @@ module Camdram
     # @param url_slug [String] The URL slug to send the HTTP get request to.
     # @return [Hash] A hash parsed from the JSON response with symbolized keys.
     def get(url_slug)
-      response = @http.get(url_slug, 3)
+      response = HTTP.instance.get(url_slug, 3)
       JSON.parse(response, symbolize_names: true)
     end
 
@@ -54,7 +52,7 @@ module Camdram
     def split_object(json, object)
       objects = Array.new
       json.each do |obj|
-        objects << object.new( obj, @http )
+        objects << object.new( obj )
       end
       return objects
     end

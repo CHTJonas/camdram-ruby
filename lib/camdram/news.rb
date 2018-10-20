@@ -12,12 +12,12 @@ module Camdram
     #
     # @param options [Hash] A single JSON hash with symbolized keys.
     # @return [Camdram::News] The new News object.
-    def initialize(options = {}, http = nil)
-      super(options, http)
+    def initialize(options = {})
+      super(options)
       @entity = case @entity[:_type]
-        when "society" then Organisation.new( @entity, @http )
-        when "venue" then Venue.new( @entity, @http )
-      end if !@entity.nil?
+        when "society" then Organisation.new( @entity )
+        when "venue" then Venue.new( @entity )
+      end unless @entity.nil?
     end
 
     # Return a hash of the news item's attributes

@@ -63,7 +63,7 @@ module Camdram
       json = get(slug)
       objects = Array.new
       json.each do |obj|
-        objects << object.new( obj, @http ) if obj[:_type] == orm_type
+        objects << object.new( obj ) if obj[:_type] == orm_type
       end
       return objects
     end

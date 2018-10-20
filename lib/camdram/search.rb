@@ -14,15 +14,15 @@ module Camdram
     #
     # @return [Object] The Ruby object that is referenced by the search entity.
     def entity
-      cls = case entity_type
+      klass = case entity_type
         when "show" then Show
         when "society" then Organisation
         when "venue" then Venue
         when "person" then Person
       end
-      url = "#{cls.url}/#{slug}.json"
+      url = "#{klass.url}/#{slug}.json"
       response = get(url)
-      return cls.new(response, @http)
+      return klass.new(response)
     end
 
     # Return a hash of the search entity's attributes

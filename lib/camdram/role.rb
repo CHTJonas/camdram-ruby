@@ -11,10 +11,10 @@ module Camdram
     #
     # @param options [Hash] A single JSON hash with symbolized keys.
     # @return [Camdram::Role] The new Role object.
-    def initialize(options = {}, http = nil)
+    def initialize(options = {})
       super(options)
-      @show = Show.new( @show, http ) if !@show.nil?
-      @person = Person.new( @person, http ) if !@person.nil?
+      @show = Show.new( @show ) unless @show.nil?
+      @person = Person.new( @person ) unless @person.nil?
     end
 
     # Return a hash of the roles's attributes
