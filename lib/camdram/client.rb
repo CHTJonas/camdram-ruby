@@ -193,5 +193,12 @@ module Camdram
       split_object( response, Search )
     end
 
+    # Returns the program version that is currently running
+    #
+    # @return [String] The version of camdram-ruby that is currently running.
+    def version
+      Camdram::VERSION
+    end
+
   end
 end
