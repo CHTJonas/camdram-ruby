@@ -25,8 +25,12 @@ client.user.get_shows
 client.user.get_shows[0].society
 client.user.get_shows[0].venue
 client.user.get_shows[0].performances
+client.user.get_orgs
 client.user.get_orgs[0].name
 client.user.get_orgs[0].twitter_id
+client.user.get_venues
+client.user.get_venues[0].slug
+client.user.get_venues[0].facebook_id
 ```
 
 These public actions don't require an API key (although you are still strongly advised to use one anyway):
@@ -59,7 +63,7 @@ As a result of this policy, you can (and should) specify a dependency on this ge
 [Pessimistic Version Constraint](http://guides.rubygems.org/patterns/#pessimistic-version-constraint) with two digits of precision.
 For example:
 ```ruby
-spec.add_runtime_dependency 'camdram', '~> 1.0'
+spec.add_runtime_dependency 'camdram', '~> 1.1'
 ```
 
 ## Copyright
