@@ -8,6 +8,7 @@ require 'camdram/venue'
 require 'camdram/person'
 require 'camdram/role'
 require 'camdram/search'
+require 'camdram/diary'
 
 module Camdram
   class Client
@@ -191,6 +192,15 @@ module Camdram
       url = "/search.json?q=#{query}&limit=#{limit}&page=#{page}"
       response = get(url)
       split_object( response, Search )
+    end
+
+    # Gets a diary object which contains an array of upcoming calendar events
+    #
+    # @return [Camdram::Diary] A Diary object.
+    def diary
+      url = "/diary.json"
+      response = get(url)
+      Diary.new(response)
     end
 
     # Returns the program version that is currently running
