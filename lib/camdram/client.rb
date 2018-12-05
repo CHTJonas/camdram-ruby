@@ -206,6 +206,17 @@ module Camdram
       Diary.new(response)
     end
 
+    # Gets a diary object which contains an array of events occuring in the given year/term
+    #
+    # @return [Camdram::Diary] A Diary object.
+    def termly_diary(year, term=nil)
+      url = "/diary/#{year}"
+      url << "/#{term}" if term
+      url << ".json"
+      response = get(url)
+      Diary.new(response)
+    end
+
     # Returns the program version that is currently running
     #
     # @return [String] The version of camdram-ruby that is currently running.
