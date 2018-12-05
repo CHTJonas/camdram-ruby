@@ -8,6 +8,7 @@ require 'camdram/venue'
 require 'camdram/person'
 require 'camdram/role'
 require 'camdram/search'
+require 'camdram/diary'
 
 module Camdram
   class Client
@@ -191,6 +192,29 @@ module Camdram
       url = "/search.json?q=#{query}&limit=#{limit}&page=#{page}"
       response = get(url)
       split_object( response, Search )
+    end
+
+    # Gets a diary object which contains an array of upcoming calendar events
+    #
+    # @return [Camdram::Diary] A Diary object.
+    def diary(start_date=nil, end_date=nil)
+      url = "/diary.json"
+      if start_date && end_date
+        url = "/diary/#{start_date}.json?end=#{end_date}"
+      end
+      response = get(url)
+      Diary.new(response)
+    end
+
+    # Gets a diary object which contains an array of events occuring in the given year/term
+    #
+    # @return [Camdram::Diary] A Diary object.
+    def termly_diary(year, term=nil)
+      url = "/diary/#{year}"
+      url << "/#{term}" if term
+      url << ".json"
+      response = get(url)
+      Diary.new(response)
     end
 
     # Returns the program version that is currently running

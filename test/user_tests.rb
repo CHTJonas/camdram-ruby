@@ -35,13 +35,14 @@ class ClientTests < MiniTest::Unit::TestCase
     assert_equal "1002481303", org.twitter_id
   end
 
-  def test_user_venues
-    venue = @client.user.get_venues.first
-    assert_equal 29, venue.id
-    assert_equal "ADC Theatre", venue.name
-    assert_equal "ADC Theatre", venue.short_name
-    assert_equal "adc-theatre", venue.slug
-    assert_equal "33348320992", venue.facebook_id
-    assert_equal "36725639", venue.twitter_id
-  end
+  # This test requires being added as an ADC venue administrator on Camdram
+  # def test_user_venues
+  #   venue = @client.user.get_venues.first
+  #   assert_equal 29, venue.id
+  #   assert_equal "ADC Theatre", venue.name
+  #   assert_equal "ADC Theatre", venue.short_name
+  #   assert_equal "adc-theatre", venue.slug
+  #   assert_equal "33348320992", venue.facebook_id
+  #   assert_equal "36725639", venue.twitter_id
+  # end
 end
