@@ -197,8 +197,11 @@ module Camdram
     # Gets a diary object which contains an array of upcoming calendar events
     #
     # @return [Camdram::Diary] A Diary object.
-    def diary
+    def diary(start_date=nil, end_date=nil)
       url = "/diary.json"
+      if start_date && end_date
+        url = "/diary/#{start_date}.json?end=#{end_date}"
+      end
       response = get(url)
       Diary.new(response)
     end

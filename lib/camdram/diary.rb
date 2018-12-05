@@ -1,10 +1,10 @@
 require 'camdram/base'
-# require 'camdram/api'
+require 'camdram/api'
 require 'camdram/event'
 
 module Camdram
   class Diary < Base
-    # include API
+    include API
     attr_accessor :events
 
     # Instantiate a new Diary object from a JSON hash
