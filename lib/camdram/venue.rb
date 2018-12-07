@@ -2,6 +2,7 @@ require 'camdram/base'
 require 'camdram/api'
 require 'camdram/news'
 require 'camdram/show'
+require 'camdram/diary'
 
 module Camdram
   class Venue < Base
@@ -43,6 +44,15 @@ module Camdram
       shows_url = "#{self.class.url}/#{slug}/shows.json"
       response = get(shows_url)
       split_object( response, Show )
+    end
+
+    # Gets a diary object which contains an array of upcoming calendar events for the venue
+    #
+    # @return [Camdram::Diary] A Diary object.
+    def diary()
+      url = "#{self.class.url}/#{slug}/diary.json"
+      response = get(url)
+      Diary.new(response)
     end
 
     # Returns the URL+slug of the venue
