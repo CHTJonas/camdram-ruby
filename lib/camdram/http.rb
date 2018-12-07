@@ -27,6 +27,13 @@ module Camdram
       !@api_token.nil? && !(blank?(@api_token))
     end
 
+    # Returns true if the User Agent string is set
+    #
+    # @return [Boolean] Whether the User Agent string is set or not.
+    def user_agent?
+      !@user_agent.nil? && !(blank?(@user_agent))
+    end
+
     # Returns the API URL that each HTTP request is sent to
     #
     # @return [String] The API hostname to send requests to.
@@ -59,8 +66,8 @@ module Camdram
 
       response = Net::HTTP.start(uri.hostname, uri.port, :use_ssl => true) {|http|
         request = Net::HTTP::Get.new(uri)
-        request['Authorization'] = "Bearer #{@api_token}" if !@api_token.nil?
-        request['User-Agent'] = @user_agent if !@user_agent.nil?
+        request['Authorization'] = "Bearer #{@api_token}" if api_token?
+        request['User-Agent'] = @user_agent if user_agent?
         http.request(request)
       }
 
