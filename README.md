@@ -16,7 +16,7 @@ end
 
 ## Documentation
 Full documentation is generated from the source code by [YARD](https://yardoc.org) and is available to view on
-[RubyDocs](https://www.rubydoc.info/github/CHTJonas/camdram-ruby).
+[RubyDocs](https://www.rubydoc.info/gems/camdram).
 
 ## Usage Examples
 Just some of the things you can do after configuring a `client` object:
@@ -63,7 +63,7 @@ As a result of this policy, you can (and should) specify a dependency on this ge
 [Pessimistic Version Constraint](http://guides.rubygems.org/patterns/#pessimistic-version-constraint) with two digits of precision.
 For example:
 ```ruby
-spec.add_runtime_dependency 'camdram', '~> 1.1'
+spec.add_runtime_dependency 'camdram', '~> 1.2'
 ```
 
 ## Copyright
