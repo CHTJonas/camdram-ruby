@@ -64,16 +64,14 @@ module Camdram
         new_token = @access_token.refresh!
         @access_token = new_token
       end
-      response = @access_token.get(url_slug, raise_errors: false, parse: :text)
-      case response.status
-      when 200..299
-        return response.body
-      else
-        Error.for(response)
-      end
+      @access_token.get(url_slug, parse: :text).body
     end
 
+    private
+
     def access_token_expiring_soon?
+      # If setup in read-only mode then just return immediately
+      return false if (@access_token.token == "")
       # By default, Camdram access tokens are valid for one hour.
       # We factor in a thirty second safety margin.
       Time.now.to_i + 30 >= @access_token.expires_at if @access_token

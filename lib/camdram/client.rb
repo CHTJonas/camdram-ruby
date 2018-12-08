@@ -18,7 +18,7 @@ module Camdram
     #
     # @return [Camdram::Client] The top-level Camdram client.
     def initialize
-      raise('Camdram::Client instantiated without config block') unless block_given?
+      raise Camdram::Error::NotConfigured.new('Camdram::Client instantiated without config block') unless block_given?
       yield(self)
     end
 
@@ -37,6 +37,12 @@ module Camdram
     # @param app_secret [String] The API client application secret
     def auth_code(token_hash, app_id, app_secret)
       HTTP.instance.auth_code(token_hash, app_id, app_secret)
+    end
+
+    # Setup the API backend in read-only mode
+    # @note It is highly recommended that use use authenticated Camdram API access
+    def read_only
+      HTTP.instance.auth_code({access_token: nil}, nil, nil)
     end
 
     # Sets the user agent header sent in each HTTP request
