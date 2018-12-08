@@ -1,17 +1,28 @@
 # The Camdram Ruby Gem
+The Camdram gem is an API wrapper and interface for [Camdram](https://www.camdram.net) 🎭 that's made with love ❤️ and written in Ruby 💎.
 
-Camdram-ruby is an API wrapper & interface for [Camdram](https://www.camdram.net) 🎭 that's made with love ❤️ and written in Ruby 💎.
+It makes an opinionated decision to use access tokens resulting from the [authorization code](http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-4.1) OAuth strategy rather than client credentials, however it's explained below how you can generate the appropriate tokens for a server-side app with no user interaction.
+This may change in future versions.
 
 ## Quick Start
+A client can be initialised as shown below, optionally using an access token that's valid for the Camdram API.
 Any of the lines inside the config block can be omitted.
+
 ```ruby
 require 'camdram/client'
 
 client = Camdram::Client.new do |config|
-  config.api_token = api_token
+  config.access_token = access_token
   config.user_agent = "MyApp v1.0.0"
   config.base_url = "https://www.camdram.net"
 end
+```
+
+Actually obtaining an access token is slightly beyond the scope of this documentation, but a quick and dirty way is to [register your application on Camdram](https://www.camdram.net/api/apps) and then to use the third-party [OAuth2 gem](https://github.com/oauth-xx/oauth2):
+```ruby
+require 'oauth2'
+oa2 = OAuth2::Client.new(app_id, app_secret, site: 'https://www.camdram.net', authorize_url: "/oauth/v2/auth", token_url: "/oauth/v2/token")
+mytoken = oa2.client_credentials.get_token.token
 ```
 
 ## Documentation
@@ -33,7 +44,7 @@ client.user.get_venues[0].slug
 client.user.get_venues[0].facebook_id
 ```
 
-These public actions don't require an API key (although you are still strongly advised to use one anyway):
+These public read-only actions don't require an access token (although you are still strongly advised to use one anyway):
 ```ruby
 client.get_show(6171)
 client.get_show("2018-lucky")

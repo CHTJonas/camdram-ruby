@@ -13,14 +13,14 @@ require 'camdram/diary'
 module Camdram
   class Client
     include API
-    attr_reader :api_token
+    attr_reader :access_token
 
     # Initializes a new Client object using a block
     #
     # @return [Camdram::Client] The top-level Camdram client.
     def initialize
       if !block_given?
-        warn 'Camdram::Client instantiated without config block - did you mean to add an API key?'
+        warn 'Camdram::Client instantiated without config block - did you mean to add an access token?'
       else
         yield(self)
       end
@@ -29,16 +29,16 @@ module Camdram
     # Returns true if the API access token is set
     #
     # @return [Boolean] Whether the API token is set or not.
-    def api_token?
-      HTTP.instance.api_token?
+    def access_token?
+      HTTP.instance.access_token?
     end
 
     # Sets the API access token
     #
     # @param token [String] The access token used to authenticate API calls.
     # @return [String] The token itself.
-    def api_token=(token)
-      HTTP.instance.api_token = token
+    def access_token=(token)
+      HTTP.instance.access_token = token
     end
 
     # Returns the API URL that each HTTP request is sent to

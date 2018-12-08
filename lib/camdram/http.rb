@@ -6,7 +6,7 @@ require 'camdram/version'
 module Camdram
   class HTTP
     include Singleton
-    attr_writer :api_token, :base_url, :user_agent
+    attr_writer :access_token, :base_url, :user_agent
 
     # Sends a HTTP-get request to the Camdram API
     #
@@ -23,8 +23,8 @@ module Camdram
     # Returns true if the API access token is set
     #
     # @return [Boolean] Whether the API token is set or not.
-    def api_token?
-      !@api_token.nil? && !(blank?(@api_token))
+    def access_token?
+      !@access_token.nil? && !(blank?(@access_token))
     end
 
     # Returns true if the User Agent string is set
@@ -66,7 +66,7 @@ module Camdram
 
       response = Net::HTTP.start(uri.hostname, uri.port, :use_ssl => true) {|http|
         request = Net::HTTP::Get.new(uri)
-        request['Authorization'] = "Bearer #{@api_token}" if api_token?
+        request['Authorization'] = "Bearer #{@access_token}" if access_token?
         request['User-Agent'] = @user_agent if user_agent?
         http.request(request)
       }
