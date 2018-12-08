@@ -64,7 +64,7 @@ module Camdram
         new_token = @access_token.refresh!
         @access_token = new_token
       end
-      @access_token.get(url_slug, parse: :text).body
+      @access_token.get(url_slug, parse: :json)
     end
 
     private

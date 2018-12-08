@@ -3,15 +3,6 @@ require 'camdram/http'
 
 module Camdram
   module API
-    attr_accessor :http
-
-    # Instantiate a new object
-    #
-    # @param options [Hash] A single JSON hash with symbolized keys.
-    # @return [Object] The newly instantiated object.
-    def initialize(options = {})
-      super(options)
-    end
 
     # Update the object
     #
@@ -30,8 +21,7 @@ module Camdram
     # @param url_slug [String] The URL slug to send the HTTP get request to.
     # @return [Hash] A hash parsed from the JSON response with symbolized keys.
     def get(url_slug)
-      response = HTTP.instance.get(url_slug)
-      JSON.parse(response, symbolize_names: true)
+      HTTP.instance.get(url_slug).parsed
     end
 
     # Return an array of objects of the given class
