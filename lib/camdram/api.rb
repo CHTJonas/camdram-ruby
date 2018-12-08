@@ -30,7 +30,7 @@ module Camdram
     # @param url_slug [String] The URL slug to send the HTTP get request to.
     # @return [Hash] A hash parsed from the JSON response with symbolized keys.
     def get(url_slug)
-      response = HTTP.instance.get(url_slug, 3)
+      response = HTTP.instance.get(url_slug)
       JSON.parse(response, symbolize_names: true)
     end
 

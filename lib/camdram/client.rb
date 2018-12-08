@@ -13,7 +13,6 @@ require 'camdram/diary'
 module Camdram
   class Client
     include API
-    attr_reader :access_token
 
     # Initializes a new Client object using a block
     #
@@ -23,14 +22,37 @@ module Camdram
       yield(self)
     end
 
-    # of the form {:access_token=>"testtoken", :refresh_token=>nil, :expires_at=>nil}
-    def auth_code(token_hash, app_id, app_secret, site = Camdram::BASE_URL)
-      client = self.client_credentials(app_id, app_secret, site)
-      HTTP.instance.access_token = OAuth2::AccessToken.from_hash(client, token_hash)
+    # Setup the API backend to use the client credentials OAuth2 strategy
+    #
+    # @param app_id [String] The API client application identifier.
+    # @param app_secret [String] The API client application secret.
+    def client_credentials(app_id, app_secret)
+      HTTP.instance.client_credentials(app_id, app_secret)
     end
 
-    def client_credentials(app_id, app_secret, site = Camdram::BASE_URL)
-      HTTP.instance.client = OAuth2::Client.new(app_id, app_secret, site: site, authorize_url: "/oauth/v2/auth", token_url: "/oauth/v2/token")
+    # Setup the API backend to use the authorisation code OAuth2 strategy
+    #
+    # @param token_hash [Hash] A hash of the access token, refresh token and expiry Unix time
+    # @param app_id [String] The API client application identifier.
+    # @param app_secret [String] The API client application secret
+    def auth_code(token_hash, app_id, app_secret)
+      HTTP.instance.auth_code(token_hash, app_id, app_secret)
+    end
+
+    # Sets the user agent header sent in each HTTP request
+    #
+    # @param agent [String] The user agent header to send with HTTP requests.
+    # @return [String] The agent string itself.
+    def user_agent=(agent)
+      HTTP.instance.user_agent = agent
+    end
+
+    # Sets the API URL that each HTTP request is sent to
+    #
+    # @param url [String] The API hostname to send requests to.
+    # @return [String] The url itself.
+    def base_url=(url)
+      HTTP.instance.base_url = url
     end
 
     # Returns the user associated with the API token if set, otherwise raises an exception
@@ -41,6 +63,13 @@ module Camdram
       slug = "/auth/account.json"
       response = get(slug)
       User.new(response)
+    end
+
+    # Returns the program version that is currently running
+    #
+    # @return [String] The version of camdram-ruby that is currently running.
+    def version
+      Camdram::VERSION
     end
 
     # Lookup a show by its ID or slug
@@ -178,13 +207,5 @@ module Camdram
       response = get(url)
       Diary.new(response)
     end
-
-    # Returns the program version that is currently running
-    #
-    # @return [String] The version of camdram-ruby that is currently running.
-    def version
-      Camdram::VERSION
-    end
-
   end
 end

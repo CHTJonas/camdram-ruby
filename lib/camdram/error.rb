@@ -53,7 +53,7 @@ module Camdram
     # This is called by the HTTP class when a request
     # is not successful and is not a redirect
     def self.for(response)
-      code = response.code.to_i
+      code = response.status
       error_class = case code
                     when 300..399
                       RedirectError
@@ -72,7 +72,7 @@ module Camdram
                     else
                       CamdramError
                     end
-      error_class.new(code, response.body, response.header)
+      error_class.new(code, response.body, response.headers)
     end
   end
 end
