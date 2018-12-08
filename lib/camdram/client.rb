@@ -19,56 +19,18 @@ module Camdram
     #
     # @return [Camdram::Client] The top-level Camdram client.
     def initialize
-      if !block_given?
-        warn 'Camdram::Client instantiated without config block - did you mean to add an access token?'
-      else
-        yield(self)
-      end
+      raise('Camdram::Client instantiated without config block') unless block_given?
+      yield(self)
     end
 
-    # Returns true if the API access token is set
-    #
-    # @return [Boolean] Whether the API token is set or not.
-    def access_token?
-      HTTP.instance.access_token?
+    # of the form {:access_token=>"testtoken", :refresh_token=>nil, :expires_at=>nil}
+    def auth_code(token_hash, app_id, app_secret, site = Camdram::BASE_URL)
+      client = self.client_credentials(app_id, app_secret, site)
+      HTTP.instance.access_token = OAuth2::AccessToken.from_hash(client, token_hash)
     end
 
-    # Sets the API access token
-    #
-    # @param token [String] The access token used to authenticate API calls.
-    # @return [String] The token itself.
-    def access_token=(token)
-      HTTP.instance.access_token = token
-    end
-
-    # Returns the API URL that each HTTP request is sent to
-    #
-    # @return [String] The API hostname to send requests to.
-    def base_url
-      HTTP.instance.base_url
-    end
-
-    # Sets the API URL that each HTTP request is sent to
-    #
-    # @param url [String] The API hostname to send requests to.
-    # @return [String] The url itself.
-    def base_url=(url)
-      HTTP.instance.base_url = url
-    end
-
-    # Returns the user agent header sent in each HTTP request
-    #
-    # @return [String] The user agent header to send with HTTP requests.
-    def user_agent
-      HTTP.instance.user_agent
-    end
-
-    # Sets the user agent header sent in each HTTP request
-    #
-    # @param agent [String] The user agent header to send with HTTP requests.
-    # @return [String] The agent string itself.
-    def user_agent=(agent)
-      HTTP.instance.user_agent = agent
+    def client_credentials(app_id, app_secret, site = Camdram::BASE_URL)
+      HTTP.instance.client = OAuth2::Client.new(app_id, app_secret, site: site, authorize_url: "/oauth/v2/auth", token_url: "/oauth/v2/token")
     end
 
     # Returns the user associated with the API token if set, otherwise raises an exception
