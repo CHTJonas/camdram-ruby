@@ -8,7 +8,7 @@ require 'camdram/person'
 module Camdram
   class Search < Base
     include API
-    attr_accessor :name, :slug, :start_at, :rank, :entity_type
+    attr_accessor :name, :slug, :show_count, :last_active, :start_at, :rank, :entity_type
 
     # Return the correct Ruby object referenced by the search entity
     #

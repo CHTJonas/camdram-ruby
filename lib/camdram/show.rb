@@ -9,7 +9,7 @@ require 'camdram/role'
 module Camdram
   class Show < Base
     include API
-    attr_accessor :name, :description, :image, :slug, :author, :prices, :other_venue, :other_society, :category, :performances, :online_booking_url, :society, :venue
+    attr_accessor :name, :description, :image, :slug, :author, :prices, :other_venue, :other_society, :category, :performances, :online_booking_url, :societies, :society, :venue
 
     # Instantiate a new Show object from a JSON hash
     #
@@ -17,10 +17,32 @@ module Camdram
     # @return [Camdram::Show] The new Show object.
     def initialize(options = {})
       super(options)
+      @societies = split_object( @societies, Organisation ) unless @societies.nil?
       @society = Organisation.new( @society ) unless @society.nil?
       @venue = Venue.new( @venue ) unless @venue.nil?
       @performances = split_object( @performances, Performance ) unless @performances.nil?
       @image = Image.new( @image ) unless @image.nil?
+    end
+
+    # @deprecated This field will soon be removed from the Camdram API. See the
+    #  discussion at https://github.com/camdram/camdram/issues/541
+    def other_venue
+      warn 'Camdram::Show.other_venue is deprecated and will be removed in future versions'
+      @other_venue
+    end
+
+    # @deprecated This field will soon be removed from the Camdram API. See the
+    #  discussion at https://github.com/camdram/camdram/issues/541
+    def other_society
+      warn 'Camdram::Show.other_society is deprecated and will be removed in future versions'
+      @other_society
+    end
+
+    # @deprecated This field will soon be removed from the Camdram API. See the
+    #   discussion at https://github.com/camdram/camdram/pull/536#issuecomment-445069669
+    def society
+      warn 'Camdram::Show.society is deprecated and will be removed in future versions'
+      @society
     end
 
     # Gets an array of roles associated with the shows

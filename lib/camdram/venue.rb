@@ -7,7 +7,16 @@ require 'camdram/diary'
 module Camdram
   class Venue < Base
     include API
-    attr_accessor :name, :description, :facebook_id, :twitter_id, :short_name, :college, :slug, :address, :latitude, :longitude
+    attr_accessor :name, :description, :image, :facebook_id, :twitter_id, :short_name, :college, :slug, :address, :latitude, :longitude
+
+    # Instantiate a new Venue object from a JSON hash
+    #
+    # @param options [Hash] A single JSON hash with symbolized keys.
+    # @return [Camdram::Venue] The new Venue object.
+    def initialize(options = {})
+      super(options)
+      @image = Image.new( @image ) unless @image.nil?
+    end
 
     # Return a hash of the venue's attributes
     #
