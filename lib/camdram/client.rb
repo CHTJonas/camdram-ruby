@@ -192,7 +192,7 @@ module Camdram
     def get_people
       url = "#{Person.url}.json"
       response = get(url)
-      split_object( response, Role )
+      split_object( response, Person )
     end
 
     # Return an array of search entity results based on a search string

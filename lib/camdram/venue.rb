@@ -58,7 +58,7 @@ module Camdram
     # Gets a diary object which contains an array of upcoming calendar events for the venue
     #
     # @return [Camdram::Diary] A Diary object.
-    def diary()
+    def diary
       url = "#{self.class.url}/#{slug}/diary.json"
       response = get(url)
       Diary.new(response)
