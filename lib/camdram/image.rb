@@ -1,3 +1,5 @@
+require 'date'
+require 'mime/types'
 require 'camdram/base'
 require 'camdram/api'
 
@@ -5,6 +7,16 @@ module Camdram
   class Image < Base
     include API
     attr_accessor :filename, :created_at, :width, :height, :extension, :type
+
+    # Instantiate a new Image object from a JSON hash
+    #
+    # @param options [Hash] A single JSON hash with symbolized keys.
+    # @return [Camdram::Image] The new Image object.
+    def initialize(options = {})
+      super(options)
+      @created_at = DateTime.parse(@created_at) unless @created_at.nil?
+      @type = MIME::Types[@type].first unless @type.nil?
+    end
 
     # Return a hash of the image's attributes
     #

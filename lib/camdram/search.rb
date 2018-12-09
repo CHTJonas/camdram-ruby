@@ -10,6 +10,16 @@ module Camdram
     include API
     attr_accessor :name, :slug, :show_count, :last_active, :start_at, :rank, :entity_type
 
+    # Instantiate a new Search object from a JSON hash
+    #
+    # @param options [Hash] A single JSON hash with symbolized keys.
+    # @return [Camdram::Search] The new Search object.
+    def initialize(options = {})
+      super(options)
+      @start_at = Date.parse(@start_at) unless @start_at.nil?
+      @last_active = Date.parse(@last_active) unless @last_active.nil?
+    end
+
     # Return the correct Ruby object referenced by the search entity
     #
     # @return [Object] The Ruby object that is referenced by the search entity.
