@@ -9,6 +9,9 @@ require 'camdram/person'
 require 'camdram/role'
 require 'camdram/search'
 require 'camdram/diary'
+require 'camdram/application'
+require 'camdram/audition'
+require 'camdram/techie_advert'
 
 module Camdram
   class Client
@@ -226,6 +229,33 @@ module Camdram
       url << ".json"
       response = get(url)
       Diary.new(response)
+    end
+
+    # Gets an array of actor auditions listed on Camdram
+    #
+    # @return [Array] An array of Audition objects.
+    def auditions
+      url = '/vacancies/auditions.json'
+      response = get(url)
+      split_object( response, Audition )
+    end
+
+    # Gets an array of technical & designer roles advertised on Camdram
+    #
+    # @return [Array] An array of TechieAdvert objects.
+    def techie_adverts
+      url = '/vacancies/techies.json'
+      response = get(url)
+      split_object( response, TechieAdvert )
+    end
+
+    # Gets an array of producer/director roles and show applications advertised on Camdram
+    #
+    # @return [Array] An array of Application objects.
+    def applications
+      url = '/vacancies/applications.json'
+      response = get(url)
+      split_object( response, Application )
     end
   end
 end
