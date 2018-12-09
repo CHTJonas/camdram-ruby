@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class SearchTests < MiniTest::Unit::TestCase
+class SearchTests < Minitest::Test
 
   def test_search_show
     entity = @client.search("API Test")[0].entity

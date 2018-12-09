@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ClientTests < MiniTest::Unit::TestCase
+class ClientTests < Minitest::Test
 
   def test_user
     user = @client.user
