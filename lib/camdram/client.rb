@@ -53,12 +53,26 @@ module Camdram
       HTTP.instance.user_agent = agent
     end
 
+    # Returns the user agent HTTP header sent with each API request
+    #
+    # @return [String] The user agent header to send with API requests.
+    def user_agent
+      HTTP.instance.user_agent
+    end
+
     # Sets the API URL that each HTTP request is sent to
     #
     # @param url [String] The API hostname to send requests to.
     # @return [String] The url itself.
     def base_url=(url)
       HTTP.instance.base_url = url
+    end
+
+    # Returns the root URL that each API request is sent to
+    #
+    # @return [String] The hostname & protocol to send API requests to.
+    def base_url
+      HTTP.instance.base_url
     end
 
     # Returns the user associated with the API token if set, otherwise raises an exception
