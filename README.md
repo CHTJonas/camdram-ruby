@@ -1,7 +1,29 @@
 # The Camdram Ruby Gem
+
+[![Gem Version](https://badge.fury.io/rb/camdram.svg)](https://badge.fury.io/rb/camdram)
+
 The Camdram gem is an API wrapper and interface for [Camdram](https://www.camdram.net) 🎭 that's made with love ❤️ and written in Ruby 💎.
 
-## Quick Start
+## Installation
+Add this line to your application's Gemfile:
+
+```ruby
+gem 'camdram', '~> 2.0'
+```
+
+And then execute:
+
+```shell
+bundle install
+```
+
+Or install it yourself as:
+
+```shell
+gem install camdram
+```
+
+## Usage
 Version 2 comes with significant backend changes which now allows you to use the [client credentials](http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-4.4) OAuth strategy in addition to [authorisation code](http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-4.1).
 
 ### Client Credentials
@@ -46,7 +68,7 @@ end
 Full documentation is generated automatically from the source code by [YARD](https://yardoc.org) and is available to view on
 [RubyDocs](https://www.rubydoc.info/gems/camdram).
 
-## Usage Examples
+## Examples
 Just some of the things you can do after configuring a `client` object:
 ```ruby
 client.user.get_shows
@@ -80,6 +102,28 @@ client.get_org("cambridge-footlights").news
 client.get_venue("cambridge-arts-theatre").shows
 client.get_venue("cambridge-arts-theatre").news
 ```
+
+## Development
+First download a copy of the source code:
+
+```shell
+git clone https://github.com/CHTJonas/camdram-ruby.git && cd camdram-ruby
+```
+
+Once you've made a few changes you can test that things are still working as expected:
+
+```shell
+APP_ID=yourappid APP_SECRET=yourappsecret rake test
+```
+
+## Contributing
+Bug reports, enhancements and pull requests are welcome on [GitHub](https://github.com/CHTJonas/camdram-ruby)!
+If you think this is something you can do yourself:
+1. Fork it ( https://github.com/CHTJonas/camdram-ruby/fork )
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create a new Pull Request
 
 ## Versioning
 This library aims to adhere to [Semantic Versioning 2.0.0](http://semver.org/).
