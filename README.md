@@ -1,6 +1,7 @@
 # The Camdram Ruby Gem
 
 [![Gem Version](https://badge.fury.io/rb/camdram.svg)](https://badge.fury.io/rb/camdram)
+[![Build Status](https://travis-ci.org/CHTJonas/camdram-ruby.svg?branch=master)](https://travis-ci.org/CHTJonas/camdram-ruby)
 
 The Camdram gem is an API wrapper and interface for [Camdram](https://www.camdram.net) 🎭 that's made with love ❤️ and written in Ruby 💎.
 
