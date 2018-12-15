@@ -2,7 +2,7 @@ require 'date'
 require 'camdram/base'
 require 'camdram/api'
 require 'camdram/show'
-require 'camdram/organisation'
+require 'camdram/society'
 
 module Camdram
   class Application < Base
@@ -16,7 +16,7 @@ module Camdram
     def initialize(options = {})
       super(options)
       @show = Show.new(@show) unless @show.nil?
-      @society = Organisation.new(@society) unless @society.nil?
+      @society = Society.new(@society) unless @society.nil?
       @deadline_date = Date.parse(@deadline_date) unless @deadline_date.nil?
       @deadline_time = DateTime.parse(@deadline_time) unless @deadline_time.nil?
     end

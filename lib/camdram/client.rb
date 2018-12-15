@@ -3,7 +3,7 @@ require 'camdram/error'
 require 'camdram/version'
 require 'camdram/user'
 require 'camdram/show'
-require 'camdram/organisation'
+require 'camdram/society'
 require 'camdram/venue'
 require 'camdram/person'
 require 'camdram/role'
@@ -114,23 +114,23 @@ module Camdram
       return Show.new(response)
     end
 
-    # Lookup an organisation by its ID or slug
+    # Lookup a society by its ID or slug
     #
-    # @param id [Integer] The numeric ID of the organisation.
-    # @param id [String] The slug of the organisation.
+    # @param id [Integer] The numeric ID of the society.
+    # @param id [String] The slug of the society.
     # @raise [ArgumentError] Error raised when an integer or string is not provided.
-    # @return [Camdram::Organisation] The organisation with the provided ID or slug.
-    def get_org(id)
+    # @return [Camdram::Society] The society with the provided ID or slug.
+    def get_society(id)
       url = nil
       if id.is_a? Integer
-        url = "#{Organisation.url}/by-id/#{id}.json"
+        url = "#{Society.url}/by-id/#{id}.json"
       elsif id.is_a? String
-        url = "#{Organisation.url}/#{id}.json"
+        url = "#{Society.url}/#{id}.json"
       else
         raise ArgumentError.new 'id must be an integer, or slug must be a string'
       end
       response = get(url)
-      Organisation.new(response)
+      Society.new(response)
     end
 
     # Lookup a venue by its ID or slug
@@ -171,13 +171,13 @@ module Camdram
       Person.new(response)
     end
 
-    # Returns an array of all registered organisations
+    # Returns an array of all registered societies
     #
-    # @return [Array] An array of Organisation objects.
-    def get_orgs
-      url = "#{Organisation.url}.json"
+    # @return [Array] An array of Society objects.
+    def get_societies
+      url = "#{Society.url}.json"
       response = get(url)
-      split_object( response, Organisation )
+      split_object( response, Society )
     end
 
     # Returns an array of all registered venues

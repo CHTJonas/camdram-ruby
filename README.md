@@ -75,9 +75,9 @@ client.user.get_shows
 client.user.get_shows[0].society
 client.user.get_shows[0].venue
 client.user.get_shows[0].performances
-client.user.get_orgs
-client.user.get_orgs[0].name
-client.user.get_orgs[0].twitter_id
+client.user.get_societies
+client.user.get_societies[0].name
+client.user.get_societies[0].twitter_id
 client.user.get_venues
 client.user.get_venues[0].slug
 client.user.get_venues[0].facebook_id
@@ -88,8 +88,8 @@ These public read-only actions don't require an access token (although you are s
 client.get_show(6171)
 client.get_show("2018-lucky")
 
-client.get_org(1)
-client.get_org("cambridge-university-amateur-dramatic-club")
+client.get_society(1)
+client.get_society("cambridge-university-amateur-dramatic-club")
 
 client.get_venue(29)
 client.get_venue("adc-theatre")
@@ -97,8 +97,8 @@ client.get_venue("adc-theatre")
 client.get_person(13865)
 client.get_person("charlie-jonas")
 
-client.get_org("cambridge-footlights").shows
-client.get_org("cambridge-footlights").news
+client.get_society("cambridge-footlights").shows
+client.get_society("cambridge-footlights").news
 client.get_venue("cambridge-arts-theatre").shows
 client.get_venue("cambridge-arts-theatre").news
 ```

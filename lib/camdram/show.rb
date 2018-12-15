@@ -1,6 +1,6 @@
 require 'camdram/base'
 require 'camdram/api'
-require 'camdram/organisation'
+require 'camdram/society'
 require 'camdram/venue'
 require 'camdram/performance'
 require 'camdram/image'
@@ -17,11 +17,11 @@ module Camdram
     # @return [Camdram::Show] The new Show object.
     def initialize(options = {})
       super(options)
-      @societies = split_object( @societies, Organisation ) unless @societies.nil?
-      @society = Organisation.new( @society ) unless @society.nil?
-      @venue = Venue.new( @venue ) unless @venue.nil?
-      @performances = split_object( @performances, Performance ) unless @performances.nil?
-      @image = Image.new( @image ) unless @image.nil?
+      @societies = split_object(@societies, Society) unless @societies.nil?
+      @society = Society.new(@society) unless @society.nil?
+      @venue = Venue.new(@venue) unless @venue.nil?
+      @performances = split_object(@performances, Performance) unless @performances.nil?
+      @image = Image.new(@image) unless @image.nil?
     end
 
     # @deprecated This field will soon be removed from the Camdram API. See the

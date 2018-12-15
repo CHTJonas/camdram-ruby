@@ -44,7 +44,7 @@ module Camdram
     def split_object(json, object)
       objects = Array.new
       json.each do |obj|
-        objects << object.new( obj )
+        objects << object.new(obj)
       end
       return objects
     end

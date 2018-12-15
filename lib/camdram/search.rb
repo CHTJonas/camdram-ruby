@@ -1,7 +1,7 @@
 require 'camdram/base'
 require 'camdram/api'
 require 'camdram/show'
-require 'camdram/organisation'
+require 'camdram/society'
 require 'camdram/venue'
 require 'camdram/person'
 
@@ -26,7 +26,7 @@ module Camdram
     def entity
       klass = case entity_type
         when "show" then Show
-        when "society" then Organisation
+        when "society" then Society
         when "venue" then Venue
         when "person" then Person
       end

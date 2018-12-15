@@ -26,13 +26,13 @@ class ClientTests < Minitest::Test
     assert_equal "ADC Theatre", show.venue.name
   end
 
-  def test_user_organisations
-    org = @client.user.get_orgs.first
-    assert_equal 38, org.id
-    assert_equal "Camdram", org.name
-    assert_equal "Camdram", org.short_name
-    assert_equal "camdram", org.slug
-    assert_equal "1002481303", org.twitter_id
+  def test_user_societies
+    society = @client.user.get_societies.first
+    assert_equal 38, society.id
+    assert_equal "Camdram", society.name
+    assert_equal "Camdram", society.short_name
+    assert_equal "camdram", society.slug
+    assert_equal "1002481303", society.twitter_id
   end
 
   # This test requires being added as an ADC venue administrator on Camdram

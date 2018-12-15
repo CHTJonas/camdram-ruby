@@ -1,7 +1,7 @@
 require 'date'
 require 'camdram/base'
 require 'camdram/api'
-require 'camdram/organisation'
+require 'camdram/society'
 require 'camdram/venue'
 
 module Camdram
@@ -16,8 +16,8 @@ module Camdram
     def initialize(options = {})
       super(options)
       @entity = case @entity[:_type]
-        when "society" then Organisation.new( @entity )
-        when "venue" then Venue.new( @entity )
+        when "society" then Society.new(@entity)
+        when "venue" then Venue.new(@entity)
       end unless @entity.nil?
       @posted_at = DateTime.parse(@posted_at) unless @posted_at.nil?
       @created_at = DateTime.parse(@created_at) unless @created_at.nil?

@@ -6,20 +6,20 @@ require 'camdram/show'
 require 'camdram/diary'
 
 module Camdram
-  class Organisation < Base
+  class Society < Base
     include API
     attr_accessor :name, :description, :image, :facebook_id, :twitter_id, :short_name, :slug
 
-    # Instantiate a new Organisation object from a JSON hash
+    # Instantiate a new Society object from a JSON hash
     #
     # @param options [Hash] A single JSON hash with symbolized keys.
-    # @return [Camdram::Organisation] The new Organisation object.
+    # @return [Camdram::Society] The new Society object.
     def initialize(options = {})
       super(options)
       @image = Image.new(@image) unless @image.nil?
     end
 
-    # Return a hash of the organisation's attributes
+    # Return a hash of the society's attributes
     #
     # @return [Hash] Hash with symbolized keys.
     def info
@@ -34,7 +34,7 @@ module Camdram
       }
     end
 
-    # Gets an array of the organisation's news items
+    # Gets an array of the society's news items
     #
     # @return [Array] An array of News objects.
     def news
@@ -43,7 +43,7 @@ module Camdram
       split_object(response, News)
     end
 
-    # Gets an array of the organisation's upcoming shows
+    # Gets an array of the society's upcoming shows
     #
     # @return [Array] An array of Show objects.
     def shows(from = nil, to = nil)
@@ -56,7 +56,7 @@ module Camdram
       split_object(response, Show)
     end
 
-    # Gets a diary object which contains an array of upcoming calendar events for the organisation
+    # Gets a diary object which contains an array of upcoming calendar events for the society
     #
     # @return [Camdram::Diary] A Diary object.
     def diary(from = nil, to = nil)
@@ -69,14 +69,14 @@ module Camdram
       Diary.new(response)
     end
 
-    # Returns the URL+slug of the organisation
+    # Returns the URL+slug of the society
     #
     # @return [String] The full URL and slug.
     def url_slug
       "#{self.class.url}/#{slug}.json"
     end
 
-    # Returns the URL stub assocaited with all organisations
+    # Returns the URL stub assocaited with all societies
     #
     # @return [String] The URL stub.
     def self.url
