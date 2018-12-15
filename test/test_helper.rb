@@ -1,12 +1,13 @@
 require 'minitest/autorun'
 require 'camdram/client'
 
-raise "API test key is not set!" if !ENV["API_test_key"]
+raise 'API client app id not set' if !ENV['APP_ID']
+raise 'API client app secret not set' if !ENV['APP_SECRET']
 
-class MiniTest::Unit::TestCase
+class Minitest::Test
   def setup
     @client = Camdram::Client.new do |config|
-      config.api_token = ENV["API_test_key"]
+      config.client_credentials(ENV['APP_ID'], ENV['APP_SECRET'])
     end
   end
 end

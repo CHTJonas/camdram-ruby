@@ -1,10 +1,20 @@
 require 'camdram/base'
 require 'camdram/api'
+require 'camdram/role'
 
 module Camdram
   class Person < Base
     include API
-    attr_accessor :name, :slug
+    attr_accessor :name, :description, :slug
+
+    # Gets an array of roles the person has been in
+    #
+    # @return [Array] An array of Role objects.
+    def roles
+      roles_url = "#{self.class.url}/#{slug}/roles.json"
+      response = get(roles_url)
+      split_object( response, Role )
+    end
 
     # Return a hash of the person's attributes
     #
@@ -12,6 +22,7 @@ module Camdram
     def info
       {
         id: id,
+        description: description,
         name: name,
         slug: slug,
       }

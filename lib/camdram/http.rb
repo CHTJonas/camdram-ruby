@@ -1,12 +1,68 @@
 require 'singleton'
-require 'net/http'
-require 'camdram/error'
+require 'oauth2'
 require 'camdram/version'
+require 'camdram/error'
 
 module Camdram
   class HTTP
     include Singleton
-    attr_writer :access_token, :base_url, :user_agent
+
+    # Setup the API backend to use the client credentials OAuth2 strategy
+    #
+    # @param app_id [String] The API client application identifier.
+    # @param app_secret [String] The API client application secret.
+    def client_credentials(app_id, app_secret)
+      @client = OAuth2::Client.new(app_id, app_secret,
+                                  site: Camdram::BASE_URL,
+                                  authorize_url: "/oauth/v2/auth",
+                                  token_url: "/oauth/v2/token",
+                                  connection_opts: {headers: {user_agent: "Camdram Ruby v#{Camdram::VERSION}"}},
+                                  max_redirects: 3
+                                )
+      return nil
+    end
+
+    # Setup the API backend to use the authorisation code OAuth2 strategy
+    #
+    # @param token_hash [Hash] A hash of the access token, refresh token and expiry Unix time
+    # @param app_id [String] The API client application identifier.
+    # @param app_secret [String] The API client application secret
+    def auth_code(token_hash, app_id, app_secret)
+      self.client_credentials(app_id, app_secret)
+      @access_token = OAuth2::AccessToken.from_hash(@client, token_hash)
+      return nil
+    end
+
+    # Sets the user agent header sent in each HTTP request
+    #
+    # @param agent [String] The user agent header to send with HTTP requests.
+    # @return [String] The agent string itself.
+    def user_agent=(agent)
+      @client.connection = nil
+      @client.options[:connection_opts] = {headers: {user_agent: agent}}
+    end
+
+    # Returns the user agent HTTP header sent with each API request
+    #
+    # @return [String] The user agent header to send with API requests.
+    def user_agent
+      @client.options[:connection_opts][:headers][:user_agent]
+    end
+
+    # Sets the API URL that each HTTP request is sent to
+    #
+    # @param url [String] The API hostname to send requests to.
+    # @return [String] The url itself.
+    def base_url=(url)
+      @client.site = url
+    end
+
+    # Returns the root URL that each API request is sent to
+    #
+    # @return [String] The hostname & protocol to send API requests to.
+    def base_url
+      @client.site
+    end
 
     # Sends a HTTP-get request to the Camdram API
     #
@@ -14,79 +70,25 @@ module Camdram
     # @param max_redirects [Integer] The maximum number of redirects.
     # @raise [Camdram::Error::RedirectError] Error raised when too many redirects occur.
     # @return [String]
-    def get(url_slug, max_redirects = 10)
-      url = base_url + url_slug
-      uri = URI(url)
-      inner_get(uri, max_redirects)
-    end
-
-    # Returns true if the API access token is set
-    #
-    # @return [Boolean] Whether the API token is set or not.
-    def access_token?
-      !@access_token.nil? && !(blank?(@access_token))
-    end
-
-    # Returns true if the User Agent string is set
-    #
-    # @return [Boolean] Whether the User Agent string is set or not.
-    def user_agent?
-      !@user_agent.nil? && !(blank?(@user_agent))
-    end
-
-    # Returns the API URL that each HTTP request is sent to
-    #
-    # @return [String] The API hostname to send requests to.
-    def base_url
-      @base_url ||= Camdram::BASE_URL
-    end
-
-    # Returns the user agent header sent in each HTTP request
-    #
-    # @return [String] The user agent header to send with HTTP requests.
-    def user_agent
-      @user_agent ||= "Camdram Ruby v#{Camdram::VERSION}"
+    def get(url_slug)
+      raise('OAuth not setup correctly') if @client.nil?
+      @access_token ||= @client.client_credentials.get_token
+      if access_token_expiring_soon?
+        warn 'refreshing expired access token'
+        new_token = @access_token.refresh!
+        @access_token = new_token
+      end
+      @access_token.get(url_slug, parse: :json)
     end
 
     private
 
-    # Returns true if a given string is blank
-    #
-    # @param string [String] The string to test.
-    # @return [Boolean] True if blank, false otherwise.
-    def blank?(string)
-      string.respond_to?(:empty?) ? string.empty? : false
-    end
-
-    def inner_get(uri, max_redirects)
-      # Raise an exception if we enter a redirect loop
-      if max_redirects == 0
-        new Error::RedirectError(310, 'Too many redirects', nil)
-      end
-
-      response = Net::HTTP.start(uri.hostname, uri.port, :use_ssl => true) {|http|
-        request = Net::HTTP::Get.new(uri)
-        request['Authorization'] = "Bearer #{@access_token}" if access_token?
-        request['User-Agent'] = @user_agent if user_agent?
-        http.request(request)
-      }
-
-      case response
-      when Net::HTTPSuccess then
-        response.body
-      when Net::HTTPRedirection then
-        location = response['location']
-        warn "redirected to #{location}"
-        if location.start_with?('http')
-          # Handles full URL and external redirects
-          inner_get(URI(location), max_redirects - 1)
-        else
-          # Handles slug-based redirects
-          get(location, max_redirects - 1)
-        end
-      else
-        Error.for(response)
-      end
+    def access_token_expiring_soon?
+      # If setup in read-only mode then just return immediately
+      return false if (@access_token.token == "")
+      # By default, Camdram access tokens are valid for one hour.
+      # We factor in a thirty second safety margin.
+      Time.now.to_i + 30 >= @access_token.expires_at if @access_token
     end
   end
 end

@@ -1,3 +1,4 @@
+require 'date'
 require 'camdram/base'
 require 'camdram/api'
 require 'camdram/venue'
@@ -13,7 +14,10 @@ module Camdram
     # @return [Camdram::Performance] The new Performance object.
     def initialize(options = {})
       super(options)
-      @venue = Venue.new( @venue ) unless @venue.nil?
+      @start_date = Date.parse(@start_date) unless @start_date.nil?
+      @end_date = Date.parse(@end_date) unless @end_date.nil?
+      @time = DateTime.parse(@time) unless @time.nil?
+      @venue = Venue.new(@venue) unless @venue.nil?
     end
 
     # Return a hash of the performance's attributes

@@ -1,4 +1,4 @@
 module Camdram
-  VERSION = '1.2.1'
+  VERSION = '2.0.0'
   BASE_URL = 'https://www.camdram.net'
 end

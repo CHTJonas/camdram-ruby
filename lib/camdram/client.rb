@@ -3,64 +3,49 @@ require 'camdram/error'
 require 'camdram/version'
 require 'camdram/user'
 require 'camdram/show'
-require 'camdram/organisation'
+require 'camdram/society'
 require 'camdram/venue'
 require 'camdram/person'
 require 'camdram/role'
 require 'camdram/search'
 require 'camdram/diary'
+require 'camdram/application'
+require 'camdram/audition'
+require 'camdram/techie_advert'
 
 module Camdram
   class Client
     include API
-    attr_reader :access_token
 
     # Initializes a new Client object using a block
     #
     # @return [Camdram::Client] The top-level Camdram client.
     def initialize
-      if !block_given?
-        warn 'Camdram::Client instantiated without config block - did you mean to add an access token?'
-      else
-        yield(self)
-      end
+      raise Camdram::Error::NotConfigured.new('Camdram::Client instantiated without config block') unless block_given?
+      yield(self)
     end
 
-    # Returns true if the API access token is set
+    # Setup the API backend to use the client credentials OAuth2 strategy
     #
-    # @return [Boolean] Whether the API token is set or not.
-    def access_token?
-      HTTP.instance.access_token?
+    # @param app_id [String] The API client application identifier.
+    # @param app_secret [String] The API client application secret.
+    def client_credentials(app_id, app_secret)
+      HTTP.instance.client_credentials(app_id, app_secret)
     end
 
-    # Sets the API access token
+    # Setup the API backend to use the authorisation code OAuth2 strategy
     #
-    # @param token [String] The access token used to authenticate API calls.
-    # @return [String] The token itself.
-    def access_token=(token)
-      HTTP.instance.access_token = token
+    # @param token_hash [Hash] A hash of the access token, refresh token and expiry Unix time
+    # @param app_id [String] The API client application identifier.
+    # @param app_secret [String] The API client application secret
+    def auth_code(token_hash, app_id, app_secret)
+      HTTP.instance.auth_code(token_hash, app_id, app_secret)
     end
 
-    # Returns the API URL that each HTTP request is sent to
-    #
-    # @return [String] The API hostname to send requests to.
-    def base_url
-      HTTP.instance.base_url
-    end
-
-    # Sets the API URL that each HTTP request is sent to
-    #
-    # @param url [String] The API hostname to send requests to.
-    # @return [String] The url itself.
-    def base_url=(url)
-      HTTP.instance.base_url = url
-    end
-
-    # Returns the user agent header sent in each HTTP request
-    #
-    # @return [String] The user agent header to send with HTTP requests.
-    def user_agent
-      HTTP.instance.user_agent
+    # Setup the API backend in read-only mode
+    # @note It is highly recommended that use use authenticated Camdram API access
+    def read_only
+      HTTP.instance.auth_code({access_token: nil}, nil, nil)
     end
 
     # Sets the user agent header sent in each HTTP request
@@ -71,6 +56,28 @@ module Camdram
       HTTP.instance.user_agent = agent
     end
 
+    # Returns the user agent HTTP header sent with each API request
+    #
+    # @return [String] The user agent header to send with API requests.
+    def user_agent
+      HTTP.instance.user_agent
+    end
+
+    # Sets the API URL that each HTTP request is sent to
+    #
+    # @param url [String] The API hostname to send requests to.
+    # @return [String] The url itself.
+    def base_url=(url)
+      HTTP.instance.base_url = url
+    end
+
+    # Returns the root URL that each API request is sent to
+    #
+    # @return [String] The hostname & protocol to send API requests to.
+    def base_url
+      HTTP.instance.base_url
+    end
+
     # Returns the user associated with the API token if set, otherwise raises an exception
     #
     # @raise [StandardError] Error raised when the API token is not set.
@@ -79,6 +86,13 @@ module Camdram
       slug = "/auth/account.json"
       response = get(slug)
       User.new(response)
+    end
+
+    # Returns the program version that is currently running
+    #
+    # @return [String] The version of camdram-ruby that is currently running.
+    def version
+      Camdram::VERSION
     end
 
     # Lookup a show by its ID or slug
@@ -100,23 +114,23 @@ module Camdram
       return Show.new(response)
     end
 
-    # Lookup an organisation by its ID or slug
+    # Lookup a society by its ID or slug
     #
-    # @param id [Integer] The numeric ID of the organisation.
-    # @param id [String] The slug of the organisation.
+    # @param id [Integer] The numeric ID of the society.
+    # @param id [String] The slug of the society.
     # @raise [ArgumentError] Error raised when an integer or string is not provided.
-    # @return [Camdram::Organisation] The organisation with the provided ID or slug.
-    def get_org(id)
+    # @return [Camdram::Society] The society with the provided ID or slug.
+    def get_society(id)
       url = nil
       if id.is_a? Integer
-        url = "#{Organisation.url}/by-id/#{id}.json"
+        url = "#{Society.url}/by-id/#{id}.json"
       elsif id.is_a? String
-        url = "#{Organisation.url}/#{id}.json"
+        url = "#{Society.url}/#{id}.json"
       else
         raise ArgumentError.new 'id must be an integer, or slug must be a string'
       end
       response = get(url)
-      Organisation.new(response)
+      Society.new(response)
     end
 
     # Lookup a venue by its ID or slug
@@ -157,13 +171,13 @@ module Camdram
       Person.new(response)
     end
 
-    # Returns an array of all registered organisations
+    # Returns an array of all registered societies
     #
-    # @return [Array] An array of Organisation objects.
-    def get_orgs
-      url = "#{Organisation.url}.json"
+    # @return [Array] An array of Society objects.
+    def get_societies
+      url = "#{Society.url}.json"
       response = get(url)
-      split_object( response, Organisation )
+      split_object( response, Society )
     end
 
     # Returns an array of all registered venues
@@ -181,7 +195,7 @@ module Camdram
     def get_people
       url = "#{Person.url}.json"
       response = get(url)
-      split_object( response, Role )
+      split_object( response, Person )
     end
 
     # Return an array of search entity results based on a search string
@@ -217,12 +231,31 @@ module Camdram
       Diary.new(response)
     end
 
-    # Returns the program version that is currently running
+    # Gets an array of actor auditions listed on Camdram
     #
-    # @return [String] The version of camdram-ruby that is currently running.
-    def version
-      Camdram::VERSION
+    # @return [Array] An array of Audition objects.
+    def auditions
+      url = '/vacancies/auditions.json'
+      response = get(url)
+      split_object( response, Audition )
     end
 
+    # Gets an array of technical & designer roles advertised on Camdram
+    #
+    # @return [Array] An array of TechieAdvert objects.
+    def techie_adverts
+      url = '/vacancies/techies.json'
+      response = get(url)
+      split_object( response, TechieAdvert )
+    end
+
+    # Gets an array of producer/director roles and show applications advertised on Camdram
+    #
+    # @return [Array] An array of Application objects.
+    def applications
+      url = '/vacancies/applications.json'
+      response = get(url)
+      split_object( response, Application )
+    end
   end
 end

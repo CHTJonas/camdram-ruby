@@ -5,7 +5,34 @@ require 'camdram/event'
 module Camdram
   class Diary < Base
     include API
-    attr_accessor :events
+    attr_accessor :events, :labels, :weeks, :periods, :start_date, :end_date
+
+    class Week < Base
+      attr_accessor :start_at, :text
+
+      # Instantiate a new Week object from a JSON hash
+      #
+      # @param options [Hash] A single JSON hash with symbolized keys.
+      # @return [Camdram::Diary::Week] The new Week object.
+      def initialize(options = {})
+        super(options)
+        @start_at = Date.parse(@start_at) unless @start_at.nil?
+      end
+    end
+
+    class Period < Base
+      attr_accessor :start_at, :end_at, :text
+
+      # Instantiate a new Period object from a JSON hash
+      #
+      # @param options [Hash] A single JSON hash with symbolized keys.
+      # @return [Camdram::Diary::Period] The new Period object.
+      def initialize(options = {})
+        super(options)
+        @start_at = Date.parse(@start_at) unless @start_at.nil?
+        @end_at = Date.parse(@end_at) unless @end_at.nil?
+      end
+    end
 
     # Instantiate a new Diary object from a JSON hash
     #
@@ -14,6 +41,19 @@ module Camdram
     def initialize(options = {})
       super(options)
       @events = split_object( @events, Event ) unless @events.nil?
+      @weeks = []
+      @periods = []
+      @labels.each do |label|
+        case label["type"]
+        when "week" then
+          @weeks << Week.new(label)
+        when "period" then
+          @periods << Period.new(label)
+        end
+      end
+      @labels = nil
+      @start_date = Date.parse(@start_date) unless @start_date.nil?
+      @end_date = Date.parse(@end_date) unless @end_date.nil?
     end
 
     # Return a hash of the diary's attributes
@@ -22,6 +62,10 @@ module Camdram
     def info
       {
         events: events,
+        weeks: weeks,
+        periods: periods,
+        start_date: start_date,
+        end_date: end_date,
       }
     end
   end

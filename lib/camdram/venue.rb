@@ -7,7 +7,16 @@ require 'camdram/diary'
 module Camdram
   class Venue < Base
     include API
-    attr_accessor :name, :description, :facebook_id, :twitter_id, :short_name, :college, :slug, :address, :latitude, :longitude
+    attr_accessor :name, :description, :image, :facebook_id, :twitter_id, :short_name, :college, :slug, :address, :latitude, :longitude
+
+    # Instantiate a new Venue object from a JSON hash
+    #
+    # @param options [Hash] A single JSON hash with symbolized keys.
+    # @return [Camdram::Venue] The new Venue object.
+    def initialize(options = {})
+      super(options)
+      @image = Image.new(@image) unless @image.nil?
+    end
 
     # Return a hash of the venue's attributes
     #
@@ -32,25 +41,33 @@ module Camdram
     #
     # @return [Array] An array of News objects.
     def news
-      news_url = "#{self.class.url}/#{slug}/news.json"
-      response = get(news_url)
-      split_object( response, News )
+      url = "#{self.class.url}/#{slug}/news.json"
+      response = get(url)
+      split_object(response, News)
     end
 
     # Gets an array of the venue's upcoming shows
     #
     # @return [Array] An array of Show objects.
-    def shows
-      shows_url = "#{self.class.url}/#{slug}/shows.json"
-      response = get(shows_url)
-      split_object( response, Show )
+    def shows(from = nil, to = nil)
+      url = "#{self.class.url}/#{slug}/shows.json"
+      url << "?" if from || to
+      url << "from=#{from}" if from
+      url << "&" if from && to
+      url << "to=#{to}" if to
+      response = get(url)
+      split_object(response, Show)
     end
 
     # Gets a diary object which contains an array of upcoming calendar events for the venue
     #
     # @return [Camdram::Diary] A Diary object.
-    def diary()
+    def diary(from = nil, to = nil)
       url = "#{self.class.url}/#{slug}/diary.json"
+      url << "?" if from || to
+      url << "from=#{from}" if from
+      url << "&" if from && to
+      url << "to=#{to}" if to
       response = get(url)
       Diary.new(response)
     end

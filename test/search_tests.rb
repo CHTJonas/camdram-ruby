@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class SearchTests < MiniTest::Unit::TestCase
+class SearchTests < Minitest::Test
 
   def test_search_show
     entity = @client.search("API Test")[0].entity
@@ -19,7 +19,7 @@ class SearchTests < MiniTest::Unit::TestCase
     assert_equal "ADC Theatre", entity.venue.name
   end
 
-  def test_search_organisation
+  def test_search_society
     entity = @client.search("CUADC")[0].entity
     assert_equal 1, entity.id
     assert_equal "Cambridge University Amateur Dramatic Club", entity.name

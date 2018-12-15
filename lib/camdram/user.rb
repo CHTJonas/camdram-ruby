@@ -1,7 +1,7 @@
 require 'camdram/base'
 require 'camdram/api'
 require 'camdram/show'
-require 'camdram/organisation'
+require 'camdram/society'
 
 module Camdram
   class User < Base
@@ -36,8 +36,8 @@ module Camdram
 
     # Return an array of societies the user is authorised for
     #
-    # @return [Array] An array of Camdram::Organisation objects.
-    def get_orgs
+    # @return [Array] An array of Camdram::Society objects.
+    def get_societies
       orgs_share('society')
     end
 
@@ -56,14 +56,14 @@ module Camdram
     # @return [Array] An array of objects of the specified ORM type's class.
     def orgs_share(orm_type)
       object = case orm_type
-        when 'society' then Organisation
+        when 'society' then Society
         when 'venue' then Venue
       end
       slug = "/auth/account/organisations.json"
       json = get(slug)
       objects = Array.new
       json.each do |obj|
-        objects << object.new( obj ) if obj[:_type] == orm_type
+        objects << object.new(obj) if obj["_type"] == orm_type
       end
       return objects
     end
