@@ -16,7 +16,7 @@ module Camdram
     # @return [Camdram::Society] The new Society object.
     def initialize(*args)
       super(*args)
-      @image = Image.new(@image, @instance_key) unless @image.nil?
+      @image = Image.new(@image, @client_instance) unless @image.nil?
     end
 
     # Return a hash of the society's attributes
@@ -66,7 +66,7 @@ module Camdram
       url << "&" if from && to
       url << "to=#{to}" if to
       response = get(url)
-      Diary.new(response, @instance_key)
+      Diary.new(response, @client_instance)
     end
 
     # Returns the URL+slug of the society

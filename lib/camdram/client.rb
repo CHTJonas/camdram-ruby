@@ -21,10 +21,10 @@ module Camdram
     #
     # @return [Camdram::Client] The top-level Camdram client.
     def initialize
-      @instance_key = self.object_id
+      @client_instance = self.object_id
       raise Camdram::Error::NotConfigured.new('Camdram::Client instantiated without config block') unless block_given?
       yield(self)
-      raise Camdram::Error::MisConfigured.new('Camdram::Client instantiated with an invalid config block') unless HTTP.instance(@instance_key).mode
+      raise Camdram::Error::MisConfigured.new('Camdram::Client instantiated with an invalid config block') unless HTTP.instance(@client_instance).mode
     end
 
     # Setup the API backend to use the client credentials OAuth2 strategy
@@ -32,7 +32,7 @@ module Camdram
     # @param app_id [String] The API client application identifier.
     # @param app_secret [String] The API client application secret.
     def client_credentials(app_id, app_secret)
-      HTTP.instance(@instance_key).client_credentials(app_id, app_secret)
+      HTTP.instance(@client_instance).client_credentials(app_id, app_secret)
     end
 
     # Setup the API backend to use the authorisation code OAuth2 strategy
@@ -41,20 +41,20 @@ module Camdram
     # @param app_id [String] The API client application identifier.
     # @param app_secret [String] The API client application secret.
     def auth_code(token_hash, app_id, app_secret)
-      HTTP.instance(@instance_key).auth_code(token_hash, app_id, app_secret)
+      HTTP.instance(@client_instance).auth_code(token_hash, app_id, app_secret)
     end
 
     # Setup the API backend in read-only mode
     # @note It is highly recommended that applications authenticate when making Camdram API calls.
     def read_only
-      HTTP.instance(@instance_key).auth_code({access_token: nil}, nil, nil)
+      HTTP.instance(@client_instance).auth_code({access_token: nil}, nil, nil)
     end
 
     # Returns the current Camdram OAuth2 access token
     #
     # @return [Hash] A hash representing the current access token.
     def access_token
-      HTTP.instance(@instance_key).access_token.to_hash
+      HTTP.instance(@client_instance).access_token.to_hash
     end
 
     # Attempts to refreshes the current Camdram OAuth2 access token
@@ -62,14 +62,14 @@ module Camdram
     # @raise [RuntimeError] Raised if a refresh token is not available.
     # @return [Hash] A hash representing the new access token.
     def refresh_access_token!
-      HTTP.instance(@instance_key).refresh!.to_hash
+      HTTP.instance(@client_instance).refresh!.to_hash
     end
 
     # Returns true if the Camdram OAuth2 access token is about to expire
     #
     # @return [Boolean] True if the access token expires within the next thirty second.
     def access_token_expiring_soon?
-      HTTP.instance(@instance_key).access_token_expiring_soon?
+      HTTP.instance(@client_instance).access_token_expiring_soon?
     end
 
     # Sets the user agent header sent in each HTTP request
@@ -77,14 +77,14 @@ module Camdram
     # @param agent [String] The user agent header to send with HTTP requests.
     # @return [String] The agent string itself.
     def user_agent=(agent)
-      HTTP.instance(@instance_key).user_agent = agent
+      HTTP.instance(@client_instance).user_agent = agent
     end
 
     # Returns the user agent HTTP header sent with each API request
     #
     # @return [String] The user agent header to send with API requests.
     def user_agent
-      HTTP.instance(@instance_key).user_agent
+      HTTP.instance(@client_instance).user_agent
     end
 
     # Sets the API URL that each HTTP request is sent to
@@ -92,14 +92,14 @@ module Camdram
     # @param url [String] The API hostname to send requests to.
     # @return [String] The url itself.
     def base_url=(url)
-      HTTP.instance(@instance_key).base_url = url
+      HTTP.instance(@client_instance).base_url = url
     end
 
     # Returns the root URL that each API request is sent to
     #
     # @return [String] The hostname & protocol to send API requests to.
     def base_url
-      HTTP.instance(@instance_key).base_url
+      HTTP.instance(@client_instance).base_url
     end
 
     # Returns the user associated with the API token if set, otherwise raises an exception
@@ -109,7 +109,7 @@ module Camdram
     def user
       slug = "/auth/account.json"
       response = get(slug)
-      User.new(response, @instance_key)
+      User.new(response, @client_instance)
     end
 
     # Returns the program version that is currently running
@@ -135,7 +135,7 @@ module Camdram
         raise ArgumentError.new 'id must be an integer, or slug must be a string'
       end
       response = get(url)
-      return Show.new(response, @instance_key)
+      return Show.new(response, @client_instance)
     end
 
     # Lookup a society by its ID or slug
@@ -154,7 +154,7 @@ module Camdram
         raise ArgumentError.new 'id must be an integer, or slug must be a string'
       end
       response = get(url)
-      Society.new(response, @instance_key)
+      Society.new(response, @client_instance)
     end
 
     # Lookup a venue by its ID or slug
@@ -173,7 +173,7 @@ module Camdram
         raise ArgumentError.new 'id must be an integer, or slug must be a string'
       end
       response = get(url)
-      Venue.new(response, @instance_key)
+      Venue.new(response, @client_instance)
     end
 
     # Lookup a person by their ID or slug
@@ -192,7 +192,7 @@ module Camdram
         raise ArgumentError.new 'id must be an integer, or slug must be a string'
       end
       response = get(url)
-      Person.new(response, @instance_key)
+      Person.new(response, @client_instance)
     end
 
     # Returns an array of all registered societies
@@ -241,7 +241,7 @@ module Camdram
         url = "/diary/#{start_date}.json?end=#{end_date}"
       end
       response = get(url)
-      Diary.new(response, @instance_key)
+      Diary.new(response, @client_instance)
     end
 
     # Gets a diary object which contains an array of events occuring in the given year/term
@@ -252,7 +252,7 @@ module Camdram
       url << "/#{term}" if term
       url << ".json"
       response = get(url)
-      Diary.new(response, @instance_key)
+      Diary.new(response, @client_instance)
     end
 
     # Gets an array of actor auditions listed on Camdram

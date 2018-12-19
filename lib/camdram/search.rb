@@ -32,7 +32,7 @@ module Camdram
       end
       url = "#{klass.url}/#{slug}.json"
       response = get(url)
-      return klass.new(response, @instance_key)
+      return klass.new(response, @client_instance)
     end
 
     # Return a hash of the search entity's attributes

@@ -14,10 +14,10 @@ module Camdram
     # @return [Camdram::Audition] The new Audition object.
     def initialize(*args)
       super(*args)
-      @date = Date.parse(@date, @instance_key) unless @date.nil?
-      @start_time = DateTime.parse(@start_time, @instance_key) unless @start_time.nil?
-      @end_time = DateTime.parse(@end_time, @instance_key) unless @end_time.nil?
-      @show = Show.new(@show, @instance_key) unless @show.nil?
+      @date = Date.parse(@date, @client_instance) unless @date.nil?
+      @start_time = DateTime.parse(@start_time, @client_instance) unless @start_time.nil?
+      @end_time = DateTime.parse(@end_time, @client_instance) unless @end_time.nil?
+      @show = Show.new(@show, @client_instance) unless @show.nil?
     end
 
     # Return a hash of the audition's attributes

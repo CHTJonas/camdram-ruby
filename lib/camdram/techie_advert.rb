@@ -14,7 +14,7 @@ module Camdram
     # @return [Camdram::TechieAdvert] The new TechieAdvert object.
     def initialize(*args)
       super(*args)
-      @show = Show.new(@show, @instance_key) unless @show.nil?
+      @show = Show.new(@show, @client_instance) unless @show.nil?
       @deadline_time = DateTime.parse(@deadline_time) unless @deadline_time.nil?
       @expiry = Date.parse(@expiry) unless @expiry.nil?
       @last_updated = Date.parse(@last_updated) unless @last_updated.nil?

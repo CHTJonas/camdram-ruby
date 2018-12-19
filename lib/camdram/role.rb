@@ -13,8 +13,8 @@ module Camdram
     # @return [Camdram::Role] The new Role object.
     def initialize(*args)
       super(*args)
-      @show = Show.new(@show, @instance_key) unless @show.nil?
-      @person = Person.new(@person, @instance_key) unless @person.nil?
+      @show = Show.new(@show, @client_instance) unless @show.nil?
+      @person = Person.new(@person, @client_instance) unless @person.nil?
     end
 
     # Return a hash of the roles's attributes

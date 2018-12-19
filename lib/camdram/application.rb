@@ -15,10 +15,10 @@ module Camdram
     # @return [Camdram::Application] The new Application object.
     def initialize(*args)
       super(*args)
-      @show = Show.new(@show, @instance_key) unless @show.nil?
-      @society = Society.new(@society, @instance_key) unless @society.nil?
-      @deadline_date = Date.parse(@deadline_date, @instance_key) unless @deadline_date.nil?
-      @deadline_time = DateTime.parse(@deadline_time, @instance_key) unless @deadline_time.nil?
+      @show = Show.new(@show, @client_instance) unless @show.nil?
+      @society = Society.new(@society, @client_instance) unless @society.nil?
+      @deadline_date = Date.parse(@deadline_date, @client_instance) unless @deadline_date.nil?
+      @deadline_time = DateTime.parse(@deadline_time, @client_instance) unless @deadline_time.nil?
     end
 
     # Return a hash of the vacancy application's attributes

@@ -18,8 +18,8 @@ module Camdram
       @start_date = Date.parse(@start_date) unless @start_date.nil?
       @end_date = Date.parse(@end_date) unless @end_date.nil?
       @time = DateTime.parse(@time) unless @time.nil?
-      @show = Show.new(@show, @instance_key) unless @show.nil?
-      @venue = Venue.new(@venue, @instance_key) unless @venue.nil?
+      @show = Show.new(@show, @client_instance) unless @show.nil?
+      @venue = Venue.new(@venue, @client_instance) unless @venue.nil?
     end
 
     # Return a hash of the image's attributes

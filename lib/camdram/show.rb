@@ -18,10 +18,10 @@ module Camdram
     def initialize(*args)
       super(*args)
       @societies = split_object(@societies, Society) unless @societies.nil?
-      @society = Society.new(@society, @instance_key) unless @society.nil?
-      @venue = Venue.new(@venue, @instance_key) unless @venue.nil?
+      @society = Society.new(@society, @client_instance) unless @society.nil?
+      @venue = Venue.new(@venue, @client_instance) unless @venue.nil?
       @performances = split_object(@performances, Performance) unless @performances.nil?
-      @image = Image.new(@image, @instance_key) unless @image.nil?
+      @image = Image.new(@image, @client_instance) unless @image.nil?
     end
 
     # @deprecated This field will soon be removed from the Camdram API. See the

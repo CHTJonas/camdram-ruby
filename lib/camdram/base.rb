@@ -13,7 +13,7 @@ module Camdram
       raise ArgumentError, 'Too many arguments' if args.length > 2
       options, key = *args
       set_from_hash(options)
-      @instance_key = key
+      @client_instance = key
     end
 
     private

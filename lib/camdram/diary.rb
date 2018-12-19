@@ -46,9 +46,9 @@ module Camdram
       @labels.each do |label|
         case label["type"]
         when "week" then
-          @weeks << Week.new(label, @instance_key)
+          @weeks << Week.new(label, @client_instance)
         when "period" then
-          @periods << Period.new(label, @instance_key)
+          @periods << Period.new(label, @client_instance)
         end
       end
       @labels = nil

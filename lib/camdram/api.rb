@@ -10,7 +10,7 @@ module Camdram
     # @note The object this method is called on is updated 'in place'.
     def update!
       json = get(self.url_slug)
-      self.send(:initialize, json, @instance_key)
+      self.send(:initialize, json, @client_instance)
       return self
     end
 
@@ -21,7 +21,7 @@ module Camdram
     # @param url_slug [String] The URL slug to send the HTTP get request to.
     # @return [Hash] A hash parsed from the JSON response with symbolized keys.
     def get(url_slug)
-      response = HTTP.instance(@instance_key).get(url_slug)
+      response = HTTP.instance(@client_instance).get(url_slug)
       puts response.parsed.inspect if ENV['DEBUG']
       response.parsed
     end
@@ -44,7 +44,7 @@ module Camdram
     def split_object(json, object)
       objects = Array.new
       json.each do |obj|
-        objects << object.new(obj, @instance_key)
+        objects << object.new(obj, @client_instance)
       end
       return objects
     end

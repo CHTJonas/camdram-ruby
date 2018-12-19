@@ -16,8 +16,8 @@ module Camdram
     def initialize(*args)
       super(*args)
       @entity = case @entity[:_type]
-        when "society" then Society.new(@entity, @instance_key)
-        when "venue" then Venue.new(@entity, @instance_key)
+        when "society" then Society.new(@entity, @client_instance)
+        when "venue" then Venue.new(@entity, @client_instance)
       end unless @entity.nil?
       @posted_at = DateTime.parse(@posted_at) unless @posted_at.nil?
       @created_at = DateTime.parse(@created_at) unless @created_at.nil?
