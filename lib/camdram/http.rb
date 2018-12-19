@@ -6,7 +6,7 @@ require 'camdram/error'
 module Camdram
   class HTTP
     extend Multiton
-    attr_reader :mode
+    attr_reader :mode, :access_token
 
     def initialize(key); end
 
@@ -86,8 +86,6 @@ module Camdram
       end
       @access_token.get(url_slug, parse: :json)
     end
-
-    private
 
     # Returns true if the access token is expiring in the next 30 seconds
     #

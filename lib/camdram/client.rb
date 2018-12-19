@@ -49,6 +49,27 @@ module Camdram
     def read_only
       HTTP.instance(@instance_key).auth_code({access_token: nil}, nil, nil)
     end
+
+    # Returns the current Camdram OAuth2 access token
+    #
+    # @return [Hash] A hash representing the current access token.
+    def access_token
+      HTTP.instance(@instance_key).access_token.to_hash
+    end
+
+    # Attempts to refreshes the current Camdram OAuth2 access token
+    #
+    # @raise [RuntimeError] Raised if a refresh token is not available.
+    # @return [Hash] A hash representing the new access token.
+    def refresh_access_token!
+      HTTP.instance(@instance_key).refresh!.to_hash
+    end
+
+    # Returns true if the Camdram OAuth2 access token is about to expire
+    #
+    # @return [Boolean] True if the access token expires within the next thirty second.
+    def access_token_expiring_soon?
+      HTTP.instance(@instance_key).access_token_expiring_soon?
     end
 
     # Sets the user agent header sent in each HTTP request
