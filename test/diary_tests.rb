@@ -16,17 +16,17 @@ class ClientTests < Minitest::Test
     assert_equal Date.parse("2018-12-02"), period.end_at
     assert_equal "Michaelmas Term 2018", period.text
     events = diary.events
-    assert_equal 6238, events[0].id
-    assert_equal 6466, events[0].show.id
-    assert_equal "Witches", events[0].show.name
-    assert_equal 30, events[0].venue.id
-    assert_equal "Corpus Playroom", events[0].venue.name
+    assert_equal 6238, events[2].id
+    assert_equal 6466, events[2].show.id
+    assert_equal "Witches", events[2].show.name
+    assert_equal 30, events[2].venue.id
+    assert_equal "Corpus Playroom", events[2].venue.name
   end
 
   def test_termly_diary
     diary = @client.termly_diary("2015", "lent-term")
     events = diary.events
-    assert_equal 4246, events[0].id
+    assert_equal 4247, events[0].id
     assert_equal 4068, events[0].show.id
     assert_equal "ETG 2014: Macbeth", events[0].show.name
     assert_equal 29, events[0].venue.id
