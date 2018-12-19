@@ -14,8 +14,8 @@ module Camdram
     #
     # @param options [Hash] A single JSON hash with symbolized keys.
     # @return [Camdram::Search] The new Search object.
-    def initialize(options = {})
-      super(options)
+    def initialize(*args)
+      super(*args)
       @start_at = Date.parse(@start_at) unless @start_at.nil?
       @last_active = Date.parse(@last_active) unless @last_active.nil?
     end
@@ -32,7 +32,7 @@ module Camdram
       end
       url = "#{klass.url}/#{slug}.json"
       response = get(url)
-      return klass.new(response)
+      return klass.new(response, @instance_key)
     end
 
     # Return a hash of the search entity's attributes

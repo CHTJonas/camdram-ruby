@@ -13,9 +13,9 @@ module Camdram
     #
     # @param options [Hash] A single JSON hash with symbolized keys.
     # @return [Camdram::Venue] The new Venue object.
-    def initialize(options = {})
-      super(options)
-      @image = Image.new(@image) unless @image.nil?
+    def initialize(*args)
+      super(*args)
+      @image = Image.new(@image, @instance_key) unless @image.nil?
     end
 
     # Return a hash of the venue's attributes
@@ -69,7 +69,7 @@ module Camdram
       url << "&" if from && to
       url << "to=#{to}" if to
       response = get(url)
-      Diary.new(response)
+      Diary.new(response, @instance_key)
     end
 
     # Returns the URL+slug of the venue

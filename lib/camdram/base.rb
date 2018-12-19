@@ -8,8 +8,12 @@ module Camdram
     #
     # @param options [Hash] A single JSON hash with symbolized keys.
     # @return [Object] The new object.
-    def initialize(options = {})
+    def initialize(*args)
+      raise ArgumentError, 'Too few arguments' if args.length < 2
+      raise ArgumentError, 'Too many arguments' if args.length > 2
+      options, key = *args
       set_from_hash(options)
+      @instance_key = key
     end
 
     private

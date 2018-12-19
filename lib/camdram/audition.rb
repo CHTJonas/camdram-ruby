@@ -12,12 +12,12 @@ module Camdram
     #
     # @param options [Hash] A single JSON hash with symbolized keys.
     # @return [Camdram::Audition] The new Audition object.
-    def initialize(options = {})
-      super(options)
-      @date = Date.parse(@date) unless @date.nil?
-      @start_time = DateTime.parse(@start_time) unless @start_time.nil?
-      @end_time = DateTime.parse(@end_time) unless @end_time.nil?
-      @show = Show.new(@show) unless @show.nil?
+    def initialize(*args)
+      super(*args)
+      @date = Date.parse(@date, @instance_key) unless @date.nil?
+      @start_time = DateTime.parse(@start_time, @instance_key) unless @start_time.nil?
+      @end_time = DateTime.parse(@end_time, @instance_key) unless @end_time.nil?
+      @show = Show.new(@show, @instance_key) unless @show.nil?
     end
 
     # Return a hash of the audition's attributes

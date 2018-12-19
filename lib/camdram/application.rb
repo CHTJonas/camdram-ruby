@@ -13,12 +13,12 @@ module Camdram
     #
     # @param options [Hash] A single JSON hash with symbolized keys.
     # @return [Camdram::Application] The new Application object.
-    def initialize(options = {})
-      super(options)
-      @show = Show.new(@show) unless @show.nil?
-      @society = Society.new(@society) unless @society.nil?
-      @deadline_date = Date.parse(@deadline_date) unless @deadline_date.nil?
-      @deadline_time = DateTime.parse(@deadline_time) unless @deadline_time.nil?
+    def initialize(*args)
+      super(*args)
+      @show = Show.new(@show, @instance_key) unless @show.nil?
+      @society = Society.new(@society, @instance_key) unless @society.nil?
+      @deadline_date = Date.parse(@deadline_date, @instance_key) unless @deadline_date.nil?
+      @deadline_time = DateTime.parse(@deadline_time, @instance_key) unless @deadline_time.nil?
     end
 
     # Return a hash of the vacancy application's attributes

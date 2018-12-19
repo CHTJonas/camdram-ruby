@@ -13,11 +13,11 @@ module Camdram
     #
     # @param options [Hash] A single JSON hash with symbolized keys.
     # @return [Camdram::News] The new News object.
-    def initialize(options = {})
-      super(options)
+    def initialize(*args)
+      super(*args)
       @entity = case @entity[:_type]
-        when "society" then Society.new(@entity)
-        when "venue" then Venue.new(@entity)
+        when "society" then Society.new(@entity, @instance_key)
+        when "venue" then Venue.new(@entity, @instance_key)
       end unless @entity.nil?
       @posted_at = DateTime.parse(@posted_at) unless @posted_at.nil?
       @created_at = DateTime.parse(@created_at) unless @created_at.nil?

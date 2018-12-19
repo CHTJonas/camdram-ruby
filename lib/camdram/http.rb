@@ -1,12 +1,14 @@
-require 'singleton'
+require 'multiton'
 require 'oauth2'
 require 'camdram/version'
 require 'camdram/error'
 
 module Camdram
   class HTTP
-    include Singleton
+    extend Multiton
     attr_reader :mode
+
+    def initialize(key); end
 
     # Setup the API backend to use the client credentials OAuth2 strategy
     #

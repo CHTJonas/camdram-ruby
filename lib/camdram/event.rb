@@ -13,13 +13,13 @@ module Camdram
     #
     # @param options [Hash] A single JSON hash with symbolized keys.
     # @return [Camdram::Event] The new Event object.
-    def initialize(options = {})
-      super(options)
+    def initialize(*args)
+      super(*args)
       @start_date = Date.parse(@start_date) unless @start_date.nil?
       @end_date = Date.parse(@end_date) unless @end_date.nil?
       @time = DateTime.parse(@time) unless @time.nil?
-      @show = Show.new(@show) unless @show.nil?
-      @venue = Venue.new(@venue) unless @venue.nil?
+      @show = Show.new(@show, @instance_key) unless @show.nil?
+      @venue = Venue.new(@venue, @instance_key) unless @venue.nil?
     end
 
     # Return a hash of the image's attributes

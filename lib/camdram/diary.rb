@@ -14,8 +14,8 @@ module Camdram
       #
       # @param options [Hash] A single JSON hash with symbolized keys.
       # @return [Camdram::Diary::Week] The new Week object.
-      def initialize(options = {})
-        super(options)
+      def initialize(*args)
+        super(*args)
         @start_at = Date.parse(@start_at) unless @start_at.nil?
       end
     end
@@ -27,8 +27,8 @@ module Camdram
       #
       # @param options [Hash] A single JSON hash with symbolized keys.
       # @return [Camdram::Diary::Period] The new Period object.
-      def initialize(options = {})
-        super(options)
+      def initialize(*args)
+        super(*args)
         @start_at = Date.parse(@start_at) unless @start_at.nil?
         @end_at = Date.parse(@end_at) unless @end_at.nil?
       end
@@ -38,17 +38,17 @@ module Camdram
     #
     # @param options [Hash] A single JSON hash with symbolized keys.
     # @return [Camdram::Event] The new Diary object.
-    def initialize(options = {})
-      super(options)
+    def initialize(*args)
+      super(*args)
       @events = split_object( @events, Event ) unless @events.nil?
       @weeks = []
       @periods = []
       @labels.each do |label|
         case label["type"]
         when "week" then
-          @weeks << Week.new(label)
+          @weeks << Week.new(label, @instance_key)
         when "period" then
-          @periods << Period.new(label)
+          @periods << Period.new(label, @instance_key)
         end
       end
       @labels = nil

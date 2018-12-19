@@ -12,8 +12,8 @@ module Camdram
     #
     # @param options [Hash] A single JSON hash with symbolized keys.
     # @return [Camdram::Image] The new Image object.
-    def initialize(options = {})
-      super(options)
+    def initialize(*args)
+      super(*args)
       @created_at = DateTime.parse(@created_at) unless @created_at.nil?
       @type = MIME::Types[@type].first unless @type.nil?
     end

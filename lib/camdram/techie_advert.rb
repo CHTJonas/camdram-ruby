@@ -12,9 +12,9 @@ module Camdram
     #
     # @param options [Hash] A single JSON hash with symbolized keys.
     # @return [Camdram::TechieAdvert] The new TechieAdvert object.
-    def initialize(options = {})
-      super(options)
-      @show = Show.new(@show) unless @show.nil?
+    def initialize(*args)
+      super(*args)
+      @show = Show.new(@show, @instance_key) unless @show.nil?
       @deadline_time = DateTime.parse(@deadline_time) unless @deadline_time.nil?
       @expiry = Date.parse(@expiry) unless @expiry.nil?
       @last_updated = Date.parse(@last_updated) unless @last_updated.nil?

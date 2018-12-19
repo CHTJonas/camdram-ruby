@@ -12,12 +12,12 @@ module Camdram
     #
     # @param options [Hash] A single JSON hash with symbolized keys.
     # @return [Camdram::Performance] The new Performance object.
-    def initialize(options = {})
-      super(options)
+    def initialize(*args)
+      super(*args)
       @start_date = Date.parse(@start_date) unless @start_date.nil?
       @end_date = Date.parse(@end_date) unless @end_date.nil?
       @time = DateTime.parse(@time) unless @time.nil?
-      @venue = Venue.new(@venue) unless @venue.nil?
+      @venue = Venue.new(@venue, @instance_key) unless @venue.nil?
     end
 
     # Return a hash of the performance's attributes

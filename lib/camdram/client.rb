@@ -21,9 +21,10 @@ module Camdram
     #
     # @return [Camdram::Client] The top-level Camdram client.
     def initialize
+      @instance_key = self.object_id
       raise Camdram::Error::NotConfigured.new('Camdram::Client instantiated without config block') unless block_given?
       yield(self)
-      raise Camdram::Error::MisConfigured.new('Camdram::Client instantiated with an invalid config block') unless HTTP.instance.mode
+      raise Camdram::Error::MisConfigured.new('Camdram::Client instantiated with an invalid config block') unless HTTP.instance(@instance_key).mode
     end
 
     # Setup the API backend to use the client credentials OAuth2 strategy
@@ -31,22 +32,23 @@ module Camdram
     # @param app_id [String] The API client application identifier.
     # @param app_secret [String] The API client application secret.
     def client_credentials(app_id, app_secret)
-      HTTP.instance.client_credentials(app_id, app_secret)
+      HTTP.instance(@instance_key).client_credentials(app_id, app_secret)
     end
 
     # Setup the API backend to use the authorisation code OAuth2 strategy
     #
     # @param token_hash [Hash] A hash of the access token, refresh token and expiry Unix time
     # @param app_id [String] The API client application identifier.
-    # @param app_secret [String] The API client application secret
+    # @param app_secret [String] The API client application secret.
     def auth_code(token_hash, app_id, app_secret)
-      HTTP.instance.auth_code(token_hash, app_id, app_secret)
+      HTTP.instance(@instance_key).auth_code(token_hash, app_id, app_secret)
     end
 
     # Setup the API backend in read-only mode
-    # @note It is highly recommended that use use authenticated Camdram API access
+    # @note It is highly recommended that applications authenticate when making Camdram API calls.
     def read_only
-      HTTP.instance.auth_code({access_token: nil}, nil, nil)
+      HTTP.instance(@instance_key).auth_code({access_token: nil}, nil, nil)
+    end
     end
 
     # Sets the user agent header sent in each HTTP request
@@ -54,14 +56,14 @@ module Camdram
     # @param agent [String] The user agent header to send with HTTP requests.
     # @return [String] The agent string itself.
     def user_agent=(agent)
-      HTTP.instance.user_agent = agent
+      HTTP.instance(@instance_key).user_agent = agent
     end
 
     # Returns the user agent HTTP header sent with each API request
     #
     # @return [String] The user agent header to send with API requests.
     def user_agent
-      HTTP.instance.user_agent
+      HTTP.instance(@instance_key).user_agent
     end
 
     # Sets the API URL that each HTTP request is sent to
@@ -69,14 +71,14 @@ module Camdram
     # @param url [String] The API hostname to send requests to.
     # @return [String] The url itself.
     def base_url=(url)
-      HTTP.instance.base_url = url
+      HTTP.instance(@instance_key).base_url = url
     end
 
     # Returns the root URL that each API request is sent to
     #
     # @return [String] The hostname & protocol to send API requests to.
     def base_url
-      HTTP.instance.base_url
+      HTTP.instance(@instance_key).base_url
     end
 
     # Returns the user associated with the API token if set, otherwise raises an exception
@@ -86,7 +88,7 @@ module Camdram
     def user
       slug = "/auth/account.json"
       response = get(slug)
-      User.new(response)
+      User.new(response, @instance_key)
     end
 
     # Returns the program version that is currently running
@@ -112,7 +114,7 @@ module Camdram
         raise ArgumentError.new 'id must be an integer, or slug must be a string'
       end
       response = get(url)
-      return Show.new(response)
+      return Show.new(response, @instance_key)
     end
 
     # Lookup a society by its ID or slug
@@ -131,7 +133,7 @@ module Camdram
         raise ArgumentError.new 'id must be an integer, or slug must be a string'
       end
       response = get(url)
-      Society.new(response)
+      Society.new(response, @instance_key)
     end
 
     # Lookup a venue by its ID or slug
@@ -150,7 +152,7 @@ module Camdram
         raise ArgumentError.new 'id must be an integer, or slug must be a string'
       end
       response = get(url)
-      Venue.new(response)
+      Venue.new(response, @instance_key)
     end
 
     # Lookup a person by their ID or slug
@@ -169,7 +171,7 @@ module Camdram
         raise ArgumentError.new 'id must be an integer, or slug must be a string'
       end
       response = get(url)
-      Person.new(response)
+      Person.new(response, @instance_key)
     end
 
     # Returns an array of all registered societies
@@ -218,7 +220,7 @@ module Camdram
         url = "/diary/#{start_date}.json?end=#{end_date}"
       end
       response = get(url)
-      Diary.new(response)
+      Diary.new(response, @instance_key)
     end
 
     # Gets a diary object which contains an array of events occuring in the given year/term
@@ -229,7 +231,7 @@ module Camdram
       url << "/#{term}" if term
       url << ".json"
       response = get(url)
-      Diary.new(response)
+      Diary.new(response, @instance_key)
     end
 
     # Gets an array of actor auditions listed on Camdram
