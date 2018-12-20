@@ -1,3 +1,4 @@
+require 'date'
 require 'camdram/api'
 require 'camdram/error'
 require 'camdram/version'
@@ -12,6 +13,7 @@ require 'camdram/diary'
 require 'camdram/application'
 require 'camdram/audition'
 require 'camdram/techie_advert'
+require 'camdram/time_period'
 
 module Camdram
   class Client
@@ -280,6 +282,15 @@ module Camdram
       url = '/vacancies/applications.json'
       response = get(url)
       split_object( response, Application )
+    end
+
+    # Gets an array of time periods as defined on Camdram
+    #
+    # @return [Array] An array of TimePeriod objects.
+    def time_periods(year = Date.today.year.to_s)
+      url = "/time-periods/#{year}.json"
+      response = get(url)
+      split_object( response, TimePeriod )
     end
   end
 end

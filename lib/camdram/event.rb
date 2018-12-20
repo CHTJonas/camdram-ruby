@@ -7,7 +7,7 @@ require 'camdram/venue'
 module Camdram
   class Event < Base
     include API
-    attr_accessor :id, :start_date, :end_date, :time, :other_venue, :show, :venue
+    attr_accessor :start_date, :end_date, :time, :other_venue, :show, :venue
 
     # Instantiate a new Event object from a JSON hash
     #
@@ -22,7 +22,7 @@ module Camdram
       @venue = Venue.new(@venue, @client_instance) unless @venue.nil?
     end
 
-    # Return a hash of the image's attributes
+    # Return a hash of the event's attributes
     #
     # @return [Hash] Hash with symbolized keys.
     def info

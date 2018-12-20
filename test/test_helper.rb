@@ -1,3 +1,4 @@
+require 'date'
 require 'minitest/autorun'
 require 'camdram/client'
 
