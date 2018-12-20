@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class SearchTests < Minitest::Test
-
   def test_search_show
     entity = @client.search("API Test")[0].entity
     assert_equal 6514, entity.id
@@ -45,5 +44,4 @@ class SearchTests < Minitest::Test
     assert_equal "Charlie Jonas", entity.name
     assert_equal "charlie-jonas", entity.slug
   end
-
 end

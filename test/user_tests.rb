@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class ClientTests < Minitest::Test
-
   def test_user
     user = @client.user
     assert_equal 3807, user.id

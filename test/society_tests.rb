@@ -1,8 +1,7 @@
 require 'test_helper'
 
 class SocietyTests < Minitest::Test
-
-  def test_society
+  def test_society_by_id
     society = @client.get_society(1)
     assert_equal 1, society.id
     assert_equal "Cambridge University Amateur Dramatic Club", society.name
@@ -11,6 +10,16 @@ class SocietyTests < Minitest::Test
     assert_equal "Founded in 1855, the Cambridge University Amateur Dramatic Club (or CUADC) is the oldest University dramatic society in England - and the largest dramatic society in Cambridge. We're at the very heart of one of the liveliest student theatre scenes in the country. We stage an exciting and diverse range of productions every term, most of them at the ADC Theatre in Park Street, where we are the resident company. We regularly stage shows at other Cambridge venues, annually at the Edinburgh Fringe and occasionally on tour abroad.\r\n\r\nFor more information, see the [L:http://www.cuadc.org;CUADC website] or contact the [L:mailto:president@cuadc.org;CUADC president]", society.description
     assert_equal "189141344500085", society.facebook_id
     assert_equal "472457773", society.twitter_id
+    assert_equal society, society.refresh!
+  end
+
+  def test_society_by_slug
+    society = @client.get_society("camdram")
+    assert_equal 38, society.id
+    assert_equal "Camdram", society.name
+    assert_equal "Camdram", society.short_name
+    assert_equal "1002481303", society.twitter_id
+    assert_equal society, society.refresh!
   end
 
   def test_society_image
@@ -56,5 +65,4 @@ class SocietyTests < Minitest::Test
     assert_equal Date.parse("2017-09-06"), event.end_date
     assert_equal DateTime.parse("1970-01-01T19:30:00+00:00"), event.time
   end
-
 end

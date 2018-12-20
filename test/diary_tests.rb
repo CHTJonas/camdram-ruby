@@ -1,12 +1,10 @@
 require 'test_helper'
 
+# There is some real magic going on here. Not really sure why
+# some of the shows have start dates of -0001. There is a
+# special place reserved in hell for the data returned by the
+# Camdram API.
 class ClientTests < Minitest::Test
-
-  # There is some real magic going on here. Not really sure why
-  # some of the shows have start dates of -0001. There is a
-  # special place reserved in hell for the data returned by the
-  # Camdram API.
-
   def test_diary
     diary = @client.diary("2018-11-01", "2018-11-02")
     assert_equal Date.parse("2018-10-28"), diary.start_date

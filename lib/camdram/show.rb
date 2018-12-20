@@ -28,21 +28,21 @@ module Camdram
     # @deprecated This field will soon be removed from the Camdram API. See the
     #  discussion at https://github.com/camdram/camdram/issues/541
     def other_venue
-      warn 'Camdram::Show.other_venue is deprecated and will be removed in future versions'
+      warn 'Camdram::Show.other_venue is deprecated and will be removed in future versions' unless ENV['QUIET']
       @other_venue
     end
 
     # @deprecated This field will soon be removed from the Camdram API. See the
     #  discussion at https://github.com/camdram/camdram/issues/541
     def other_society
-      warn 'Camdram::Show.other_society is deprecated and will be removed in future versions'
+      warn 'Camdram::Show.other_society is deprecated and will be removed in future versions' unless ENV['QUIET']
       @other_society
     end
 
     # @deprecated This field will soon be removed from the Camdram API. See the
     #   discussion at https://github.com/camdram/camdram/pull/536#issuecomment-445069669
     def society
-      warn 'Camdram::Show.society is deprecated and will be removed in future versions'
+      warn 'Camdram::Show.society is deprecated and will be removed in future versions' unless ENV['QUIET']
       @society
     end
 
