@@ -1,11 +1,9 @@
 require 'date'
 require 'camdram/base'
-require 'camdram/api'
 require 'camdram/show'
 
 module Camdram
   class TechieAdvert < Base
-    include API
     attr_accessor :show, :positions, :contact, :deadline, :deadline_time, :expiry, :tech_extra, :last_updated
 
     # Instantiate a new TechieAdvert object from a JSON hash

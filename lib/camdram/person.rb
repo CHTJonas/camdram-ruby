@@ -1,10 +1,11 @@
 require 'camdram/base'
 require 'camdram/api'
+require 'camdram/refreshable'
 require 'camdram/role'
 
 module Camdram
   class Person < Base
-    include API
+    include API, Refreshable
     attr_accessor :name, :description, :slug
 
     # Gets an array of roles the person has been in

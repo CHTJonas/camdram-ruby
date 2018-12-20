@@ -1,12 +1,13 @@
 require 'camdram/base'
 require 'camdram/api'
+require 'camdram/refreshable'
 require 'camdram/news'
 require 'camdram/show'
 require 'camdram/diary'
 
 module Camdram
   class Venue < Base
-    include API
+    include API, Refreshable
     attr_accessor :name, :description, :image, :facebook_id, :twitter_id, :short_name, :college, :slug, :address, :latitude, :longitude
 
     # Instantiate a new Venue object from a JSON hash

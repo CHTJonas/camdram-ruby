@@ -7,11 +7,9 @@ module Camdram
     # Instantiate a new object from a JSON hash
     #
     # @param options [Hash] A single JSON hash with symbolized keys.
+    # @param key [Object] The Camdram::Client instance key for the API multiton.
     # @return [Object] The new object.
-    def initialize(*args)
-      raise ArgumentError, 'Too few arguments' if args.length < 2
-      raise ArgumentError, 'Too many arguments' if args.length > 2
-      options, key = *args
+    def initialize(options = {}, key = nil)
       set_from_hash(options)
       @client_instance = key
     end

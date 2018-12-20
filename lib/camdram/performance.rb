@@ -1,11 +1,9 @@
 require 'date'
 require 'camdram/base'
-require 'camdram/api'
 require 'camdram/venue'
 
 module Camdram
   class Performance < Base
-    include API
     attr_accessor :start_date, :end_date, :time, :venue, :other_venue
 
     # Instantiate a new Performance object from a JSON hash

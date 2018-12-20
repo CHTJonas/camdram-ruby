@@ -1,12 +1,10 @@
 require 'date'
 require 'camdram/base'
-require 'camdram/api'
 require 'camdram/society'
 require 'camdram/venue'
 
 module Camdram
   class News < Base
-    include API
     attr_accessor :entity, :remote_id, :source, :picture, :body, :posted_at, :created_at
 
     # Instantiate a new News object from a JSON hash

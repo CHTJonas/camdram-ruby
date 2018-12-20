@@ -6,7 +6,6 @@ require 'camdram/society'
 
 module Camdram
   class Application < Base
-    include API
     attr_accessor :show, :society, :text, :deadline_date, :further_info, :deadline_time
 
     # Instantiate a new Application object from a JSON hash

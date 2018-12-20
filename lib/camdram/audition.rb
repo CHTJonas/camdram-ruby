@@ -1,11 +1,9 @@
 require 'date'
 require 'camdram/base'
-require 'camdram/api'
 require 'camdram/show'
 
 module Camdram
   class Audition < Base
-    include API
     attr_accessor :date, :start_time, :end_time, :location, :show
 
     # Instantiate a new Audition object from a JSON hash

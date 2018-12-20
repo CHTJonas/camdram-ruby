@@ -1,11 +1,12 @@
 require 'camdram/base'
 require 'camdram/api'
+require 'camdram/refreshable'
 require 'camdram/show'
 require 'camdram/society'
 
 module Camdram
   class User < Base
-    include API
+    include API, Refreshable
     attr_accessor :name, :email
 
     # Return a hash of the user's attributes

@@ -1,5 +1,6 @@
 require 'camdram/base'
 require 'camdram/api'
+require 'camdram/refreshable'
 require 'camdram/image'
 require 'camdram/news'
 require 'camdram/show'
@@ -7,7 +8,7 @@ require 'camdram/diary'
 
 module Camdram
   class Society < Base
-    include API
+    include API, Refreshable
     attr_accessor :name, :description, :image, :facebook_id, :twitter_id, :short_name, :slug
 
     # Instantiate a new Society object from a JSON hash

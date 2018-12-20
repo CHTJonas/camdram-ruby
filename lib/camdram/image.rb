@@ -2,10 +2,11 @@ require 'date'
 require 'mime/types'
 require 'camdram/base'
 require 'camdram/api'
+require 'camdram/refreshable'
 
 module Camdram
   class Image < Base
-    include API
+    include API, Refreshable
     attr_accessor :filename, :created_at, :width, :height, :extension, :type
 
     # Instantiate a new Image object from a JSON hash

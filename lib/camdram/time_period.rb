@@ -1,6 +1,7 @@
+require 'date'
+
 module Camdram
   class TimePeriod < Base
-    include API
     attr_accessor :short_name, :name, :full_name, :slug, :start_at, :end_at
 
     # Instantiate a new TimePeriod object from a JSON hash

@@ -1,12 +1,10 @@
 require 'date'
 require 'camdram/base'
-require 'camdram/api'
 require 'camdram/show'
 require 'camdram/venue'
 
 module Camdram
   class Event < Base
-    include API
     attr_accessor :start_date, :end_date, :time, :other_venue, :show, :venue
 
     # Instantiate a new Event object from a JSON hash

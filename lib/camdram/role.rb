@@ -1,5 +1,4 @@
 require 'camdram/base'
-require 'camdram/api'
 require 'camdram/show'
 require 'camdram/person'
 

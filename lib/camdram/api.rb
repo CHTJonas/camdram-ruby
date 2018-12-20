@@ -1,18 +1,7 @@
-require 'json'
 require 'camdram/http'
 
 module Camdram
   module API
-
-    # Update the object
-    #
-    # @return [Object] The object the method is called on.
-    # @note The object this method is called on is updated 'in place'.
-    def update!
-      json = get(self.url_slug)
-      self.send(:initialize, json, @client_instance)
-      return self
-    end
 
     private
 

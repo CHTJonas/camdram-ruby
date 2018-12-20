@@ -1,5 +1,6 @@
 require 'camdram/base'
 require 'camdram/api'
+require 'camdram/refreshable'
 require 'camdram/society'
 require 'camdram/venue'
 require 'camdram/performance'
@@ -8,7 +9,7 @@ require 'camdram/role'
 
 module Camdram
   class Show < Base
-    include API
+    include API, Refreshable
     attr_accessor :name, :description, :image, :slug, :author, :prices, :other_venue, :other_society, :category, :performances, :online_booking_url, :societies, :society, :venue
 
     # Instantiate a new Show object from a JSON hash
