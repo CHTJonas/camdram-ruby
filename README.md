@@ -140,5 +140,5 @@ spec.add_runtime_dependency 'camdram', '~> 2.0'
 ```
 
 ## Copyright
-Copyright (c) 2018 Charlie Jonas.
+Copyright (c) 2018-2019 Charlie Jonas.
 See [LICENSE](LICENSE) for details.
