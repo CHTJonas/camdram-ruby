@@ -33,8 +33,9 @@ module Camdram
     #
     # @param app_id [String] The API client application identifier.
     # @param app_secret [String] The API client application secret.
-    def client_credentials(app_id, app_secret)
-      HTTP.instance(@client_instance).client_credentials(app_id, app_secret)
+    # @param block [Proc] The Faraday connection builder.
+    def client_credentials(app_id, app_secret, &block)
+      HTTP.instance(@client_instance).client_credentials(app_id, app_secret, &block)
     end
 
     # Setup the API backend to use the authorisation code OAuth2 strategy
@@ -42,14 +43,16 @@ module Camdram
     # @param token_hash [Hash] A hash of the access token, refresh token and expiry Unix time
     # @param app_id [String] The API client application identifier.
     # @param app_secret [String] The API client application secret.
-    def auth_code(token_hash, app_id, app_secret)
-      HTTP.instance(@client_instance).auth_code(token_hash, app_id, app_secret)
+    # @param block [Proc] The Faraday connection builder.
+    def auth_code(token_hash, app_id, app_secret, &block)
+      HTTP.instance(@client_instance).auth_code(token_hash, app_id, app_secret, &block)
     end
 
     # Setup the API backend in read-only mode
     # @note It is highly recommended that applications authenticate when making Camdram API calls.
-    def read_only
-      HTTP.instance(@client_instance).auth_code({access_token: nil}, nil, nil)
+    # @param block [Proc] The Faraday connection builder.
+    def read_only(&block)
+      HTTP.instance(@client_instance).auth_code({access_token: nil}, nil, nil, block)
     end
 
     # Returns the current Camdram OAuth2 access token

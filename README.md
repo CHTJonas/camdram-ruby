@@ -110,6 +110,21 @@ client.get_venue("cambridge-arts-theatre").shows
 client.get_venue("cambridge-arts-theatre").news
 ```
 
+## I want logging/choice of HTTP backend
+The Camdram gem uses the [OAuth2](https://github.com/oauth-xx/oauth2) gem as it's backend,
+which in turn uses [Faraday](https://github.com/lostisland/faraday) for making HTTP requests.
+To that end, you can pass a block when instantiating a client that will be passed to the Faraday connection builder:
+```ruby
+require 'camdram/client'
+client = Camdram::Client.new do |config|
+  config.client_credentials(app_id, app_secret) do |faraday|
+    faraday.request  :url_encoded  # form-encode POST params
+    faraday.response :logger       # log requests to $stdout
+    faraday.adapter  :patron       # make requests with Patron
+  end
+end
+```
+
 ## Development
 First download a copy of the source code:
 

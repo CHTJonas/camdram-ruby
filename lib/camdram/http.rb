@@ -14,14 +14,15 @@ module Camdram
     #
     # @param app_id [String] The API client application identifier.
     # @param app_secret [String] The API client application secret.
-    def client_credentials(app_id, app_secret)
+    # @param block [Proc] The Faraday connection builder.
+    def client_credentials(app_id, app_secret, &block)
       @client = OAuth2::Client.new(app_id, app_secret,
-                                  site: Camdram::BASE_URL,
-                                  authorize_url: "/oauth/v2/auth",
-                                  token_url: "/oauth/v2/token",
-                                  connection_opts: {headers: {user_agent: "Camdram Ruby v#{Camdram::VERSION}"}},
-                                  max_redirects: 3
-                                )
+        { site: Camdram::BASE_URL,
+          authorize_url: "/oauth/v2/auth",
+          token_url: "/oauth/v2/token",
+          connection_opts: {headers: {user_agent: "Camdram Ruby v#{Camdram::VERSION}"}},
+          max_redirects: 3
+        }, &block)
       @access_token = nil
       @mode = :client_credentials
       nil
@@ -31,9 +32,10 @@ module Camdram
     #
     # @param token_hash [Hash] A hash of the access token, refresh token and expiry Unix time.
     # @param app_id [String] The API client application identifier.
-    # @param app_secret [String] The API client application secret
-    def auth_code(token_hash, app_id, app_secret)
-      self.client_credentials(app_id, app_secret)
+    # @param app_secret [String] The API client application secret.
+    # @param block [Proc] The Faraday connection builder.
+    def auth_code(token_hash, app_id, app_secret, &block)
+      self.client_credentials(app_id, app_secret, &block)
       @access_token = OAuth2::AccessToken.from_hash(@client, token_hash)
       @mode = :auth_code
       nil
