@@ -110,7 +110,8 @@ client.get_venue("cambridge-arts-theatre").shows
 client.get_venue("cambridge-arts-theatre").news
 ```
 
-## I want logging/choice of HTTP backend
+## Advanced Config
+Need control of the HTTP backend, timeouts, redirects, headers, logging, proxying, client certificates etc.?
 The Camdram gem uses the [OAuth2](https://github.com/oauth-xx/oauth2) gem as it's backend,
 which in turn uses [Faraday](https://github.com/lostisland/faraday) for making HTTP requests.
 To that end, you can pass a block when instantiating a client that will be passed to the Faraday connection builder:
@@ -118,12 +119,20 @@ To that end, you can pass a block when instantiating a client that will be passe
 require 'camdram/client'
 client = Camdram::Client.new do |config|
   config.client_credentials(app_id, app_secret) do |faraday|
-    faraday.request  :url_encoded  # form-encode POST params
-    faraday.response :logger       # log requests to $stdout
-    faraday.adapter  :patron       # make requests with Patron
+    faraday.request  :url_encoded          # form-encode POST params
+    faraday.response :logger               # log requests to $stdout
+    faraday.adapter  :patron do |session|  # make requests with Patron
+      session.connect_timeout = 1
+      session.timeout = 1
+      session.max_redirects = 1
+      session.proxy = 'hostname:8080'
+      # et cetera
+    end
   end
 end
 ```
+Be sure to checkout the documentation for Faraday and the adapter you want to use for more complex setups than the above.
+If you don't give any block when instantiating then the OAuth2/Faraday defaults will be used (Net::HTTP at the time of writing).
 
 ## Development
 First download a copy of the source code:
