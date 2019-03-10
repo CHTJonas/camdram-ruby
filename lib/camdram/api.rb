@@ -2,6 +2,7 @@ require 'camdram/http'
 
 module Camdram
   module API
+    class OrphanedObject < StandardError; end
 
     private
 
@@ -10,6 +11,7 @@ module Camdram
     # @param url_slug [String] The URL slug to send the HTTP get request to.
     # @return [Hash] A hash parsed from the JSON response with symbolized keys.
     def get(url_slug)
+      raise OrphanedObject, 'Object is an orphan and has no associated client instance.' if @client_instance == -1
       response = HTTP.instance(@client_instance).get(url_slug)
       puts response.parsed.inspect if ENV['DEBUG']
       response.parsed

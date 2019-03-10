@@ -14,6 +14,25 @@ module Camdram
       @client_instance = key
     end
 
+    # Removes the HTTP instance from any module contained within the Camdram
+    # module namespace. Also removes the HTTP instance from any sub-objects as
+    # well. This may be useful in some multi-threaded environments if you have
+    # a connection pool of Camdram::Client objects.
+    #
+    # @return [Object] The object on which the method is called.
+    def make_orphan
+      @client_instance = -1 if instance_variable_defined?(:@client_instance)
+      instance_variables.each do |var|
+        value = instance_variable_get(var)
+        if value.class.name.split('::').first == 'Camdram'
+          value.make_orphan
+        elsif value.class.name.split('::').first == 'Array'
+          value.each { |v| v.make_orphan }
+        end
+      end
+      self
+    end
+
     private
 
     # Sets the object's instance variables from a JSON hash
