@@ -58,7 +58,7 @@ module Camdram
     # @note It is highly recommended that applications authenticate when making Camdram API calls.
     # @param block [Proc] The Faraday connection builder.
     def read_only(&block)
-      HTTP.instance(@client_instance).auth_code({access_token: nil}, nil, nil, block)
+      HTTP.instance(@client_instance).auth_code({access_token: nil}, nil, nil, &block)
     end
 
     # Returns the current Camdram OAuth2 access token
