@@ -1,5 +1,6 @@
 require 'date'
 require 'camdram/api'
+require 'camdram/utils'
 require 'camdram/error'
 require 'camdram/version'
 require 'camdram/user'
@@ -17,7 +18,7 @@ require 'camdram/time_period'
 
 module Camdram
   class Client
-    include API
+    include API, Utils
 
     # Initializes a new Client object using a block
     #
@@ -27,6 +28,11 @@ module Camdram
       raise Camdram::Error::NotConfigured.new('Camdram::Client instantiated without config block') unless block_given?
       yield(self)
       raise Camdram::Error::MisConfigured.new('Camdram::Client instantiated with an invalid config block') unless HTTP.instance(@client_instance).mode
+    end
+
+    # @!visibility private
+    def inspect
+      "#<#{self.class}>"
     end
 
     # Setup the API backend to use the client credentials OAuth2 strategy

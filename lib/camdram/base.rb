@@ -1,7 +1,8 @@
-require 'camdram/http'
+require 'camdram/utils'
 
 module Camdram
   class Base
+    include Utils
     attr_reader :id
 
     # Instantiate a new object from a JSON hash
