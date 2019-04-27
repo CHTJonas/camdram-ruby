@@ -6,13 +6,20 @@ module Camdram
 
     private
 
+    # Returns the current Camdram::HTTP backend instance.
+    #
+    # @return [Camdram::HTTP] The API backend that is associated with the Camdram::Client from which the current class is derived.
+    def http
+      HTTP.instance(@client_instance) if @client_instance
+    end
+
     # Send a HTTP get request and parse the returned JSON
     #
     # @param url_slug [String] The URL slug to send the HTTP get request to.
     # @return [Hash] A hash parsed from the JSON response with symbolized keys.
     def get(url_slug)
       raise OrphanedObject, 'Object is an orphan and has no associated client instance.' if @client_instance == -1
-      response = HTTP.instance(@client_instance).get(url_slug)
+      response = http.get(url_slug)
       puts response.parsed.inspect if ENV['DEBUG']
       response.parsed
     end

@@ -27,7 +27,7 @@ module Camdram
       @client_instance = self.object_id
       raise Camdram::Error::NotConfigured.new('Camdram::Client instantiated without config block') unless block_given?
       yield(self)
-      raise Camdram::Error::MisConfigured.new('Camdram::Client instantiated with an invalid config block') unless HTTP.instance(@client_instance).mode
+      raise Camdram::Error::MisConfigured.new('Camdram::Client instantiated with an invalid config block') unless http.mode
     end
 
     # @!visibility private
@@ -41,7 +41,7 @@ module Camdram
     # @param app_secret [String] The API client application secret.
     # @param block [Proc] The Faraday connection builder.
     def client_credentials(app_id, app_secret, &block)
-      HTTP.instance(@client_instance).client_credentials(app_id, app_secret, &block)
+      http.client_credentials(app_id, app_secret, &block)
     end
 
     # Setup the API backend to use the authorisation code OAuth2 strategy
@@ -51,21 +51,21 @@ module Camdram
     # @param app_secret [String] The API client application secret.
     # @param block [Proc] The Faraday connection builder.
     def auth_code(token_hash, app_id, app_secret, &block)
-      HTTP.instance(@client_instance).auth_code(token_hash, app_id, app_secret, &block)
+      http.auth_code(token_hash, app_id, app_secret, &block)
     end
 
     # Setup the API backend in read-only mode
     # @note It is highly recommended that applications authenticate when making Camdram API calls.
     # @param block [Proc] The Faraday connection builder.
     def read_only(&block)
-      HTTP.instance(@client_instance).auth_code({access_token: nil}, nil, nil, &block)
+      http.auth_code({access_token: nil}, nil, nil, &block)
     end
 
     # Returns the current Camdram OAuth2 access token
     #
     # @return [Hash] A hash representing the current access token.
     def access_token
-      HTTP.instance(@client_instance).access_token.to_hash
+      http.access_token.to_hash
     end
 
     # Attempts to refreshes the current Camdram OAuth2 access token
@@ -73,14 +73,14 @@ module Camdram
     # @raise [RuntimeError] Raised if a refresh token is not available.
     # @return [Hash] A hash representing the new access token.
     def refresh_access_token!
-      HTTP.instance(@client_instance).refresh!.to_hash
+      http.refresh!.to_hash
     end
 
     # Returns true if the Camdram OAuth2 access token is about to expire
     #
     # @return [Boolean] True if the access token expires within the next thirty second.
     def access_token_expiring_soon?
-      HTTP.instance(@client_instance).access_token_expiring_soon?
+      http.access_token_expiring_soon?
     end
 
     # Sets the user agent header sent in each HTTP request
@@ -88,14 +88,14 @@ module Camdram
     # @param agent [String] The user agent header to send with HTTP requests.
     # @return [String] The agent string itself.
     def user_agent=(agent)
-      HTTP.instance(@client_instance).user_agent = agent
+      http.user_agent = agent
     end
 
     # Returns the user agent HTTP header sent with each API request
     #
     # @return [String] The user agent header to send with API requests.
     def user_agent
-      HTTP.instance(@client_instance).user_agent
+      http.user_agent
     end
 
     # Sets the API URL that each HTTP request is sent to
@@ -103,14 +103,14 @@ module Camdram
     # @param url [String] The API hostname to send requests to.
     # @return [String] The url itself.
     def base_url=(url)
-      HTTP.instance(@client_instance).base_url = url
+      http.base_url = url
     end
 
     # Returns the root URL that each API request is sent to
     #
     # @return [String] The hostname & protocol to send API requests to.
     def base_url
-      HTTP.instance(@client_instance).base_url
+      http.base_url
     end
 
     # Returns the user associated with the API token if set, otherwise raises an exception
