@@ -4,7 +4,7 @@ require 'camdram/venue'
 
 module Camdram
   class Performance < Base
-    attr_accessor :start_date, :end_date, :time, :venue, :other_venue
+    attr_accessor :start_at, :repeat_until, :venue, :other_venue
 
     # Instantiate a new Performance object from a JSON hash
     #
@@ -12,9 +12,8 @@ module Camdram
     # @return [Camdram::Performance] The new Performance object.
     def initialize(*args)
       super(*args)
-      @start_date = Date.parse(@start_date) unless @start_date.nil?
-      @end_date = Date.parse(@end_date) unless @end_date.nil?
-      @time = DateTime.parse(@time) unless @time.nil?
+      @start_at = DateTime.parse(@start_at) unless @start_at.nil?
+      @repeat_until = Date.parse(@repeat_until) unless @repeat_until.nil?
       @venue = Venue.new(@venue, @client_instance) unless @venue.nil?
     end
 
@@ -23,9 +22,9 @@ module Camdram
     # @return [Hash] Hash with symbolized keys.
     def info
       {
-        start_date: start_date,
-        end_date: end_date,
-        time: time,
+        start_at: start_at,
+        repeat_until: repeat_until,
+        venue: venue,
         other_venue: other_venue,
       }
     end

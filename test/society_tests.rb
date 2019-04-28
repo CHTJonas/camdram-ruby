@@ -61,8 +61,7 @@ class SocietyTests < Minitest::Test
     society = @client.get_society('cambridge-american-stage-tour')
     diary = society.diary("2017-09-01", "2018-01-01")
     event = diary.events.first
-    assert_equal Date.parse("2017-09-06"), event.start_date
-    assert_equal Date.parse("2017-09-06"), event.end_date
-    assert_equal DateTime.parse("1970-01-01T19:30:00+00:00"), event.time
+    assert_equal DateTime.parse("2017-09-06T18:30:00+00:00"), event.start_at
+    assert_nil event.repeat_until
   end
 end

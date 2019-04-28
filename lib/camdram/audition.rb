@@ -4,7 +4,7 @@ require 'camdram/show'
 
 module Camdram
   class Audition < Base
-    attr_accessor :date, :start_time, :end_time, :location, :show
+    attr_accessor :start_at, :end_at, :location, :show
 
     # Instantiate a new Audition object from a JSON hash
     #
@@ -12,9 +12,8 @@ module Camdram
     # @return [Camdram::Audition] The new Audition object.
     def initialize(*args)
       super(*args)
-      @date = Date.parse(@date, @client_instance) unless @date.nil?
-      @start_time = DateTime.parse(@start_time, @client_instance) unless @start_time.nil?
-      @end_time = DateTime.parse(@end_time, @client_instance) unless @end_time.nil?
+      @start_at = DateTime.parse(@start_at, @client_instance) unless @start_at.nil?
+      @end_at = DateTime.parse(@end_at, @client_instance) unless @end_at.nil?
       @show = Show.new(@show, @client_instance) unless @show.nil?
     end
 
@@ -24,9 +23,8 @@ module Camdram
     def info
       {
         id: id,
-        date: date,
-        start_time: start_time,
-        end_time: end_time,
+        start_at: start_at,
+        end_at: end_at,
         location: location,
         show: show,
       }

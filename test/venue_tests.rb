@@ -67,9 +67,8 @@ class VenueTests < Minitest::Test
     venue = @client.get_venue('fitzpatrick-hall-queens-college')
     diary = venue.diary("2017-02-15", "2017-02-18")
     event = diary.events.first
-    assert_equal Date.parse("2017-02-16"), event.start_date
-    assert_equal Date.parse("2017-02-18"), event.end_date
-    assert_equal DateTime.parse("1970-01-01T19:30:00+00:00"), event.time
+    assert_equal DateTime.parse("2017-02-16T19:30:00+00:00"), event.start_at
+    assert_equal Date.parse("2017-02-18"), event.repeat_until
     assert_equal 42, event.venue.id
     assert_equal "Silver Street, Cambridge", event.venue.refresh!.address
   end
