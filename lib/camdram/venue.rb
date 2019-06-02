@@ -8,7 +8,7 @@ require 'camdram/diary'
 module Camdram
   class Venue < Base
     include API, Refreshable
-    attr_accessor :name, :description, :image, :facebook_id, :twitter_id, :short_name, :college, :slug, :address, :latitude, :longitude
+    attr_accessor :theme_color, :name, :description, :image, :facebook_id, :twitter_id, :short_name, :college, :slug, :address, :latitude, :longitude
 
     # Instantiate a new Venue object from a JSON hash
     #

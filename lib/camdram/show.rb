@@ -10,7 +10,7 @@ require 'camdram/role'
 module Camdram
   class Show < Base
     include API, Refreshable
-    attr_accessor :name, :description, :image, :slug, :author, :prices, :other_venue, :other_society, :category, :performances, :online_booking_url, :societies, :society, :venue
+    attr_accessor :name, :description, :image, :slug, :author, :prices, :other_venue, :other_society, :category, :performances, :theme_color, :online_booking_url, :societies, :society, :venue
 
     # Instantiate a new Show object from a JSON hash
     #

@@ -9,7 +9,7 @@ require 'camdram/diary'
 module Camdram
   class Society < Base
     include API, Refreshable
-    attr_accessor :name, :description, :image, :facebook_id, :twitter_id, :short_name, :slug
+    attr_accessor :theme_color, :name, :description, :image, :facebook_id, :twitter_id, :short_name, :slug
 
     # Instantiate a new Society object from a JSON hash
     #
