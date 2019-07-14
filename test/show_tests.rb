@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ClientTests < Minitest::Test
+class ShowTests < Minitest::Test
   def test_show_by_id
     show = @client.get_show(6514)
     assert_equal 6514, show.id
