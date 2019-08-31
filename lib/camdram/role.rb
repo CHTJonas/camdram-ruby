@@ -4,7 +4,7 @@ require 'camdram/person'
 
 module Camdram
   class Role < Base
-    attr_accessor :person_name, :person_slug, :type, :role, :order, :show, :person
+    attr_accessor :person_name, :person_slug, :type, :role, :order, :tag, :show, :person
 
     # Instantiate a new Role object from a JSON hash
     #
@@ -27,6 +27,7 @@ module Camdram
         type: type,
         role: role,
         order: order,
+        tag: tag,
         show: show,
         person: person,
       }

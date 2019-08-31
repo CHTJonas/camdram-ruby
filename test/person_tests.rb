@@ -15,6 +15,13 @@ class PersonTests < Minitest::Test
     assert_equal "charlie-jonas", person.slug
   end
 
+  def test_person_tags
+    person = @client.get_person(18493)
+    assert_equal Set["Primary", "Secondary"], person.role_tags
+    assert_equal "Secondary", person.roles[0].tag
+    assert_equal "Primary", person.roles[1].tag
+  end
+
   def test_person_roles
     person = @client.get_person("charlie-jonas")
     role = person.roles.first

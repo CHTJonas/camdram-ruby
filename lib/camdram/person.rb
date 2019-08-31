@@ -17,6 +17,15 @@ module Camdram
       split_object( response, Role )
     end
 
+    def role_tags
+      tags = Set.new
+      roles.each do |role|
+        tag = role.tag
+        tags.add(tag) unless tag.nil?
+      end
+      tags
+    end
+
     # Return a hash of the person's attributes
     #
     # @return [Hash] Hash with symbolized keys.
