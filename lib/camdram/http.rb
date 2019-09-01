@@ -75,6 +75,11 @@ module Camdram
       @client.site
     end
 
+    # Disables automatic renewal of expired API access tokens.
+    def disable_auto_token_renewal
+      @auto_renew_disabled = true
+    end
+
     # Sends a HTTP-get request to the Camdram API
     #
     # @param url_slug [String] The URL slug to send the request to.
@@ -84,7 +89,7 @@ module Camdram
       if (!@access_token && @mode == :client_credentials)
         @access_token = @client.client_credentials.get_token
       end
-      if access_token_expiring_soon?
+      if !@auto_renew_disabled && access_token_expiring_soon?
         warn 'refreshing expired access token'
         self.refresh!
       end

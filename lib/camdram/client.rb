@@ -116,6 +116,11 @@ module Camdram
       http.base_url
     end
 
+    # Disables automatic renewal of expired API access tokens
+    def disable_auto_token_renewal
+      http.disable_auto_token_renewal
+    end
+
     # Returns the user associated with the API token if set, otherwise raises an exception
     #
     # @raise [StandardError] Error raised when the API token is not set.
