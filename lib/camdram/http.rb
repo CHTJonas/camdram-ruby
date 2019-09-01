@@ -80,7 +80,7 @@ module Camdram
     # @param url_slug [String] The URL slug to send the request to.
     # @return [OAuth2::Response] The OAuth2 response object from the Camdram API.
     def get(url_slug)
-      raise Camdram::Error::MisConfigured.new('Camdram OAuth client not setup correctly') unless @client
+      raise Camdram::Error::Misconfigured.new('Camdram OAuth client not setup correctly') unless @client
       if (!@access_token && @mode == :client_credentials)
         @access_token = @client.client_credentials.get_token
       end

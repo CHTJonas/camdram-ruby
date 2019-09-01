@@ -28,9 +28,9 @@ module Camdram
     # @return [Camdram::Client] The top-level Camdram client.
     def initialize
       @client_instance = self.object_id
-      raise Camdram::Error::NotConfigured.new('Camdram::Client instantiated without config block') unless block_given?
+      raise Camdram::Error::Misconfigured.new('Camdram::Client instantiated without config block') unless block_given?
       yield(self)
-      raise Camdram::Error::MisConfigured.new('Camdram::Client instantiated with an invalid config block') unless http.mode
+      raise Camdram::Error::Misconfigured.new('Camdram::Client instantiated with an invalid config block') unless http.mode
     end
 
     # @!visibility private
