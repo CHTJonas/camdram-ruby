@@ -1,4 +1,5 @@
 require 'date'
+require 'camdram'
 require 'camdram/api'
 require 'camdram/utils'
 require 'camdram/error'
@@ -121,13 +122,6 @@ module Camdram
       slug = "/auth/account.json"
       response = get(slug)
       User.new(response, @client_instance)
-    end
-
-    # Returns the program version that is currently running
-    #
-    # @return [String] The version of camdram-ruby that is currently running.
-    def version
-      Camdram::VERSION
     end
 
     # Lookup a show by its ID or slug

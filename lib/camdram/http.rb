@@ -17,10 +17,10 @@ module Camdram
     # @param block [Proc] The Faraday connection builder.
     def client_credentials(app_id, app_secret, &block)
       @client = OAuth2::Client.new(app_id, app_secret,
-        { site: Camdram::BASE_URL,
+        { site: ::Camdram.base_url,
           authorize_url: "/oauth/v2/auth",
           token_url: "/oauth/v2/token",
-          connection_opts: {headers: {user_agent: "Camdram Ruby v#{Camdram::VERSION}"}},
+          connection_opts: {headers: {user_agent: "Camdram Ruby v#{Camdram.version}"}},
           max_redirects: 3
         }, &block)
       @access_token = nil
