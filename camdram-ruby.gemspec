@@ -4,7 +4,7 @@ require 'camdram/version'
 
 Gem::Specification.new do |s|
   s.name          = 'camdram'
-  s.version       = Camdram::VERSION
+  s.version       = Camdram::Version.to_s
   s.license       = 'MIT'
   s.summary       = 'A lovely API wrapper for Camdram written in Ruby'
   s.description   = 'This gem acts as a convenient wrapper around the public API provided by a Camdram installation. See GitHub for a brief overview of available functionality and RubyDocs for more complete documentation.'
