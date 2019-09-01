@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'camdram/base'
 require 'camdram/api'
 require 'camdram/refreshable'
@@ -49,10 +51,10 @@ module Camdram
     # @return [Array] An array of Show objects.
     def shows(from = nil, to = nil)
       url = "#{self.class.url}/#{slug}/shows.json"
-      url << "?" if from || to
-      url << "from=#{from}" if from
-      url << "&" if from && to
-      url << "to=#{to}" if to
+      url += "?" if from || to
+      url += "from=#{from}" if from
+      url += "&" if from && to
+      url += "to=#{to}" if to
       response = get(url)
       split_object(response, Show)
     end
@@ -62,10 +64,10 @@ module Camdram
     # @return [Camdram::Diary] A Diary object.
     def diary(from = nil, to = nil)
       url = "#{self.class.url}/#{slug}/diary.json"
-      url << "?" if from || to
-      url << "from=#{from}" if from
-      url << "&" if from && to
-      url << "to=#{to}" if to
+      url += "?" if from || to
+      url += "from=#{from}" if from
+      url += "&" if from && to
+      url += "to=#{to}" if to
       response = get(url)
       Diary.new(response, @client_instance)
     end

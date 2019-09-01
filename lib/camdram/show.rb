@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'camdram/base'
 require 'camdram/api'
 require 'camdram/refreshable'

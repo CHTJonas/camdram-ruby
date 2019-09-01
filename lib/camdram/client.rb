@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'date'
 require 'camdram'
 require 'camdram/api'
@@ -254,8 +256,8 @@ module Camdram
     # @return [Camdram::Diary] A Diary object.
     def termly_diary(year, term=nil)
       url = "/diary/#{year}"
-      url << "/#{term}" if term
-      url << ".json"
+      url += "/#{term}" if term
+      url += ".json"
       response = get(url)
       Diary.new(response, @client_instance)
     end

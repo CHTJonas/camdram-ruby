@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'camdram/utils'
 
 module Camdram

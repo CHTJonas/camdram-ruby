@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'multiton'
 require 'oauth2'
 require 'camdram/version'

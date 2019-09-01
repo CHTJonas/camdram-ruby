@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Camdram
   module Error
     class NotConfigured < RuntimeError; end
