@@ -4,7 +4,6 @@ require 'camdram/base'
 require 'camdram/api'
 require 'camdram/refreshable'
 require 'camdram/society'
-require 'camdram/venue'
 require 'camdram/performance'
 require 'camdram/image'
 require 'camdram/role'
@@ -12,7 +11,7 @@ require 'camdram/role'
 module Camdram
   class Show < Base
     include API, Refreshable
-    attr_accessor :name, :description, :image, :slug, :author, :prices, :other_venue, :other_society, :category, :performances, :theme_color, :online_booking_url, :societies, :society, :venue
+    attr_accessor :name, :description, :image, :slug, :author, :prices, :other_society, :category, :performances, :theme_color, :online_booking_url, :societies, :society
 
     # Instantiate a new Show object from a JSON hash
     #
@@ -22,16 +21,8 @@ module Camdram
       super(*args)
       @societies = split_object(@societies, Society) unless @societies.nil?
       @society = Society.new(@society, @client_instance) unless @society.nil?
-      @venue = Venue.new(@venue, @client_instance) unless @venue.nil?
       @performances = split_object(@performances, Performance) unless @performances.nil?
       @image = Image.new(@image, @client_instance) unless @image.nil?
-    end
-
-    # @deprecated This field will soon be removed from the Camdram API. See the
-    #  discussion at https://github.com/camdram/camdram/issues/541
-    def other_venue
-      warn 'Camdram::Show.other_venue is deprecated and will be removed in future versions' unless ENV['QUIET']
-      @other_venue
     end
 
     # @deprecated This field will soon be removed from the Camdram API. See the
@@ -69,13 +60,11 @@ module Camdram
         slug: slug,
         author: author,
         prices: prices,
-        other_venue: other_venue,
         other_society: other_society,
         category: category,
         performances: performances,
         online_booking_url: online_booking_url,
         society: society,
-        venue: venue,
       }
     end
 
