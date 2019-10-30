@@ -48,4 +48,13 @@ class ShowTests < Minitest::Test
     assert_equal person.name, role.person.name
     assert_equal person.slug, role.person.slug
   end
+
+  def test_show_embedded_fields
+    show = @client.get_show("cuadc-footlights-pantomime-2019-red-riding-hood")
+    assert_equal 1, show.societies[0].id
+    assert_equal 4, show.societies[1].id
+    assert_equal 2080, show.image.id
+    assert_equal "5d9cd49aa2666.jpg", show.image.filename
+    assert_equal "#c80f0f", show.theme_color
+  end
 end
