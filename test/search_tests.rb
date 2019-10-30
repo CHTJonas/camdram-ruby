@@ -8,12 +8,11 @@ class SearchTests < Minitest::Test
     assert_equal "5b58b83bd534a.jpg", entity.image.filename
     assert_equal 1024, entity.image.width
     assert_equal "API Test 1", entity.name
-    assert_equal "Camdram", entity.other_society
     assert_equal 29, entity.performances.first.venue.id
     assert_equal "ADC Theatre", entity.performances.first.venue.name
     assert_equal "1997-api-test-1", entity.slug
-    assert_equal 38, entity.society.id
-    assert_equal "Camdram", entity.society.name
+    assert_equal 38, entity.societies.first.id
+    assert_equal "Camdram", entity.societies.first.name
   end
 
   def test_search_society

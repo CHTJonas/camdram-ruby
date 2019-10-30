@@ -11,7 +11,7 @@ require 'camdram/role'
 module Camdram
   class Show < Base
     include API, Refreshable
-    attr_accessor :name, :description, :image, :slug, :author, :prices, :other_society, :category, :performances, :theme_color, :online_booking_url, :societies, :society
+    attr_accessor :name, :description, :image, :slug, :author, :prices, :category, :performances, :theme_color, :online_booking_url, :societies
 
     # Instantiate a new Show object from a JSON hash
     #
@@ -20,23 +20,8 @@ module Camdram
     def initialize(*args)
       super(*args)
       @societies = split_object(@societies, Society) unless @societies.nil?
-      @society = Society.new(@society, @client_instance) unless @society.nil?
       @performances = split_object(@performances, Performance) unless @performances.nil?
       @image = Image.new(@image, @client_instance) unless @image.nil?
-    end
-
-    # @deprecated This field will soon be removed from the Camdram API. See the
-    #  discussion at https://github.com/camdram/camdram/issues/541
-    def other_society
-      warn 'Camdram::Show.other_society is deprecated and will be removed in future versions' unless ENV['QUIET']
-      @other_society
-    end
-
-    # @deprecated This field will soon be removed from the Camdram API. See the
-    #   discussion at https://github.com/camdram/camdram/pull/536#issuecomment-445069669
-    def society
-      warn 'Camdram::Show.society is deprecated and will be removed in future versions' unless ENV['QUIET']
-      @society
     end
 
     # Gets an array of roles associated with the shows
@@ -60,11 +45,10 @@ module Camdram
         slug: slug,
         author: author,
         prices: prices,
-        other_society: other_society,
         category: category,
         performances: performances,
         online_booking_url: online_booking_url,
-        society: society,
+        societies: societies,
       }
     end
 

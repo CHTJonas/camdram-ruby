@@ -15,12 +15,11 @@ class UserTests < Minitest::Test
     assert_equal "5b58b83bd534a.jpg", show.image.filename
     assert_equal 1024, show.image.width
     assert_equal "API Test 1", show.name
-    assert_equal "Camdram", show.other_society
     assert_equal 29, show.performances.first.venue.id
     assert_equal "ADC Theatre", show.performances.first.venue.name
     assert_equal "1997-api-test-1", show.slug
-    assert_equal 38, show.society.id
-    assert_equal "Camdram", show.society.name
+    assert_equal 38, show.societies.first.id
+    assert_equal "Camdram", show.societies.first.name
   end
 
   def test_user_societies
