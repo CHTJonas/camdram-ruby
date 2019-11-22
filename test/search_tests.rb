@@ -5,8 +5,8 @@ class SearchTests < Minitest::Test
     entity = @client.search("API Test")[0].entity
     assert_equal 6514, entity.id
     assert_equal "This show is a dummy used by Camdram for testing purposes only.", entity.description
-    assert_equal "5b58b83bd534a.jpg", entity.image.filename
-    assert_equal 1024, entity.image.width
+    assert_equal "5dd80dad3502e.jpeg", entity.image.filename
+    assert_equal 1920, entity.image.width
     assert_equal "API Test 1", entity.name
     assert_equal 29, entity.performances.first.venue.id
     assert_equal "ADC Theatre", entity.performances.first.venue.name

@@ -5,8 +5,8 @@ class ShowTests < Minitest::Test
     show = @client.get_show(6514)
     assert_equal 6514, show.id
     assert_equal "This show is a dummy used by Camdram for testing purposes only.", show.description
-    assert_equal "5b58b83bd534a.jpg", show.image.filename
-    assert_equal 1024, show.image.width
+    assert_equal "5dd80dad3502e.jpeg", show.image.filename
+    assert_equal 1920, show.image.width
     assert_equal "API Test 1", show.name
     assert_equal 29, show.performances.first.venue.id
     assert_equal "ADC Theatre", show.performances.first.venue.name
@@ -20,8 +20,8 @@ class ShowTests < Minitest::Test
     show = @client.get_show("1997-api-test-1")
     assert_equal 6514, show.id
     assert_equal "This show is a dummy used by Camdram for testing purposes only.", show.description
-    assert_equal "5b58b83bd534a.jpg", show.image.filename
-    assert_equal 1024, show.image.width
+    assert_equal "5dd80dad3502e.jpeg", show.image.filename
+    assert_equal 1920, show.image.width
     assert_equal "API Test 1", show.name
     assert_equal 29, show.performances.first.venue.id
     assert_equal "ADC Theatre", show.performances.first.venue.name
