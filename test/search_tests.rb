@@ -7,7 +7,7 @@ class SearchTests < Minitest::Test
     assert_equal "This show is a dummy used by Camdram for testing purposes only.", entity.description
     assert_equal "5dd80dad3502e.jpeg", entity.image.filename
     assert_equal 1920, entity.image.width
-    assert_equal "API Test 1", entity.name
+    assert_equal "ÁPÏ Test 1", entity.name
     assert_equal 29, entity.performances.first.venue.id
     assert_equal "ADC Theatre", entity.performances.first.venue.name
     assert_equal "1997-api-test-1", entity.slug

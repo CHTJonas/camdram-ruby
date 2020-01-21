@@ -14,7 +14,7 @@ class UserTests < Minitest::Test
     assert_equal "This show is a dummy used by Camdram for testing purposes only.", show.description
     assert_equal "5dd80dad3502e.jpeg", show.image.filename
     assert_equal 1920, show.image.width
-    assert_equal "API Test 1", show.name
+    assert_equal "ÁPÏ Test 1", show.name
     assert_equal 29, show.performances.first.venue.id
     assert_equal "ADC Theatre", show.performances.first.venue.name
     assert_equal "1997-api-test-1", show.slug
