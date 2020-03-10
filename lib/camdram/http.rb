@@ -2,6 +2,7 @@
 
 require 'multiton'
 require 'oauth2'
+require 'faraday/error'
 require 'camdram/version'
 require 'camdram/error'
 
@@ -18,13 +19,17 @@ module Camdram
     # @param app_secret [String] The API client application secret.
     # @param block [Proc] The Faraday connection builder.
     def client_credentials(app_id, app_secret, &block)
-      @client = OAuth2::Client.new(app_id, app_secret,
-        { site: ::Camdram.base_url,
-          authorize_url: "/oauth/v2/auth",
-          token_url: "/oauth/v2/token",
-          connection_opts: {headers: {user_agent: "Camdram Ruby v#{Camdram.version}"}},
-          max_redirects: 3
-        }, &block)
+      opts = { site: ::Camdram.base_url,
+        authorize_url: "/oauth/v2/auth",
+        token_url: "/oauth/v2/token",
+        connection_opts: {
+          headers: {
+            user_agent: "Camdram Ruby v#{Camdram.version}"
+          }
+        },
+        max_redirects: 3
+      }
+      @client = ::OAuth2::Client.new(app_id, app_secret, opts, &block)
       @access_token = nil
       @mode = :client_credentials
       nil
@@ -87,35 +92,16 @@ module Camdram
     def get(url_slug)
       raise Camdram::Error::Misconfigured.new('Camdram OAuth client not setup correctly') unless @client
       if (!@access_token && @mode == :client_credentials)
-        @access_token = @client.client_credentials.get_token
+        handle_exceptions do
+          @access_token = @client.client_credentials.get_token
+        end
       end
       if !@auto_renew_disabled && access_token_expiring_soon?
         warn 'refreshing expired access token'
         self.refresh!
       end
-      begin
+      handle_exceptions do
         @access_token.get(url_slug, parse: :json)
-      rescue OAuth2::Error => e
-        raise Camdram::Error::GenericException.new, e unless e.code.is_a? Hash
-        http_status = e.code['code']
-        raise Camdram::Error::GenericException.new, e unless http_status.is_a? Integer
-        if http_status.between?(400, 499)
-          raise Camdram::Error::ClientError.new, e
-        elsif http_status.between?(500, 599)
-          raise Camdram::Error::ServerError.new, e
-        else
-          raise Camdram::Error::GenericException.new, e
-        end
-      rescue Faraday::Timeout => e
-        raise Camdram::Error::Timeout.new, e
-      rescue Faraday::ConnectionFailed => e
-        if e.wrapped_exception.class == Net::OpenTimeout
-          raise Camdram::Error::Timeout.new, e
-        else
-          raise Camdram::Error::GenericException.new, e
-        end
-      rescue => e
-        raise Camdram::Error::GenericException.new, e
       end
     end
 
@@ -134,12 +120,41 @@ module Camdram
     #
     # @return [OAuth2::AccessToken] The new access token.
     def refresh!
-      if (@mode == :client_credentials)
-        new_token = @client.client_credentials.get_token
-        @access_token = new_token
-      else
-        new_token = @access_token.refresh!
-        @access_token = new_token
+      handle_exceptions do
+        if (@mode == :client_credentials)
+          new_token = @client.client_credentials.get_token
+          @access_token = new_token
+        else
+          new_token = @access_token.refresh!
+          @access_token = new_token
+        end
+      end
+    end
+
+    def handle_exceptions
+      begin
+        yield
+      rescue OAuth2::Error => e
+        raise Camdram::Error::GenericException.new, e unless e.code.is_a? Hash
+        http_status = e.code['code']
+        raise Camdram::Error::GenericException.new, e unless http_status.is_a? Integer
+        if http_status.between?(400, 499)
+          raise Camdram::Error::ClientError.new, e
+        elsif http_status.between?(500, 599)
+          raise Camdram::Error::ServerError.new, e
+        else
+          raise Camdram::Error::GenericException.new, e
+        end
+      rescue Faraday::TimeoutError => e
+        raise Camdram::Error::Timeout.new, e
+      rescue Faraday::ConnectionFailed => e
+        if e.wrapped_exception.class == Net::OpenTimeout
+          raise Camdram::Error::Timeout.new, e
+        else
+          raise Camdram::Error::GenericException.new, e
+        end
+      rescue => e
+        raise Camdram::Error::GenericException.new, e
       end
     end
   end
