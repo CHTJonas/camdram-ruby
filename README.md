@@ -110,6 +110,22 @@ client.get_venue("cambridge-arts-theatre").shows
 client.get_venue("cambridge-arts-theatre").news
 ```
 
+It's always a good idea to handle exceptions gracefully within your application. To that end, the Camdram gem raises the following:
+```ruby
+begin
+  blargh
+resuce Camdram::Error::Timeout => e
+  # Handle HTTP socket and DNS lookup timeouts
+rescue Camdram::Error::ClientError => e
+  # Handle HTTP 4xx errors
+rescue Camdram::Error::ServerError => e
+  # Handle HTTP 5xx errors
+rescue Camdram::Error::GenericException => e
+  # Handle any other kind of error
+  # (note that all of the above classes inherit from GenericException)
+end
+```
+
 ## Advanced Config
 Need control of the HTTP backend, timeouts, redirects, headers, logging, proxying, client certificates etc.?
 The Camdram gem uses the [OAuth2](https://github.com/oauth-xx/oauth2) gem as it's backend,
