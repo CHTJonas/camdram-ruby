@@ -8,7 +8,7 @@ raise 'API client app secret not set' if !ENV['APP_SECRET']
 
 # Retry failed tests (eg. due to timeouts)
 Minitest::Retry.use!(
-  exceptions_to_retry: [OAuth2::Error, Faraday::TimeoutError, Faraday::ConnectionFailed],
+  exceptions_to_retry: [Camdram::Error::GenericException, Camdram::Error::ClientError, Camdram::Error::ServerError, Camdram::Error::Timeout],
   retry_count: 5,
   verbose: true
 )

@@ -93,7 +93,30 @@ module Camdram
         warn 'refreshing expired access token'
         self.refresh!
       end
-      @access_token.get(url_slug, parse: :json)
+      begin
+        @access_token.get(url_slug, parse: :json)
+      rescue OAuth2::Error => e
+        raise Camdram::Error::GenericException.new, e unless e.code.is_a? Hash
+        http_status = e.code['code']
+        raise Camdram::Error::GenericException.new, e unless http_status.is_a? Integer
+        if http_status.between?(400, 499)
+          raise Camdram::Error::ClientError.new, e
+        elsif http_status.between?(500, 599)
+          raise Camdram::Error::ServerError.new, e
+        else
+          raise Camdram::Error::GenericException.new, e
+        end
+      rescue Faraday::Timeout => e
+        raise Camdram::Error::Timeout.new, e
+      rescue Faraday::ConnectionFailed => e
+        if e.wrapped_exception.class == Net::OpenTimeout
+          raise Camdram::Error::Timeout.new, e
+        else
+          raise Camdram::Error::GenericException.new, e
+        end
+      rescue => e
+        raise Camdram::Error::GenericException.new, e
+      end
     end
 
     # Returns true if the access token is expiring in the next 30 seconds
