@@ -1,4 +1,3 @@
-require 'date'
 require 'minitest/autorun'
 require 'minitest/retry'
 require 'camdram/client'
@@ -15,7 +14,7 @@ Minitest::Retry.use!(
 
 class Minitest::Test
   def setup
-    @client = Camdram::Client.new do |config|
+    @client = ::Camdram::Client.new do |config|
       config.client_credentials(ENV['APP_ID'], ENV['APP_SECRET'])
     end
   end
