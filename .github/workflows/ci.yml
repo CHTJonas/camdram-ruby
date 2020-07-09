@@ -16,9 +16,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 2.6
+        run: rbenv local 2.6.6
       - name: Install dependencies
         run: bundle install
       - name: Run tests
