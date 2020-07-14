@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'cgi'
 require 'date'
 require 'camdram'
 require 'camdram/api'
@@ -239,7 +240,7 @@ module Camdram
     # @param query [String] The query string to search with.
     # @return [Array] An array of Search objects.
     def search(query, limit=10, page=1)
-      url = "/search.json?q=#{query}&limit=#{limit}&page=#{page}"
+      url = "/search.json?q=#{CGI.escape query}&limit=#{limit}&page=#{page}"
       response = get(url)
       split_object( response, Search )
     end

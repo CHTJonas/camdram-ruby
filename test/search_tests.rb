@@ -2,7 +2,7 @@ require 'test_helper'
 
 class SearchTests < Minitest::Test
   def test_search_show
-    entity = @client.search("API Test")[0].entity
+    entity = @client.search("ÁPÏ Test 1")[0].entity
     assert_equal 6514, entity.id
     assert_equal "This show is a dummy used by Camdram for testing purposes only.", entity.description
     assert_equal "5dd80dad3502e.jpeg", entity.image.filename
