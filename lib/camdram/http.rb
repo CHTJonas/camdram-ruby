@@ -97,7 +97,7 @@ module Camdram
         end
       end
       if !@auto_renew_disabled && access_token_expiring_soon?
-        warn 'refreshing expired access token'
+        warn 'refreshing expired access token' unless @mode == :client_credentials
         self.refresh!
       end
       handle_exceptions do
