@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'mime-types', '~> 3.2'
   s.add_dependency 'sync', '~> 0.5.0'
   s.add_dependency 'ruby_multiton', '~> 0.1.2'
-  s.add_development_dependency 'rake', '~> 12.3'
+  s.add_development_dependency 'rake', '~> 13.0'
   s.add_development_dependency 'minitest', '~> 5.11'
   s.add_development_dependency 'minitest-retry', '~> 0.2.1'
 end
