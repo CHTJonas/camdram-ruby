@@ -148,11 +148,14 @@ module Camdram
       rescue Faraday::TimeoutError => e
         raise Camdram::Error::Timeout.new, e
       rescue Faraday::ConnectionFailed => e
-        if e.wrapped_exception.class == Net::OpenTimeout
-          raise Camdram::Error::Timeout.new, e
-        else
-          raise Camdram::Error::GenericException.new, e
+        f = e
+        while !f.nil?
+          if f.class == Net::OpenTimeout
+            raise Camdram::Error::Timeout.new, e
+          end
+          f = f.wrapped_exception
         end
+        raise Camdram::Error::GenericException.new, e
       rescue => e
         raise Camdram::Error::GenericException.new, e
       end

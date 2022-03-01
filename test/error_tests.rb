@@ -21,7 +21,7 @@ class ErrorTests < Minitest::Test
     begin
       client.user
     rescue Camdram::Error::Timeout => e
-      assert_equal Net::OpenTimeout, e.cause.wrapped_exception.class
+      assert_equal Net::OpenTimeout, e.cause.cause.cause.class
       result = true
     end
     assert result
@@ -33,7 +33,7 @@ class ErrorTests < Minitest::Test
     begin
       client.user
     rescue Camdram::Error::Timeout => e
-      assert_equal Net::ReadTimeout, e.cause.wrapped_exception.class
+      assert_equal Net::ReadTimeout, e.cause.cause.class
       result = true
     end
     assert result
