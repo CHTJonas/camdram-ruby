@@ -60,7 +60,7 @@ class VenueTests < Minitest::Test
     assert_equal "drama", show.category
     assert_equal "BATS", show.societies.first.name
     assert_equal 5404, show.performances.first.id
-    assert_equal "Fitzpatrick Hall, Queens' College", show.performances.first.venue.name
+    assert_equal "Fitzpatrick Hall", show.performances.first.venue.name
   end
 
   def test_venue_diary
