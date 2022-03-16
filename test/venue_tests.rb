@@ -50,7 +50,7 @@ class VenueTests < Minitest::Test
   end
 
   def test_venue_shows
-    venue = @client.get_venue('fitzpatrick-hall-queens-college')
+    venue = @client.get_venue('fitzpatrick-hall')
     assert_equal "Queens'", venue.college
     shows = venue.shows("2017-02-15", "2017-02-18")
     show = shows.first
@@ -64,7 +64,7 @@ class VenueTests < Minitest::Test
   end
 
   def test_venue_diary
-    venue = @client.get_venue('fitzpatrick-hall-queens-college')
+    venue = @client.get_venue('fitzpatrick-hall')
     diary = venue.diary("2017-02-15", "2017-02-18")
     event = diary.events.first
     assert_equal DateTime.parse("2017-02-16T19:30:00+00:00"), event.start_at
