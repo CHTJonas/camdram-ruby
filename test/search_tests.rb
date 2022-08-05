@@ -31,7 +31,7 @@ class SearchTests < Minitest::Test
     assert_equal "ADC Theatre", entity.name
     assert_equal "ADC Theatre", entity.short_name
     assert_equal "adc-theatre", entity.slug
-    assert_equal "33348320992", entity.facebook_id
+    assert_equal "https://www.facebook.com/33348320992", entity.facebook_id
     assert_equal "36725639", entity.twitter_id
   end
 

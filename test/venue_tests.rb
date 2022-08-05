@@ -7,9 +7,9 @@ class VenueTests < Minitest::Test
     assert_equal "ADC Theatre", venue.name
     assert_equal "ADC Theatre", venue.short_name
     assert_equal "adc-theatre", venue.slug
-    assert_equal "Park Street,\r\nCambridge,\r\nCB5 8AS", venue.address
-    assert_equal "See the ADC Theatre website at [L:www.adctheatre.com]", venue.description
-    assert_equal "33348320992", venue.facebook_id
+    assert_equal "Park Street, Cambridge", venue.address
+    assert_equal "See the ADC Theatre website at https://www.adctheatre.com/.", venue.description
+    assert_equal "https://www.facebook.com/33348320992", venue.facebook_id
     assert_equal "36725639", venue.twitter_id
     assert_equal venue, venue.refresh!
   end
@@ -20,9 +20,9 @@ class VenueTests < Minitest::Test
     assert_equal "ADC Theatre", venue.name
     assert_equal "ADC Theatre", venue.short_name
     assert_equal "adc-theatre", venue.slug
-    assert_equal "Park Street,\r\nCambridge,\r\nCB5 8AS", venue.address
-    assert_equal "See the ADC Theatre website at [L:www.adctheatre.com]", venue.description
-    assert_equal "33348320992", venue.facebook_id
+    assert_equal "Park Street, Cambridge", venue.address
+    assert_equal "See the ADC Theatre website at https://www.adctheatre.com/.", venue.description
+    assert_equal "https://www.facebook.com/33348320992", venue.facebook_id
     assert_equal "36725639", venue.twitter_id
     assert_equal venue, venue.refresh!
   end
