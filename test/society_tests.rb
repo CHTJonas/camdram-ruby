@@ -26,11 +26,11 @@ class SocietyTests < Minitest::Test
     society = @client.get_society(1)
     image = society.image
     assert_equal 3310, image.id
-    assert_equal 1024, image.width
-    assert_equal 1152, image.height
-    assert_equal "5b33d9251b70a.png", image.filename
+    assert_equal 1000, image.width
+    assert_equal 1126, image.height
+    assert_equal "64ba88a960413.png", image.filename
     assert_equal "png", image.extension
-    assert_equal DateTime.parse("2018-06-27T19:36:21+00:00"), image.created_at
+    assert_equal DateTime.parse("2023-07-21T13:31:21+00:00"), image.created_at
   end
 
   def test_society_news
