@@ -21,7 +21,7 @@ class SearchTests < Minitest::Test
     assert_equal "Cambridge University Amateur Dramatic Club", entity.name
     assert_equal "CUADC", entity.short_name
     assert_equal "cambridge-university-amateur-dramatic-club", entity.slug
-    assert_equal "189141344500085", entity.facebook_id
+    assert_equal "https://www.facebook.com/189141344500085", entity.facebook_id
     assert_equal "472457773", entity.twitter_id
   end
 
