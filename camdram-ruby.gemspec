@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.require_paths = ['lib']
 
-  s.add_dependency 'oauth2', '~> 1.4'
+  s.add_dependency 'oauth2', '>= 1.4', '< 3.0'
   s.add_dependency 'mime-types', '~> 3.2'
   s.add_dependency 'sync', '~> 0.5.0'
   s.add_dependency 'ruby_multiton', '~> 0.1.2'
