@@ -1,8 +1,6 @@
-⚠️ **WARNING**:
-You are viewing the README on the `main` branch which contains as yet unreleased changes for version 2.0.0 of the gem.
-You probably want to checkout a tag using the GitHub interface and view documentation for that version.
-
----
+> **Warning**
+> If you are viewing this README on the `main` branch then please note that this may contain as yet unreleased changes.
+> You probably want to checkout a tag using the GitHub interface and view documentation for that specific version.
 
 # The Camdram Ruby Gem
 
