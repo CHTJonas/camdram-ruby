@@ -192,5 +192,5 @@ As a result of this policy, you can (and should) specify a dependency on this ge
 
 ## Copyright
 
-Copyright (c) 2018–2021 Charlie Jonas.
+Copyright (c) 2018 Charlie Jonas.
 See [LICENSE](LICENSE) for details.
